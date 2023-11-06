@@ -11,6 +11,10 @@ spotipy = "^2.23.0"
 pandas = "^2.1.1"
 keyring = "^24.2.0"
 tqdm = "^4.66.1"
+jsonpath-ng = "^1.6.0"
+musicbrainzngs = "^0.7.1"
+sqlite-utils = "^3.35.1"
+mypy = "^1.6.1"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -1,4 +1,8 @@
-/MusicAlbum_statistics
-/MusicAlbum_top100
-*.json
-*.csv
+# Ignore everything in repository root 
+/*
+
+# Files to not ignore
+!/.gitignore
+
+# Folder to not ignore
+!/IR/
