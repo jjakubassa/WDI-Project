@@ -17,11 +17,12 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
 
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLMatchableReader;
-
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.XMLMatchableReaderID;
 /**
  * A {@link XMLMatchableReader} for {@link Actor}s.
  * 
@@ -32,8 +33,9 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 
 	@Override
 	public Album createModelFromElement(Node node, String provenanceInfo) {
-		String id = getValueFromChildElement(node, "id");
-
+		NamedNodeMap id_attribute = node.getAttributes();
+		String id = id_attribute.getNamedItem("id").getNodeValue();
+		
 		// create the object with id and provenance information
 		Album Album = new Album(id, provenanceInfo);
 
@@ -80,10 +82,10 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 			
 			if (date != null) {
 				if (date.length() == 4) {
-					date = date.concat("-01-01");
+					date = date.concat("-02-30");
 				}
 				if (date.length() == 7) {
-					date = date.concat("-01");
+					date = date.concat("-01"); //TODO how to deal with this?
 				}
 				DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 				        .appendPattern("yyyy-MM-dd")
