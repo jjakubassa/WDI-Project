@@ -12,7 +12,7 @@
 
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Movie;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.generators.BlockingKeyGenerator;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.generators.RecordBlockingKeyGenerator;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
@@ -29,8 +29,8 @@ import de.uni_mannheim.informatik.dws.winter.processing.Processable;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class MovieBlockingKeyByTitleGenerator extends
-		RecordBlockingKeyGenerator<Movie, Attribute> {
+public class AlbumBlockingKeyByTitleGenerator extends
+		RecordBlockingKeyGenerator<Album, Attribute> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,8 +39,8 @@ public class MovieBlockingKeyByTitleGenerator extends
 	 * @see de.uni_mannheim.informatik.wdi.matching.blocking.generators.BlockingKeyGenerator#generateBlockingKeys(de.uni_mannheim.informatik.wdi.model.Matchable, de.uni_mannheim.informatik.wdi.model.Result, de.uni_mannheim.informatik.wdi.processing.DatasetIterator)
 	 */
 	@Override
-	public void generateBlockingKeys(Movie record, Processable<Correspondence<Attribute, Matchable>> correspondences,
-			DataIterator<Pair<String, Movie>> resultCollector) {
+	public void generateBlockingKeys(Album record, Processable<Correspondence<Attribute, Matchable>> correspondences,
+			DataIterator<Pair<String, Album>> resultCollector) {
 
 		String[] tokens  = record.getTitle().split(" ");
 

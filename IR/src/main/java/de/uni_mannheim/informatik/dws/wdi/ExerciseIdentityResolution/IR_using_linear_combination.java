@@ -4,9 +4,10 @@ import java.io.File;
 
 import org.slf4j.Logger;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MovieBlockingKeyByTitleGenerator;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.AlbumBlockingKeyByTitleGenerator;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieDateComparator2Years;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieTitleComparatorJaccard;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshtein;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.AlbumXMLReader;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Movie;
@@ -58,50 +59,51 @@ public class IR_using_linear_combination
 		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
 		new AlbumXMLReader().loadFromXML(new File("data/input/output_target schema_MB.xml"), "/root/Albums/Album", dataMB);
 		
-//		// load the gold standard (test set)
-//		logger.info("*\tLoading gold standard\t*");
-//		MatchingGoldStandard gsTest = new MatchingGoldStandard();
-//		gsTest.loadFromCSVFile(new File(
-//				"data/goldstandard/gs_academy_awards_2_actors_test.csv"));
-//
-//		// create a matching rule
-//		LinearCombinationMatchingRule<Movie, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
-//				0.7);
-//		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000, gsTest);
-//		
-//		// add comparators
+		// load the gold standard (test set)
+		logger.info("*\tLoading gold standard\t*");
+		MatchingGoldStandard gsTest = new MatchingGoldStandard();
+		gsTest.loadFromCSVFile(new File(
+				"data/goldstandard/gs_mb_spotify_test.csv"));
+
+		// create a matching rule
+		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
+				0.7);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000, gsTest);
+		
+		// add comparators
 //		matchingRule.addComparator(new MovieDateComparator2Years(), 0.5);
-//		matchingRule.addComparator(new MovieTitleComparatorJaccard(), 0.5);
-//		
-//
-//		// create a blocker (blocking strategy)
-//		StandardRecordBlocker<Movie, Attribute> blocker = new StandardRecordBlocker<Movie, Attribute>(new MovieBlockingKeyByTitleGenerator());
-////		NoBlocker<Movie, Attribute> blocker = new NoBlocker<>();
-////		SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
-//		blocker.setMeasureBlockSizes(true);
-//		//Write debug results to file:
-//		blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
-//		
-//		// Initialize Matching Engine
-//		MatchingEngine<Movie, Attribute> engine = new MatchingEngine<>();
-//
-//		// Execute the matching
-//		logger.info("*\tRunning identity resolution\t*");
-//		Processable<Correspondence<Movie, Attribute>> correspondences = engine.runIdentityResolution(
-//				dataAcademyAwards, dataActors, null, matchingRule,
-//				blocker);
-//
-//		// Create a top-1 global matching
-////		  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.0);
-//
+		matchingRule.addComparator(new AlbumTitleComparatorLevenshtein(), 0.5);
+		
+
+		// create a blocker (blocking strategy)
+//		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
+		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
+//		SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
+		blocker.setMeasureBlockSizes(true);
+		
+		//Write debug results to file:
+		blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
+		
+		// Initialize Matching Engine
+		MatchingEngine<Album, Attribute> engine = new MatchingEngine<>();
+
+		// Execute the matching
+		logger.info("*\tRunning identity resolution\t*");
+		Processable<Correspondence<Album, Attribute>> correspondences = engine.runIdentityResolution(
+				dataMB, dataSpotify, null, matchingRule,
+				blocker);
+
+		// Create a top-1 global matching
+		  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.0);
+
 ////		 Alternative: Create a maximum-weight, bipartite matching
 ////		 MaximumBipartiteMatchingAlgorithm<Movie,Attribute> maxWeight = new MaximumBipartiteMatchingAlgorithm<>(correspondences);
 ////		 maxWeight.run();
 ////		 correspondences = maxWeight.getResult();
-//
-//		// write the correspondences to the output file
-//		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/academy_awards_2_actors_correspondences.csv"), correspondences);		
-//		
+
+//		 write the correspondences to the output file
+		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/wd_spotify_correspondences.csv"), correspondences);		
+		
 //		logger.info("*\tEvaluating result\t*");
 //		// evaluate your result
 //		MatchingEvaluator<Movie, Attribute> evaluator = new MatchingEvaluator<Movie, Attribute>();
