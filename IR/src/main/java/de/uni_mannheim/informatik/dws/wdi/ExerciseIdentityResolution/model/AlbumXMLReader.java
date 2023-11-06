@@ -11,6 +11,9 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model;
 
+import org.slf4j.Logger;
+
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -49,6 +52,18 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		Album.setLanguage(getValueFromChildElement(node, "Language"));
 		Album.setGenre(getValueFromChildElement(node, "Genre"));
 		// TODO artists, tracks, labels
+		String artists = getValueFromChildElement(node, "Artists");
+		if (artists != null){
+			String replace = artists.replace("[","");
+			System.out.println(replace);
+			String replace1 = replace.replace("]","");
+			System.out.println(replace1);
+			List<String> artistList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			Album.setArtists(artistList);
+		}
+
+		// Album.setTracks(getValueFromChildElement(node, "Tracks"));
+		// Album.setLabels(getValueFromChildElement(node, "Labels"));
 
         
         // Deal with missing values
