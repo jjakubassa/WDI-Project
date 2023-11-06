@@ -22,20 +22,20 @@ import de.uni_mannheim.informatik.dws.winter.model.io.XMLFormatter;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class ActorXMLFormatter extends XMLFormatter<Actor> {
+public class ArtistXMLFormatter extends XMLFormatter<Artist> {
 
 	@Override
 	public Element createRootElement(Document doc) {
-		return doc.createElement("actors");
+		return doc.createElement("artists");
 	}
 
 	@Override
-	public Element createElementFromRecord(Actor record, Document doc) {
-		Element actor = doc.createElement("actor");
+	public Element createElementFromRecord(Artist record, Document doc) {
+		Element artist = doc.createElement("artist");
 
-		actor.appendChild(createTextElement("name", record.getName(), doc));
+		artist.appendChild(createTextElement("name", record.getName(), doc));
 
-		return actor;
+		return artist;
 	}
 
 }

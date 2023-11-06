@@ -23,7 +23,7 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class Actor extends AbstractRecord<Attribute> implements Serializable {
+public class Artist extends AbstractRecord<Attribute> implements Serializable {
 
 	/*
 	 * example entry <actor> <name>Janet Gaynor</name>
@@ -33,10 +33,8 @@ public class Actor extends AbstractRecord<Attribute> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private LocalDateTime birthday;
-	private String birthplace;
 
-	public Actor(String identifier, String provenance) {
+	public Artist(String identifier, String provenance) {
 		super(identifier, provenance);
 	}
 
@@ -46,22 +44,6 @@ public class Actor extends AbstractRecord<Attribute> implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public LocalDateTime getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(LocalDateTime birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getBirthplace() {
-		return birthplace;
-	}
-
-	public void setBirthplace(String birthplace) {
-		this.birthplace = birthplace;
 	}
 
 	/*
@@ -88,7 +70,7 @@ public class Actor extends AbstractRecord<Attribute> implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Actor other = (Actor) obj;
+		Artist other = (Artist) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -98,8 +80,6 @@ public class Actor extends AbstractRecord<Attribute> implements Serializable {
 	}
 
 	public static final Attribute NAME = new Attribute("Name");
-	public static final Attribute BIRTHPLACE = new Attribute("Birthplace");
-	public static final Attribute BIRTHDATE = new Attribute("Birthdate");
 	
 	/* (non-Javadoc)
 	 * @see de.uni_mannheim.informatik.wdi.model.Record#hasValue(java.lang.Object)
@@ -108,10 +88,7 @@ public class Actor extends AbstractRecord<Attribute> implements Serializable {
 	public boolean hasValue(Attribute attribute) {
 		if(attribute==NAME)
 			return name!=null;
-		else if(attribute==BIRTHPLACE) 
-			return birthplace!=null;
-		else if(attribute==BIRTHDATE)
-			return birthday!=null;
-		return false;
+		else
+			return false;
 	}
 }
