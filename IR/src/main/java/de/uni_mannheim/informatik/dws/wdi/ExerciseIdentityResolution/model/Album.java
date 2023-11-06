@@ -45,7 +45,7 @@ public class Album implements Matchable {
 	private String genre;
 	private String country;
 	private String language;
-	private Double duration;
+	private int duration;
 	
 
 	public Album(String identifier, String provenance) {
@@ -129,11 +129,11 @@ public class Album implements Matchable {
 		this.language = language;
 	}
 
-	public Double getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Double duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
