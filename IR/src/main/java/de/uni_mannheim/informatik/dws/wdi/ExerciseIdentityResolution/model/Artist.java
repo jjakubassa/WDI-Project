@@ -34,8 +34,8 @@ public class Artist extends AbstractRecord<Attribute> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 
-	public Artist(String identifier, String provenance) {
-		super(identifier, provenance);
+	public Artist(String name) {
+		super();
 	}
 
 	public String getName() {
