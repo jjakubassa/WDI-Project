@@ -1,5 +1,6 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model;
 
+import de.uni_mannheim.informatik.dws.winter.model.Matchable;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -25,6 +26,11 @@ public class XMLMatchableReaderID extends XMLMatchableReader {
 			}
 		}
 
+		return null;
+	}
+
+	@Override
+	public Matchable createModelFromElement(Node node, String provenanceInfo) {
 		return null;
 	}
 }
