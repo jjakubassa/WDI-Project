@@ -13,12 +13,15 @@ package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model;
 
 import org.slf4j.Logger;
 
+import java.util.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -51,14 +54,16 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		Album.setCountry(getValueFromChildElement(node, "Country"));
 		Album.setLanguage(getValueFromChildElement(node, "Language"));
 		Album.setGenre(getValueFromChildElement(node, "Genre"));
-		// TODO artists, tracks, labels
+		// TODO artists, tracks, labels, genres
+		
 		String artists = getValueFromChildElement(node, "Artists");
 		if (artists != null){
 			String replace = artists.replace("[","");
 			System.out.println(replace);
 			String replace1 = replace.replace("]","");
 			System.out.println(replace1);
-			List<String> artistList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<Artist> artistList = strList.stream().map(Artist::new).collect(Collectors.toList());
 			Album.setArtists(artistList);
 		}
 
