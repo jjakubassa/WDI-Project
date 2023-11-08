@@ -23,10 +23,12 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
+/*
 
 public class IR_using_machine_learning {
 	
-	/*
+	*/
+/*
 	 * Logging Options:
 	 * 		default: 	level INFO	- console
 	 * 		trace:		level TRACE     - console
@@ -37,7 +39,8 @@ public class IR_using_machine_learning {
 	 * activate the "traceFile" logger as follows:
 	 *     private static final Logger logger = WinterLogManager.activateLogger("traceFile");
 	 *
-	 */
+	 *//*
+
 
 	private static final Logger logger = WinterLogManager.activateLogger("default");
 	
@@ -116,3 +119,4 @@ public class IR_using_machine_learning {
 				"F1: %.4f",perfTest.getF1()));
     }
 }
+*/
