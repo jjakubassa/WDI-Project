@@ -46,7 +46,8 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		Album Album = new Album(id, provenanceInfo);
 
 		// fill the attributes
-		Album.setTitle(getValueFromChildElement(node, "Title")); 
+		String title = getValueFromChildElement(node, "Title").replaceFirst("^\"", "").replaceFirst("\"$", "");
+		Album.setTitle(title); 
 		
 		// Album.setReleaseDate(getValueFromChildElement(node, "ReleaseDate"));
 		
