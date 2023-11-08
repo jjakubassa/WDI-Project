@@ -30,7 +30,6 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLMatchableReader;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.XMLMatchableReaderID;
 /**
- * A {@link XMLMatchableReader} for {@link Actor}s.
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
