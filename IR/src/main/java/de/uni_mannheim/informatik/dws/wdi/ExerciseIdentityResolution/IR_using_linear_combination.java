@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.AlbumBlockingKeyByTitleGenerator;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshtein;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshteinLowerCase;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.AlbumXMLReader;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEngine;
@@ -40,14 +41,14 @@ public class IR_using_linear_combination
     {
 		// loading data
 		logger.info("*\tLoading datasets\t*");
-		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/WDC_mapped_output.xml"), "/root/Albums/Album", dataWDC);
+//		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
+//		new AlbumXMLReader().loadFromXML(new File("data/input/WDC_mapped_output.xml"), "/root/Albums/Album", dataWDC);
 		
 		HashedDataSet<Album, Attribute> dataSpotify = new HashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/spotify mapped.xml"), "/root/Albums/Album", dataSpotify);
+		new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
 
 		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/output_target schema_MB.xml"), "/root/Albums/Album", dataMB);
+		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		
 		// load the gold standard (test set)
 		logger.info("*\tLoading gold standard\t*");
@@ -62,12 +63,12 @@ public class IR_using_linear_combination
 		
 		// add comparators
 //		matchingRule.addComparator(new MovieDateComparator2Years(), 0.5);
-		matchingRule.addComparator(new AlbumTitleComparatorLevenshtein(), 0.5);
+		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 1);
 		
 
 		// create a blocker (blocking strategy)
-		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
-//		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
+//		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
+		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
 //		SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
 		blocker.setMeasureBlockSizes(true);
 		
@@ -94,19 +95,19 @@ public class IR_using_linear_combination
 //		 write the correspondences to the output file
 		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/wd_spotify_correspondences.csv"), correspondences);		
 		
-//		logger.info("*\tEvaluating result\t*");
-//		// evaluate your result
-//		MatchingEvaluator<Movie, Attribute> evaluator = new MatchingEvaluator<Movie, Attribute>();
-//		Performance perfTest = evaluator.evaluateMatching(correspondences,
-//				gsTest);
-//
-//		// print the evaluation result
+		logger.info("*\tEvaluating result\t*");
+		// evaluate your result
+		MatchingEvaluator<Album, Attribute> evaluator = new MatchingEvaluator<Album, Attribute>();
+		Performance perfTest = evaluator.evaluateMatching(correspondences,
+				gsTest);
+
+		// print the evaluation result
 //		logger.info("Academy Awards <-> Actors");
-//		logger.info(String.format(
-//				"Precision: %.4f",perfTest.getPrecision()));
-//		logger.info(String.format(
-//				"Recall: %.4f",	perfTest.getRecall()));
-//		logger.info(String.format(
-//				"F1: %.4f",perfTest.getF1()));
+		logger.info(String.format(
+				"Precision: %.4f",perfTest.getPrecision()));
+		logger.info(String.format(
+				"Recall: %.4f",	perfTest.getRecall()));
+		logger.info(String.format(
+				"F1: %.4f",perfTest.getF1()));
     }
 }

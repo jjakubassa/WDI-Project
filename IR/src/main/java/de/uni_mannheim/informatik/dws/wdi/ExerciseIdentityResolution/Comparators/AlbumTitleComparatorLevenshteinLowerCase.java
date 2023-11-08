@@ -26,7 +26,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class AlbumTitleComparatorLevenshtein implements Comparator<Album, Attribute> {
+public class AlbumTitleComparatorLevenshteinLowerCase implements Comparator<Album, Attribute> {
 
 	private static final long serialVersionUID = 1L;
 	private LevenshteinSimilarity sim = new LevenshteinSimilarity();
@@ -39,8 +39,8 @@ public class AlbumTitleComparatorLevenshtein implements Comparator<Album, Attrib
 			Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondences) {
 		
-		String s1 = record1.getTitle();
-		String s2 = record2.getTitle();
+		String s1 = record1.getTitle().toLowerCase();
+		String s2 = record2.getTitle().toLowerCase();
 		
 		double similarity = sim.calculate(s1, s2);
 		

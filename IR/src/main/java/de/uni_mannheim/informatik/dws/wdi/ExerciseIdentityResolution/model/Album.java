@@ -42,7 +42,7 @@ public class Album implements Matchable {
 	private List<Track> tracks;
 	private List<String> labels;
 	private Integer totalTracks;
-	private String genre;
+	private List<String> genre;
 	private String country;
 	private String language;
 	private int duration;
@@ -146,11 +146,11 @@ public class Album implements Matchable {
 	}
 
 
-	public String getGenre() {
+	public List<String> getGenres() {
 		return genre;
 	}
 
-	public void setGenre(String genre) {
+	public void setGenres(List<String> genre) {
 		this.genre = genre;
 	}
 

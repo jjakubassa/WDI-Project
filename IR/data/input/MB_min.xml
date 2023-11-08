@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xsi:noNamespaceSchemaLocation="file:///C:/Users/patri/Patrick/Uni/Master/3.%20Semester/WDI/Project/target%20schema_0111.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Albums>
+		<Album id="MB_29202">
+			<Title>"Made in the Dark"</Title>
+			<ReleaseDate>2008</ReleaseDate>
+			<Artists>
+				<ArtistName>"Hot Chip"</ArtistName>
+			</Artists>
+			<TotalTracks>13</TotalTracks>
+			<Country>"CA"</Country>
+			<Language>"eng"</Language>
+			<Labels>
+				<LabelName>"EMI"</LabelName>
+			</Labels>
+		</Album>
+	</Albums>
+</root>

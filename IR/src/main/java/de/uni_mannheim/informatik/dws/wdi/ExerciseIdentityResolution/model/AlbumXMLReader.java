@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.w3c.dom.NamedNodeMap;
@@ -35,7 +36,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.XMLMa
  * 
  */
 public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
-
+		
 	@Override
 	public Album createModelFromElement(Node node, String provenanceInfo) {
 		NamedNodeMap id_attribute = node.getAttributes();
@@ -45,29 +46,52 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		Album Album = new Album(id, provenanceInfo);
 
 		// fill the attributes
-		Album.setTitle(getValueFromChildElement(node, "Title")); 
+		String title = getValueFromChildElement(node, "Title");
+		Album.setTitle(stripQuotes(title)); 
 		
 		// Album.setReleaseDate(getValueFromChildElement(node, "ReleaseDate"));
 		
+		String country = getValueFromChildElement(node, "Country");
+		Album.setCountry(stripQuotes(country));
 		
-		Album.setCountry(getValueFromChildElement(node, "Country"));
-		Album.setLanguage(getValueFromChildElement(node, "Language"));
-		Album.setGenre(getValueFromChildElement(node, "Genre"));
-		// TODO artists, tracks, labels, genres
+		String language = getValueFromChildElement(node, "Language");
+		Album.setLanguage(stripQuotes(language));
 		
 		String artists = getValueFromChildElement(node, "Artists");
 		if (artists != null){
 			String replace = artists.replace("[","");
-			System.out.println(replace);
 			String replace1 = replace.replace("]","");
-			System.out.println(replace1);
 			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			List<Artist> artistList = strList.stream().map(Artist::new).collect(Collectors.toList());
+			List<Artist> artistList = strList.stream().map(a -> new Artist(stripQuotes(a))).collect(Collectors.toList());
 			Album.setArtists(artistList);
 		}
 
-		// Album.setTracks(getValueFromChildElement(node, "Tracks"));
-		// Album.setLabels(getValueFromChildElement(node, "Labels"));
+		String tracks = getValueFromChildElement(node, "Tracks");
+		if (tracks != null){
+			String replace = tracks.replace("[","");
+			String replace1 = replace.replace("]","");
+			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<Track> trackList = strList.stream().map(t -> new Track(stripQuotes(t))).collect(Collectors.toList());
+			Album.setTracks(trackList);
+		}
+
+		String labels = getValueFromChildElement(node, "Labels");
+		if (labels != null){
+			String replace = labels.replace("[","");
+			String replace1 = replace.replace("]","");
+			List<String> labelList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			labelList = labelList.stream().map(l -> stripQuotes(l)).collect(Collectors.toList());
+			Album.setLabels(labelList);
+		}
+
+		String genres = getValueFromChildElement(node, "Genres");
+		if (genres != null){
+			String replace = genres.replace("[","");
+			String replace1 = replace.replace("]","");
+			List<String> genreList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			genreList = genreList.stream().map(g -> stripQuotes(g)).collect(Collectors.toList());
+			Album.setGenres(genreList);
+		}
 
         
         // Deal with missing values
@@ -117,6 +141,15 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		}
 
 		return Album;
+	}
+
+	private String stripQuotes(String title) {
+		if (title == null) {
+			return null;
+		}
+		else {
+			return title.replaceFirst("\"$", "").replaceFirst("^\"", "");
+		}
 	}
 
 }
