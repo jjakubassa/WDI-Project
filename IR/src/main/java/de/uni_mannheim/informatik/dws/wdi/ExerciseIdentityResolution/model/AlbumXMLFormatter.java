@@ -17,7 +17,7 @@ import org.w3c.dom.Element;
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLFormatter;
 
 /**
- * {@link XMLFormatter} for {@link album}s.
+ * {@link XMLFormatter} for {@link Album}s.
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
@@ -42,7 +42,7 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 				record.getTitle(),
 				doc));
 		album.appendChild(createTextElement("duration",
-				record.getDuration().toString(),
+				String.valueOf(record.getDuration()),
 				doc));
 		album.appendChild(createTextElement("totalTracks",
 				record.getTotalTracks().toString(),
