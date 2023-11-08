@@ -29,8 +29,7 @@ import de.uni_mannheim.informatik.dws.winter.processing.Processable;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class AlbumBlockingKeyByDecadeGenerator extends
-		RecordBlockingKeyGenerator<Album, Attribute> {
+public class AlbumBlockingKeyByDecadeGenerator extends RecordBlockingKeyGenerator<Album, Attribute> {
 
 	private static final long serialVersionUID = 1L;
 
