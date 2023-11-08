@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.w3c.dom.NamedNodeMap;
@@ -36,7 +37,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.XMLMa
  * 
  */
 public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
-
+		
 	@Override
 	public Album createModelFromElement(Node node, String provenanceInfo) {
 		NamedNodeMap id_attribute = node.getAttributes();
@@ -46,21 +47,26 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		Album Album = new Album(id, provenanceInfo);
 
 		// fill the attributes
-		String title = getValueFromChildElement(node, "Title").replaceFirst("^\"", "").replaceFirst("\"$", "");
-		Album.setTitle(title); 
+		String title = getValueFromChildElement(node, "Title");
+		Album.setTitle(stripQuotes(title)); 
 		
 		// Album.setReleaseDate(getValueFromChildElement(node, "ReleaseDate"));
 		
+		String country = getValueFromChildElement(node, "Country");
+		Album.setCountry(stripQuotes(country));
 		
-		Album.setCountry(getValueFromChildElement(node, "Country"));
-		Album.setLanguage(getValueFromChildElement(node, "Language"));
+		String language = getValueFromChildElement(node, "Language");
+		Album.setLanguage(stripQuotes(language));
+		
+		String genre = getValueFromChildElement(node, "Genre");
+		Album.setGenre(stripQuotes(genre));
 		
 		String artists = getValueFromChildElement(node, "Artists");
 		if (artists != null){
 			String replace = artists.replace("[","");
 			String replace1 = replace.replace("]","");
 			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			List<Artist> artistList = strList.stream().map(Artist::new).collect(Collectors.toList());
+			List<Artist> artistList = strList.stream().map(a -> new Artist(stripQuotes(a))).collect(Collectors.toList());
 			Album.setArtists(artistList);
 		}
 
@@ -139,6 +145,15 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		}
 
 		return Album;
+	}
+
+	private String stripQuotes(String title) {
+		if (title == null) {
+			return null;
+		}
+		else {
+			return title.replaceFirst("\"$", "").replaceFirst("^\"", "");
+		}
 	}
 
 }
