@@ -70,7 +70,7 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 			String replace = tracks.replace("[","");
 			String replace1 = replace.replace("]","");
 			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			List<Track> trackList = strList.stream().map(Track::new).collect(Collectors.toList());
+			List<Track> trackList = strList.stream().map(t -> new Track(stripQuotes(t))).collect(Collectors.toList());
 			Album.setTracks(trackList);
 		}
 
@@ -79,6 +79,7 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 			String replace = tracks.replace("[","");
 			String replace1 = replace.replace("]","");
 			List<String> labelList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<Track> labelList = labelList.stream().map(l -> stripQuotes(l)).collect(Collectors.toList());
 			Album.setLabels(labelList);
 		}
 
@@ -87,6 +88,7 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 			String replace = tracks.replace("[","");
 			String replace1 = replace.replace("]","");
 			List<String> genreList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<Track> genreList = genreList.stream().map(g -> stripQuotes(g)).collect(Collectors.toList());
 			Album.setGenres(genreList);
 		}
 
