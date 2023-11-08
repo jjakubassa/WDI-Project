@@ -3,7 +3,7 @@ package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution;
 import java.io.File;
 
 import org.slf4j.Logger;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieDateComparator10Years;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparator10Years;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieDirectorComparatorJaccard;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieDirectorComparatorLevenshtein;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieDirectorComparatorLowerCaseJaccard;
@@ -62,7 +62,7 @@ public class IR_using_machine_learning {
 		
 		// add comparators
 		matchingRule.addComparator(new MovieTitleComparatorEqual());
-		matchingRule.addComparator(new MovieDateComparator10Years());
+		matchingRule.addComparator(new AlbumDateComparator10Years());
 		matchingRule.addComparator(new MovieDirectorComparatorJaccard());
 		matchingRule.addComparator(new MovieDirectorComparatorLevenshtein());
 		matchingRule.addComparator(new MovieDirectorComparatorLowerCaseJaccard());
