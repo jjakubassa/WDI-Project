@@ -58,9 +58,6 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		String language = getValueFromChildElement(node, "Language");
 		Album.setLanguage(stripQuotes(language));
 		
-		String genre = getValueFromChildElement(node, "Genre");
-		Album.setGenre(stripQuotes(genre));
-		
 		String artists = getValueFromChildElement(node, "Artists");
 		if (artists != null){
 			String replace = artists.replace("[","");
@@ -81,19 +78,19 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 
 		String labels = getValueFromChildElement(node, "Labels");
 		if (labels != null){
-			String replace = tracks.replace("[","");
+			String replace = labels.replace("[","");
 			String replace1 = replace.replace("]","");
 			List<String> labelList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			List<Track> labelList = labelList.stream().map(l -> stripQuotes(l)).collect(Collectors.toList());
+			labelList = labelList.stream().map(l -> stripQuotes(l)).collect(Collectors.toList());
 			Album.setLabels(labelList);
 		}
 
 		String genres = getValueFromChildElement(node, "Genres");
 		if (genres != null){
-			String replace = tracks.replace("[","");
+			String replace = genres.replace("[","");
 			String replace1 = replace.replace("]","");
 			List<String> genreList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			List<Track> genreList = genreList.stream().map(g -> stripQuotes(g)).collect(Collectors.toList());
+			genreList = genreList.stream().map(g -> stripQuotes(g)).collect(Collectors.toList());
 			Album.setGenres(genreList);
 		}
 
