@@ -59,9 +59,7 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		String artists = getValueFromChildElement(node, "Artists");
 		if (artists != null){
 			String replace = artists.replace("[","");
-			System.out.println(replace);
 			String replace1 = replace.replace("]","");
-			System.out.println(replace1);
 			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
 			List<Artist> artistList = strList.stream().map(Artist::new).collect(Collectors.toList());
 			Album.setArtists(artistList);
