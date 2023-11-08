@@ -34,8 +34,8 @@ public class Track extends AbstractRecord<Attribute> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 
-	public Track(String identifier, String provenance) {
-		super(identifier, provenance);
+	public Track(String name) {
+		super();
 	}
 
 	public String getName() {
