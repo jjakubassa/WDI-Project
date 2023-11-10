@@ -1,6 +1,12 @@
 # Ignore everything in repository root 
 /*
 
+IR/.DS_Store
+IR/target/classes/META-INF/maven/de.uni_mannheim.informatik.dws.wdi/ExerciseIdentityResolution_Solution/pom.properties
+IR/.DS_Store
+IR/data/.DS_Store
+IR/data/goldstandard/.DS_Store
+
 # Files to not ignore
 !/.gitignore
 
@@ -9,4 +15,3 @@
 
 IR/.idea
 
-IR/.DS_Store
