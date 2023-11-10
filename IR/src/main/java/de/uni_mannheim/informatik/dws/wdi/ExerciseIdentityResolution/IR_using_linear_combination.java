@@ -51,19 +51,21 @@ public class IR_using_linear_combination
 		// loading data
 		logger.info("*\tLoading datasets\t*");
 //		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
-//		new AlbumXMLReader().loadFromXML(new File("data/input/WDC_mapped_output.xml"), "/root/Albums/Album", dataWDC);
+//		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", dataWDC);
 		
 		HashedDataSet<Album, Attribute> dataSpotify = new HashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
-
+//		new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
+		new AlbumXMLReader().loadFromXML(new File("data/input/spotify.xml"), "/root/Albums/Album", dataSpotify);
+		
 		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
+//		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
+		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
 		
 		// load the gold standard (test set)
 		logger.info("*\tLoading gold standard\t*");
 		MatchingGoldStandard gsTest = new MatchingGoldStandard();
 		gsTest.loadFromCSVFile(new File(
-				"data/goldstandard/gs_mb_spotify_test.csv"));
+				"data/goldstandard/gs_mb_spy.csv"));
 
 		// create a matching rule
 		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
@@ -76,8 +78,8 @@ public class IR_using_linear_combination
 		
 
 		// create a blocker (blocking strategy)
-//		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
-		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
+		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
+//		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
 //		SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
 		blocker.setMeasureBlockSizes(true);
 		
