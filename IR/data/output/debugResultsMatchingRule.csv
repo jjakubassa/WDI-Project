@@ -1,3 +1,3 @@
 "MatchingRule","Record1Identifier","Record2Identifier","TotalSimilarity","IsMatch","[0] AlbumTitleComparatorLevenshteinLowerCase record1Value","[0] AlbumTitleComparatorLevenshteinLowerCase record2Value","[0] AlbumTitleComparatorLevenshteinLowerCase record1PreprocessedValue","[0] AlbumTitleComparatorLevenshteinLowerCase record2PreprocessedValue","[0] AlbumTitleComparatorLevenshteinLowerCase similarity","[0] AlbumTitleComparatorLevenshteinLowerCase postproccesedSimilarity"
-"LinearCombinationMatchingRule","MB_29202","spy_3255","1.0",,"made in the dark","made in the dark","made in the dark","made in the dark","1.0","1.0"
+"LinearCombinationMatchingRule","MB_29202","spy_3255","1.0","1","made in the dark","made in the dark","made in the dark","made in the dark","1.0","1.0"
 "LinearCombinationMatchingRule","MB_29202","spy_1","0.125",,"made in the dark","runtuh","made in the dark","runtuh","0.125","0.125"

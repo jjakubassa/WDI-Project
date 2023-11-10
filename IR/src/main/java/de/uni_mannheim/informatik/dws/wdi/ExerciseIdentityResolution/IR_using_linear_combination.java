@@ -94,7 +94,7 @@ public class IR_using_linear_combination
 				blocker);
 
 		// Create a top-1 global matching
-		  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.0);
+		  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.7);
 
 ////		 Alternative: Create a maximum-weight, bipartite matching
 ////		 MaximumBipartiteMatchingAlgorithm<Movie,Attribute> maxWeight = new MaximumBipartiteMatchingAlgorithm<>(correspondences);
