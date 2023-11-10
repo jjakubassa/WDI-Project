@@ -1,12 +1,14 @@
 # Ignore everything in repository root 
 /*
 
+
 # Files to not ignore
 !/.gitignore
 
 # Folder to not ignore
 !/IR/
 
+# Files to ignore
 IR/.idea
-
 IR/.DS_Store
+IR/*xlsx
