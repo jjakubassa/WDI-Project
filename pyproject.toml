@@ -15,10 +15,12 @@ jsonpath-ng = "^1.6.0"
 musicbrainzngs = "^0.7.1"
 sqlite-utils = "^3.35.1"
 mypy = "^1.6.1"
+types-tqdm = "^4.66.0.4"
 
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.25.2"
+ruff = "^0.1.5"
 
 [build-system]
 requires = ["poetry-core"]
