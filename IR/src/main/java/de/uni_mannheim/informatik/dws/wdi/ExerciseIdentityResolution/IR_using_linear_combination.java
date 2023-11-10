@@ -50,30 +50,58 @@ public class IR_using_linear_combination
     {
 		// loading data
 		logger.info("*\tLoading datasets\t*");
-//		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
-//		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", dataWDC);
+		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", dataWDC);
 		
 		HashedDataSet<Album, Attribute> dataSpotify = new HashedDataSet<>();
 //		new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
-		new AlbumXMLReader().loadFromXML(new File("data/input/spotify.xml"), "/root/Albums/Album", dataSpotify);
+		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/root/Albums/Album", dataSpotify);
 		
 		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
 //		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
 		
+		
+		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
+		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
+		Performance perfTest_WDC_SPY = identityResolution(dataMB, dataSpotify, "WDC_SPY", "gs_wdc_spy");
+
+		// print the evaluation result
+		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+		printEvalPerf(perfTest_MB_SPY);
+		
+		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+		printEvalPerf(perfTest_WDC_MB);
+		
+		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+		printEvalPerf(perfTest_WDC_SPY);
+    }
+
+
+	private static void printEvalPerf(Performance perfTest) {
+		logger.info(String.format(
+				"Precision: %.4f",perfTest.getPrecision()));
+		logger.info(String.format(
+				"Recall: %.4f",	perfTest.getRecall()));
+		logger.info(String.format(
+				"F1: %.4f",perfTest.getF1()));
+	}
+    
+    
+	private static Performance identityResolution(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name) throws Exception {
 		// load the gold standard (test set)
-		logger.info("*\tLoading gold standard\t*");
+		logger.info("*\tLoading gold standard\t* " + d1_d2_name);
+		
 		MatchingGoldStandard gsTest = new MatchingGoldStandard();
-		gsTest.loadFromCSVFile(new File(
-				"data/goldstandard/gs_mb_spy.csv"));
+		gsTest.loadFromCSVFile(new File("data/goldstandard/" + gs_name  + ".csv"));
 
 		// create a matching rule
 		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
 				0.7);
-		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule.csv", 1000, gsTest);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 1000, gsTest);
 		
 		// add comparators
-//		matchingRule.addComparator(new MovieDateComparator2Years(), 0.5);
+//		matchingRuleMBSpy.addComparator(new MovieDateComparator2Years(), 0.5);
 		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 1);
 		
 
@@ -84,15 +112,15 @@ public class IR_using_linear_combination
 		blocker.setMeasureBlockSizes(true);
 		
 		//Write debug results to file:
-		blocker.collectBlockSizeData("data/output/debugResultsBlocking.csv", 100);
+		blocker.collectBlockSizeData("data/output/debugResultsBlocking" + d1_d2_name +  ".csv", 100);
 		
 		// Initialize Matching Engine
 		MatchingEngine<Album, Attribute> engine = new MatchingEngine<>();
 
 		// Execute the matching
-		logger.info("*\tRunning identity resolution\t*");
+		logger.info("*\tRunning identity resolution\t* " + d1_d2_name);
 		Processable<Correspondence<Album, Attribute>> correspondences = engine.runIdentityResolution(
-				dataMB, dataSpotify, null, matchingRule,
+				d1, d2, null, matchingRule,
 				blocker);
 
 		// Create a top-1 global matching
@@ -104,21 +132,13 @@ public class IR_using_linear_combination
 ////		 correspondences = maxWeight.getResult();
 
 //		 write the correspondences to the output file
-		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/wd_spotify_correspondences.csv"), correspondences);		
+		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/" + d1_d2_name + "_correspondences.csv"), correspondences);		
 		
-		logger.info("*\tEvaluating result\t*");
 		// evaluate your result
 		MatchingEvaluator<Album, Attribute> evaluator = new MatchingEvaluator<Album, Attribute>();
 		Performance perfTest = evaluator.evaluateMatching(correspondences,
 				gsTest);
 
-		// print the evaluation result
-//		logger.info("Academy Awards <-> Actors");
-		logger.info(String.format(
-				"Precision: %.4f",perfTest.getPrecision()));
-		logger.info(String.format(
-				"Recall: %.4f",	perfTest.getRecall()));
-		logger.info(String.format(
-				"F1: %.4f",perfTest.getF1()));
-    }
+		return perfTest;
+	}
 }
