@@ -17,8 +17,14 @@ import de.uni_mannheim.informatik.dws.winter.model.HashedDataSet;
 import de.uni_mannheim.informatik.dws.winter.model.MatchingGoldStandard;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter;
+import de.uni_mannheim.informatik.dws.winter.model.Performance;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
+import de.uni_mannheim.informatik.dws.winter.matching.MatchingEvaluator;
+import de.uni_mannheim.informatik.dws.winter.matching.algorithms.MaximumBipartiteMatchingAlgorithm;
+import de.uni_mannheim.informatik.dws.winter.matching.blockers.Blocker;
+import de.uni_mannheim.informatik.dws.winter.matching.blockers.NoBlocker;
+import de.uni_mannheim.informatik.dws.winter.matching.blockers.SortedNeighbourhoodBlocker;
 
 public class IR_using_linear_combination 
 {
