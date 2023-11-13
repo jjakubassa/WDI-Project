@@ -23,8 +23,6 @@ import de.uni_mannheim.informatik.dws.winter.processing.DataIterator;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 
 /**
- * {@link BlockingKeyGenerator} for {@link Movie}s, which generates a blocking
- * key based on the decade. E.g. 1999--&gt;199, 2014 --&gt; 201
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 

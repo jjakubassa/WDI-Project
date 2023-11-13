@@ -1,32 +1,12 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.solutions;
 
-import java.io.File;
-
-import org.slf4j.Logger;
-
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.MovieBlockingKeyByTitleGenerator;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieDateComparator2Years;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.MovieTitleComparatorJaccard;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Movie;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.MovieXMLReader;
-import de.uni_mannheim.informatik.dws.winter.matching.MatchingEngine;
-import de.uni_mannheim.informatik.dws.winter.matching.MatchingEvaluator;
-import de.uni_mannheim.informatik.dws.winter.matching.algorithms.MaximumBipartiteMatchingAlgorithm;
-import de.uni_mannheim.informatik.dws.winter.matching.blockers.StandardRecordBlocker;
-import de.uni_mannheim.informatik.dws.winter.matching.rules.LinearCombinationMatchingRule;
-import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
-import de.uni_mannheim.informatik.dws.winter.model.HashedDataSet;
-import de.uni_mannheim.informatik.dws.winter.model.MatchingGoldStandard;
-import de.uni_mannheim.informatik.dws.winter.model.Performance;
-import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
-import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter;
-import de.uni_mannheim.informatik.dws.winter.processing.Processable;
-import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
+/*
 
 public class IR_using_linear_combination 
 {
 	
-	/*
+	*/
+/*
 	 * Logging Options:
 	 * 		default: 	level INFO	- console
 	 * 		trace:		level TRACE     - console
@@ -37,7 +17,8 @@ public class IR_using_linear_combination
 	 * activate the "traceFile" logger as follows:
 	 *     private static final Logger logger = WinterLogManager.activateLogger("traceFile");
 	 *
-	 */
+	 *//*
+
 
 	private static final Logger logger = WinterLogManager.activateLogger("trace");
 	
@@ -121,3 +102,6 @@ public class IR_using_linear_combination
 		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/academy_awards_2_actors_correspondences.csv"), correspondences);
     }
 }
+*/
+
+
