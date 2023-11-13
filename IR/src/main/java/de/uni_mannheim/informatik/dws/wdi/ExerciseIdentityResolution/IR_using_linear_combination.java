@@ -64,7 +64,7 @@ public class IR_using_linear_combination
 		
 		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
 		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
-		Performance perfTest_WDC_SPY = identityResolution(dataMB, dataSpotify, "WDC_SPY", "gs_wdc_spy");
+		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
 
 		// print the evaluation result
 		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
