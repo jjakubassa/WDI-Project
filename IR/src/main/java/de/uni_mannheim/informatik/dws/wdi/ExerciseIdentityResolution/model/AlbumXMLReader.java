@@ -11,17 +11,12 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model;
 
-import org.slf4j.Logger;
 
 import java.util.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.util.List;
-import java.util.Locale;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.w3c.dom.NamedNodeMap;
@@ -29,7 +24,6 @@ import org.w3c.dom.Node;
 
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLMatchableReader;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.XMLMatchableReaderID;
 /**
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
@@ -61,17 +55,34 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		if (artists != null){
 			String replace = artists.replace("[","");
 			String replace1 = replace.replace("]","");
-			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			// List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split("'")));
 			List<Artist> artistList = strList.stream().map(a -> new Artist(stripQuotes(a))).collect(Collectors.toList());
 			Album.setArtists(artistList);
+
+			List<Artist> ArtistList = new ArrayList<Artist>();
+			for (String s : artists.split("\n")){
+				String s_normalized = stripQuotes(s.replace("\n","").trim());
+				Artist a = new Artist(s_normalized);
+				a.setName(s_normalized);
+				// System.out.println(a.getName());
+				ArtistList.add(a);
+			}
+			
+			Album.setArtists(ArtistList);
 		}
 
 		String tracks = getValueFromChildElement(node, "Tracks");
 		if (tracks != null){
-			String replace = tracks.replace("[","");
-			String replace1 = replace.replace("]","");
-			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			List<Track> trackList = strList.stream().map(t -> new Track(stripQuotes(t))).collect(Collectors.toList());
+
+			List<Track> trackList = new ArrayList<Track>();
+			for (String s : tracks.split("\n")){
+				String s_normalized = stripQuotes(s.replace("\n","").trim());
+				Track t = new Track(s_normalized);
+				t.setName(s_normalized);
+				// System.out.println(t.getName());
+				trackList.add(t);
+			}
 			Album.setTracks(trackList);
 		}
 
@@ -97,10 +108,9 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
         // Deal with missing values
 		String TotalTracksStr  = getValueFromChildElement(node, "TotalTracks");
         if (TotalTracksStr != null) {
-        	int TotalTracks = Integer.parseInt(getValueFromChildElement(node, "TotalTracks"));
+        	Double TotalTracks = (double) Integer.parseInt(getValueFromChildElement(node, "TotalTracks"));
         	Album.setTotalTracks(TotalTracks);
-        } 
-
+        }
         
         String DurationStr  = getValueFromChildElement(node, "Duration");
         if (DurationStr != null) {
@@ -148,7 +158,9 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 			return null;
 		}
 		else {
-			return title.replaceFirst("\"$", "").replaceFirst("^\"", "");
+			title = title.replaceFirst("[\"']+$", "").replaceFirst("^[\"']+", ""); 
+			// System.out.println(title);
+			return title;
 		}
 	}
 
