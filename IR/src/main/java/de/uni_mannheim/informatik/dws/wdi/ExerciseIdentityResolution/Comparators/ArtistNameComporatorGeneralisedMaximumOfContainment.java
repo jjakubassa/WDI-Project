@@ -54,21 +54,29 @@ public class ArtistNameComporatorGeneralisedMaximumOfContainment implements Comp
 		for (Artist a : l1_init) {
 //			System.out.println(a.getName());
 //			System.out.println(record1.getIdentifier());
-            l1.add(a.getName());
+			String name = a.getName();
+			if (name == null) {
+				name = "";
+			}
+            l1.add(name.toLowerCase());
         }
 		
 		List<Artist> l2_init = record2.getArtists();
 		List l2 = new ArrayList();
 		
 		for (Artist a : l2_init) {
-            l2.add(a.getName());
+			String name = a.getName();
+			if (name == null) {
+				name = "";
+			}
+            l2.add(name.toLowerCase());
         }
 		
 		// calculate similarity
 		double similarity = generalizedMaxOfContainmentSimilarity.calculate(l1, l2);
 
 		// postprocessing
-		int postSimilarity = 1;
+		double postSimilarity = 1;
 		if (similarity <= 0.3) {
 			postSimilarity = 0;
 		}
@@ -76,11 +84,11 @@ public class ArtistNameComporatorGeneralisedMaximumOfContainment implements Comp
 		postSimilarity *= similarity;
 		
 		String l1_str = l1_init.stream()
-			      .map(n -> String.valueOf(n))
+			      .map(n -> String.valueOf(n.getName()))
 			      .collect(Collectors.joining("-", "{", "}"));
 		
 		String l2_str = l2_init.stream()
-			      .map(n -> String.valueOf(n))
+			      .map(n -> String.valueOf(n.getName()))
 			      .collect(Collectors.joining("-", "{", "}"));
 		
 		if(this.comparisonLog != null){

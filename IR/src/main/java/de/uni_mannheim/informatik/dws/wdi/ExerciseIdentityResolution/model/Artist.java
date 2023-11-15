@@ -37,9 +37,13 @@ public class Artist extends AbstractRecord<Attribute> implements Serializable {
 	public Artist(String name) {
 		super();
 	}
+	
+//	public Artist(String identifier, String provenance) {
+//		super(identifier, provenance);
+//	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {

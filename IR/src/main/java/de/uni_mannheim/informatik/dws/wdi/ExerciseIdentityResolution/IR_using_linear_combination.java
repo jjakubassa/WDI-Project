@@ -96,7 +96,7 @@ public class IR_using_linear_combination
 		// create a matching rule
 		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
 				0.7);
-		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 50000, gsTest);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 100000, gsTest);
 		
 		// add comparators
 //		matchingRuleMBSpy.addComparator(new MovieDateComparator2Years(), 0.5);

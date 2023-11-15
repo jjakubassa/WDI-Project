@@ -61,7 +61,7 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 			Album.setArtists(artistList);
 
 			List<Artist> ArtistList = new ArrayList<Artist>();
-			for (String s : artists.split("\n")){
+			for (String s : artists.split("[\n,&]| and ")){
 				String s_normalized = stripQuotes(s.replace("\n","").trim());
 				Artist a = new Artist(s_normalized);
 				a.setName(s_normalized);
