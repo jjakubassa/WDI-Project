@@ -42,18 +42,18 @@ public class TotalTracksComparatorDeviationSimilarity implements Comparator<Albu
 			Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondences) {
 		
-		double s1;
+		Double s1;
 		Integer totalTracks1 = record1.getTotalTracks();
 		if (totalTracks1 != null) {
-			s1 = totalTracks1;
+			s1 = (double) totalTracks1;
 		} else {
 	    	return 0;
 		}
 		
-		double s2;
+		Double s2;
 		Integer totalTracks2 = record2.getTotalTracks();
 		if (totalTracks2 != null) {
-			s2 = totalTracks2;
+			s2 = (double) totalTracks2;
 		} else {
 	    	return 0;
 		}

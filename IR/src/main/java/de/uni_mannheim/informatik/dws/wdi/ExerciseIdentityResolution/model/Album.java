@@ -40,7 +40,7 @@ public class Album implements Matchable {
 	private List<Artist> artists;
 	private List<Track> tracks;
 	private List<String> labels;
-	private Double totalTracks;
+	private Integer totalTracks;
 	private List<String> genre;
 	private String country;
 	private String language;
@@ -104,11 +104,11 @@ public class Album implements Matchable {
 		this.labels = labels;
 	}
 
-	public Double getTotalTracks() {
+	public Integer getTotalTracks() {
 		return totalTracks;
 	}
 
-	public void setTotalTracks(Double totalTracks) {
+	public void setTotalTracks(Integer totalTracks) {
 		this.totalTracks = totalTracks;
 	}
 
