@@ -6,7 +6,7 @@ import org.w3c.dom.NodeList;
 
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLMatchableReader;
 
-public class XMLMatchableReaderID extends XMLMatchableReader {
+public class XMLMatchableReaderID extends XMLMatchableReader<Matchable, Matchable> {
 
 	protected String getValueFromElement(Node node, String childName) {
 
