@@ -40,6 +40,9 @@ public class AlbumDateComparator10Years implements Comparator<Album, Attribute> 
 			Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondences) {
     	
+		if (record1.getReleaseDate() == null | record1.getReleaseDate() == null) {
+			return 0.0;
+		}
     	double similarity = sim.calculate(record1.getReleaseDate().atStartOfDay(), record2.getReleaseDate().atStartOfDay());
 
 		if(this.comparisonLog != null){

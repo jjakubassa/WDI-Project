@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xsi:noNamespaceSchemaLocation="file:///C:/Users/patri/Patrick/Uni/Master/3.%20Semester/WDI/Project/target%20schema_0611.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Albums>
+        <Album id="spy_3255">
+            <Title>Made In The Dark</Title>
+            <ReleaseDate>2008-01-21</ReleaseDate>
+            <Duration>2419</Duration>
+            <Artists>
+                <ArtistName>Hot Chip</ArtistName>
+            </Artists>
+            <Tracks>
+                <TrackTitle>Out At The Pictures</TrackTitle>
+                <TrackTitle>Hold On</TrackTitle>
+                <TrackTitle>One Pure Thought</TrackTitle>
+                <TrackTitle>Made In The Dark</TrackTitle>
+                <TrackTitle>Wrestlers</TrackTitle>
+                <TrackTitle>Shake A Fist</TrackTitle>
+                <TrackTitle>Nanachi in the Dark</TrackTitle>
+                <TrackTitle>Ready For The Floor</TrackTitle>
+                <TrackTitle>We're Looking For A Lot Of Love</TrackTitle>
+                <TrackTitle>Dark Intentions</TrackTitle>
+            </Tracks>
+            <TotalTracks>13</TotalTracks>
+            <Genres>
+                <GenreName>"ohio hip hop"</GenreName>
+            </Genres>
+        </Album>
+        <Album id="spy_1">
+			<Title>Runtuh</Title>
+			<ReleaseDate>2021-10-01</ReleaseDate>
+			<Duration>2608</Duration>
+			<Artists>
+				<ArtistName>Fiersa Besari</ArtistName>
+				<ArtistName>Feby Putri</ArtistName>
+			</Artists>
+			<Tracks>
+				<TrackTitle>Runtuh</TrackTitle>
+				<TrackTitle>RUNTUH</TrackTitle>
+				<TrackTitle>Runtuh - Remix</TrackTitle>
+				<TrackTitle>Runtuh Serentak</TrackTitle>
+				<TrackTitle>Runtuh Tepat Waktu</TrackTitle>
+				<TrackTitle>Samuderasa</TrackTitle>
+				<TrackTitle>RUNTUH / BIWIR BEUREUM</TrackTitle>
+				<TrackTitle>Insan</TrackTitle>
+				<TrackTitle>Runtuh</TrackTitle>
+				<TrackTitle>Runtuh - Acoustic Version</TrackTitle>
+			</Tracks>
+			<TotalTracks>1</TotalTracks>
+			<Genres>
+				<GenreName>"indonesian pop"</GenreName>
+			</Genres>
+		</Album>
+    </Albums>
+</root>

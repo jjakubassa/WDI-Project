@@ -5,8 +5,13 @@ import java.io.File;
 import org.slf4j.Logger;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.AlbumBlockingKeyByTitleGenerator;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshtein;
+// import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshtein;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshteinLowerCase;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorDeviationSimilarity;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparator10Years;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDurationComparatorAbsoluteDifferenceSimilarity;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorJaccard;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.AlbumXMLReader;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEngine;
@@ -49,26 +54,27 @@ public class IR_using_linear_combination
 		logger.info("*\tLoading datasets\t*");
 		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
 		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", dataWDC);
+		// new AlbumXMLReader().loadFromXML(new File("data/input/WDC_min.xml"), "/root/Albums/Album", dataWDC);
 		
 		HashedDataSet<Album, Attribute> dataSpotify = new HashedDataSet<>();
-//		new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
 		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/root/Albums/Album", dataSpotify);
+		// new AlbumXMLReader().loadFromXML(new File("data/input/SPY_min.xml"), "/root/Albums/Album", dataSpotify);
 		
-		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
-//		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
-		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
+//		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
+////		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
+//		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
 		
 		
-		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
-		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
+//		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
+//		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
 		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
 
 		// print the evaluation result
-		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
-		printEvalPerf(perfTest_MB_SPY);
-		
-		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
-		printEvalPerf(perfTest_WDC_MB);
+//		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+//		printEvalPerf(perfTest_MB_SPY);
+//		
+//		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+//		printEvalPerf(perfTest_WDC_MB);
 		
 		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
 		printEvalPerf(perfTest_WDC_SPY);
@@ -95,13 +101,17 @@ public class IR_using_linear_combination
 		// create a matching rule
 		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
 				0.7);
-		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 1000, gsTest);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 10000, gsTest);
 		
 		// add comparators
 //		matchingRuleMBSpy.addComparator(new MovieDateComparator2Years(), 0.5);
-		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 1);
+		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 1.0);
+		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.5);
+		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.5);
+		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.5);
+//		matchingRule.addComparator(new AlbumDateComparator10Years(), 1);
+//		matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.5);
 		
-
 		// create a blocker (blocking strategy)
 		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
 //		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
@@ -119,7 +129,7 @@ public class IR_using_linear_combination
 		Processable<Correspondence<Album, Attribute>> correspondences = engine.runIdentityResolution(
 				d1, d2, null, matchingRule,
 				blocker);
-
+		
 		// Create a top-1 global matching
 		  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.7);
 

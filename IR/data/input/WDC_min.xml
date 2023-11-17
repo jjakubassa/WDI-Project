@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xsi:noNamespaceSchemaLocation="file:///C:/Users/saman/Desktop/WDI%20Proj/target%20schema%20(3).xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Albums>
+		<Album id="WDC_1">
+			<Title>Original Christmas Music (Original Recording &amp; Special Selection) (Original Recording &amp; Special Selection)</Title>
+			<Price>5.99</Price>
+			<Duration>2355</Duration>
+			<Artists>
+				<ArtistName>Eddie Dunstedter</ArtistName>
+			</Artists>
+			<Tracks>
+				<TrackTitle>'God Rest Ye Merry Gentlemen'</TrackTitle>
+				<TrackTitle>'Medley: Deck the Halls / Joy to the World'</TrackTitle>
+				<TrackTitle>'Adeste Fideles'</TrackTitle>
+				<TrackTitle>'Greensleeves'</TrackTitle>
+				<TrackTitle>'March of the Three Kings'</TrackTitle>
+				<TrackTitle>'Hark the Herald Angels Sing'</TrackTitle>
+				<TrackTitle>'Medley: We Three Kings of Orient Are / Bring Your Torches'</TrackTitle>
+				<TrackTitle>'Silent Night'</TrackTitle>
+				<TrackTitle>'Medley: The Conventry Carol / Von Himmel Hoch'</TrackTitle>
+				<TrackTitle>'The First Noel'</TrackTitle>
+				<TrackTitle>'O Tannenbaum'</TrackTitle>
+				<TrackTitle>'Cantique De Noel (O Holy Night)'</TrackTitle>
+				<TrackTitle>'Medley: It Came Upon the Midnight Clear / O Little Town of Bethlehem / Away in a Manger'</TrackTitle>
+			</Tracks>
+		</Album>
+	</Albums>
+</root>

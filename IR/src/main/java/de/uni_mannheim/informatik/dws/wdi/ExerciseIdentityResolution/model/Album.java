@@ -12,7 +12,6 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import de.uni_mannheim.informatik.dws.winter.model.AbstractRecord;
@@ -41,7 +40,7 @@ public class Album implements Matchable {
 	private List<Artist> artists;
 	private List<Track> tracks;
 	private List<String> labels;
-	private Integer totalTracks;
+	private Double totalTracks;
 	private List<String> genre;
 	private String country;
 	private String language;
@@ -105,11 +104,11 @@ public class Album implements Matchable {
 		this.labels = labels;
 	}
 
-	public Integer getTotalTracks() {
+	public Double getTotalTracks() {
 		return totalTracks;
 	}
 
-	public void setTotalTracks(Integer totalTracks) {
+	public void setTotalTracks(Double totalTracks) {
 		this.totalTracks = totalTracks;
 	}
 
