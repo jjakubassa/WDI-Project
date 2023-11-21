@@ -9,6 +9,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.Al
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshteinLowerCase;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.ArtistNameComporatorGeneralisedMaximumOfContainment;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.TotalTracksComparatorDeviationSimilarity;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.TrackNameComporatorGeneralisedMaximumOfContainment;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorDeviationSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparator10Years;
@@ -67,7 +68,7 @@ public class IR_using_linear_combination
 //		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		
 		
-		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
+		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "MB_SPY_GS");
 		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
 		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
 
@@ -102,26 +103,29 @@ public class IR_using_linear_combination
 		// create a matching rule
 		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
 				0.7);
-		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 10000, gsTest);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 10_000, gsTest);
 		
 		// add comparators
 		// album title comparators
-		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.8);
+		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.3);
 		matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.2);
 		
 		// artist name comparators
-		matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.4);
+		matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.1);
 		
 		// album total tracks comparators	
-		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.2);
-		matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.2);
-		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.2); // two times deviation similarity, which works better?
-
+		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.05);
+		matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.05);
+		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.05); // two times deviation similarity, which works better?
+		
+		// track names comparators
+		matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2);
+		
 		// album date comparators
-		matchingRule.addComparator(new AlbumDateComparator10Years(), 0.2);
+		matchingRule.addComparator(new AlbumDateComparator10Years(), 0.1);
 
 		// album duration comparators
-		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.2);
+		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15);
 
 		// create a blocker (blocking strategy)
 		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
@@ -157,6 +161,9 @@ public class IR_using_linear_combination
 		Performance perfTest = evaluator.evaluateMatching(correspondences,
 				gsTest);
 
+		String numberCorrespondence = String.format("%d", correspondences.size());
+		logger.info("Found correspondences: " + numberCorrespondence);
+		
 		return perfTest;
 	}
 }
