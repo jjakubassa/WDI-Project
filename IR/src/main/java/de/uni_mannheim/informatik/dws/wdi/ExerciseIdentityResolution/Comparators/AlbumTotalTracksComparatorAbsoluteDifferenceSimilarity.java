@@ -42,8 +42,26 @@ public class AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity implements C
 			Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondences) {
 		
-		Double n1 = (double) record1.getTracks().size();
-		Double n2 = (double) record2.getTracks().size();
+		
+		Double n1;
+		Integer totalTracks1 = record1.getTotalTracks();
+		if (totalTracks1 != null) {
+			n1 = (double) totalTracks1;
+		} else {
+	    	return 0;
+		}
+		
+		Double n2;
+		Integer totalTracks2 = record2.getTotalTracks();
+		if (totalTracks2 != null) {
+			n2 = (double) totalTracks2;
+		} else {
+	    	return 0;
+		}
+		
+		
+//		Double n1 = (double) record1.getTracks().size();
+//		Double n2 = (double) record2.getTracks().size();
 		
 //		Double n1 = record1.getTotalTracks();
 //		Double n2 = record2.getTotalTracks();
@@ -52,12 +70,12 @@ public class AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity implements C
 		double similarity = sim.calculate(n1, n2);
 
 		// postprocessing
-		int postSimilarity = 1;
-		if (similarity <= 0.3) {
-			postSimilarity = 0;
-		}
+//		int postSimilarity = 1;
+//		if (similarity <= 0.3) {
+//			postSimilarity = 0;
+//		}
 
-		postSimilarity *= similarity;
+//		postSimilarity *= similarity;
 		
 		if(this.comparisonLog != null){
 			this.comparisonLog.setComparatorName(getClass().getName());
@@ -80,9 +98,9 @@ public class AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity implements C
 			
     	
 			this.comparisonLog.setSimilarity(Double.toString(similarity));
-			this.comparisonLog.setPostprocessedSimilarity(Double.toString(postSimilarity));
+			this.comparisonLog.setPostprocessedSimilarity(Double.toString(similarity));
 		}
-		return postSimilarity;
+		return similarity;
 	}
 
 	@Override
