@@ -26,21 +26,22 @@ import java.util.stream.Collectors;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Artist;
 import de.uni_mannheim.informatik.dws.winter.similarity.string.LevenshteinSimilarity;
-import de.uni_mannheim.informatik.dws.winter.similarity.list.GeneralisedMaximumOfContainment;
+import de.uni_mannheim.informatik.dws.winter.similarity.list.GeneralisedJaccard;
+//import de.uni_mannheim.informatik.dws.winter.similarity.list.GeneralisedMaximumOfContainment;
 
 
 /**
  * {@link Comparator} for {@link Artist}s
  */
 
-public class ArtistNameComporatorGeneralisedMaximumOfContainment implements Comparator<Album, Attribute> {
+public class ArtistNameComporatorGeneralizedJaccard implements Comparator<Album, Attribute> {
 
 	private static final long serialVersionUID = 1L;
 	
 	private ComparatorLogger comparisonLog;
 	
 	LevenshteinSimilarity levenshteinSimilarity = new LevenshteinSimilarity();
-	GeneralisedMaximumOfContainment generalizedMaxOfContainmentSimilarity = new GeneralisedMaximumOfContainment(levenshteinSimilarity, 0.5);
+	private GeneralisedJaccard jaccardSimilarity = new GeneralisedJaccard(levenshteinSimilarity, 0.5);
 	
 	@Override
 	public double compare(
@@ -73,7 +74,8 @@ public class ArtistNameComporatorGeneralisedMaximumOfContainment implements Comp
         }
 		
 		// calculate similarity
-		double similarity = generalizedMaxOfContainmentSimilarity.calculate(l1, l2);
+		double similarity = jaccardSimilarity.calculate(l1, l2);
+		
 
 		// postprocessing
 //		double postSimilarity = 1;
@@ -112,5 +114,6 @@ public class ArtistNameComporatorGeneralisedMaximumOfContainment implements Comp
 	public void setComparisonLog(ComparatorLogger comparatorLog) {
 		this.comparisonLog = comparatorLog;
 	}
+	
 
 }
