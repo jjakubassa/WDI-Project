@@ -21,6 +21,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEngine;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.StandardRecordBlocker;
 import de.uni_mannheim.informatik.dws.winter.matching.rules.LinearCombinationMatchingRule;
+import de.uni_mannheim.informatik.dws.winter.matching.rules.WekaMatchingRule;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.HashedDataSet;
 import de.uni_mannheim.informatik.dws.winter.model.MatchingGoldStandard;
@@ -29,8 +30,11 @@ import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter
 import de.uni_mannheim.informatik.dws.winter.model.Performance;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
+import weka.core.pmml.jaxbbindings.False;
+import weka.core.pmml.jaxbbindings.True;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEvaluator;
 import de.uni_mannheim.informatik.dws.winter.matching.algorithms.MaximumBipartiteMatchingAlgorithm;
+import de.uni_mannheim.informatik.dws.winter.matching.algorithms.RuleLearner;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.Blocker;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.NoBlocker;
 import de.uni_mannheim.informatik.dws.winter.matching.blockers.SortedNeighbourhoodBlocker;
@@ -68,10 +72,22 @@ public class IR_using_linear_combination
 		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
 		// new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		
-		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
-		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
-		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
+		Performance perfTest_MB_SPY;
+		Performance perfTest_WDC_MB;
+		Performance perfTest_WDC_SPY;
+		Boolean learn_weights = true;
 
+		if (learn_weights == true) {
+			perfTest_MB_SPY = identityResolutionLearnedWeights(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
+			perfTest_WDC_MB = identityResolutionLearnedWeights(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
+			perfTest_WDC_SPY = identityResolutionLearnedWeights(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
+		}
+		else {
+			perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
+			perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
+			perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
+		}
+		
 		// print the evaluation result
 		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
 		printEvalPerf(perfTest_MB_SPY);
@@ -79,7 +95,6 @@ public class IR_using_linear_combination
 		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
 		printEvalPerf(perfTest_WDC_MB);
 
-		
 		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
 		printEvalPerf(perfTest_WDC_SPY);
     }
@@ -118,7 +133,7 @@ public class IR_using_linear_combination
 		// album total tracks comparators	
 		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.1); // WDC-MB: 0.1
 		matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.1); // WDC-MB: 0.1
-//		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.2); // this does not work
+		// matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.2); // this does not work
 		
 		// track names comparators
 		// matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2);
@@ -128,11 +143,11 @@ public class IR_using_linear_combination
 
 		// album duration comparators
 		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15);
-
+		
 		// create a blocker (blocking strategy)
 		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
-//		NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
-//		SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
+		// NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
+		// SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
 		blocker.setMeasureBlockSizes(true);
 		
 		//Write debug results to file:
@@ -150,12 +165,12 @@ public class IR_using_linear_combination
 		// Create a top-1 global matching
 		  correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.7);
 
-////		 Alternative: Create a maximum-weight, bipartite matching
-////		 MaximumBipartiteMatchingAlgorithm<Movie,Attribute> maxWeight = new MaximumBipartiteMatchingAlgorithm<>(correspondences);
-////		 maxWeight.run();
-////		 correspondences = maxWeight.getResult();
+		//// Alternative: Create a maximum-weight, bipartite matching
+		//  MaximumBipartiteMatchingAlgorithm<Movie,Attribute> maxWeight = new MaximumBipartiteMatchingAlgorithm<>(correspondences);
+		//  maxWeight.run();
+		//  correspondences = maxWeight.getResult();
 
-//		 write the correspondences to the output file
+		//  write the correspondences to the output file
 		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/" + d1_d2_name + "_correspondences.csv"), correspondences);		
 		
 		// evaluate your result
@@ -168,4 +183,93 @@ public class IR_using_linear_combination
 		
 		return perfTest;
 	}
+
+	private static Performance identityResolutionLearnedWeights(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name) throws Exception {
+		// load the gold standard (test set)
+		logger.info("*\tLoading gold standard\t* " + d1_d2_name);
+		
+		MatchingGoldStandard gsTraining = new MatchingGoldStandard();
+		gsTraining.loadFromCSVFile(new File("data/goldstandard/" + gs_name  + "_train.csv"));
+
+		// create a matching rule
+		String options[] = new String[] { "-S" }; // save model? or what is this for?
+		String modelType = "SimpleLogistic"; // use a logistic regression
+		WekaMatchingRule<Album, Attribute> matchingRule = new WekaMatchingRule<>(0.7, modelType, options);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRuleLearnedWeights" + d1_d2_name + ".csv", 100_000, gsTraining);
+
+		// add comparators
+		// album title comparators
+		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase()); 
+		matchingRule.addComparator(new AlbumTitleComparatorJaccard()); 
+		
+		// artist name comparators
+		matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment()); 
+		matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard()); 
+		
+		// album total tracks comparators	
+		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity());
+		matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity()); 
+		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity()); // this does not work
+		
+		// track names comparators
+		matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment());
+		
+		// album date comparators
+		matchingRule.addComparator(new AlbumDateComparator10Years());
+
+		// album duration comparators
+		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity());
+
+		// train the matching rule's model
+		logger.info("*\tLearning matching rule\t*");
+		RuleLearner<Album, Attribute> learner = new RuleLearner<>();
+		learner.learnMatchingRule(d1, d2, null, matchingRule, gsTraining);
+		logger.info(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
+
+		// create a blocker (blocking strategy)
+		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
+		// NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
+		// SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
+		blocker.setMeasureBlockSizes(true);
+		
+		//Write debug results to file:
+		blocker.collectBlockSizeData("data/output/debugResultsBlocking" + d1_d2_name +  ".csv", 100);
+		
+		// Initialize Matching Engine
+		MatchingEngine<Album, Attribute> engine = new MatchingEngine<>();
+
+		// Execute the matching
+		logger.info("*\tRunning identity resolution\t* " + d1_d2_name);
+		Processable<Correspondence<Album, Attribute>> correspondences = engine.runIdentityResolution(
+				d1, d2, null, matchingRule,
+				blocker);
+		
+		// Create a top-1 global matching
+		correspondences = engine.getTopKInstanceCorrespondences(correspondences, 1, 0.7);
+
+		//// Alternative: Create a maximum-weight, bipartite matching
+		//  MaximumBipartiteMatchingAlgorithm<Movie,Attribute> maxWeight = new MaximumBipartiteMatchingAlgorithm<>(correspondences);
+		//  maxWeight.run();
+		//  correspondences = maxWeight.getResult();
+
+		//  write the correspondences to the output file
+		new CSVCorrespondenceFormatter().writeCSV(new File("data/output/" + d1_d2_name + "_correspondences.csv"), correspondences);		
+		
+		// load the gold standard (test set)
+		logger.info("*\tLoading gold standard\t*");
+		MatchingGoldStandard gsTest = new MatchingGoldStandard();
+		gsTest.loadFromCSVFile(new File(
+				"data/goldstandard/" + gs_name  + "_test.csv"));
+
+		// evaluate your result
+		MatchingEvaluator<Album, Attribute> evaluator = new MatchingEvaluator<Album, Attribute>();
+		Performance perfTest = evaluator.evaluateMatching(correspondences,
+				gsTest);
+
+		String numberCorrespondence = String.format("%d", correspondences.size());
+		logger.info("Found correspondences: " + numberCorrespondence);
+		
+		return perfTest;	
+	}
+
 }
