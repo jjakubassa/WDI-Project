@@ -64,24 +64,24 @@ public class IR_using_linear_combination
 		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/root/Albums/Album", dataSpotify);
 		// new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
 		
-		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
+		// HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
+		// new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
 //		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		
 		
 //		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "MB_SPY_GS");
-		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
-//		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
+		// Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
+		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
 
 		// print the evaluation result
 //		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
 //		printEvalPerf(perfTest_MB_SPY);
 		
-		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
-		printEvalPerf(perfTest_WDC_MB);
+		// logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+		// printEvalPerf(perfTest_WDC_MB);
 		
-//		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
-//		printEvalPerf(perfTest_WDC_SPY);
+		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+		printEvalPerf(perfTest_WDC_SPY);
     }
 
 	private static void printEvalPerf(Performance perfTest) {
@@ -104,7 +104,7 @@ public class IR_using_linear_combination
 		// create a matching rule
 		LinearCombinationMatchingRule<Album, Attribute> matchingRule = new LinearCombinationMatchingRule<>(
 				0.7);
-		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 10_000, gsTest);
+		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 100_000, gsTest);
 		
 		// add comparators
 		// album title comparators
@@ -121,13 +121,13 @@ public class IR_using_linear_combination
 //		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.2); // this does not work
 		
 		// track names comparators
-//		matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2);
+		// matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2);
 		
 		// album date comparators
-//		matchingRule.addComparator(new AlbumDateComparator10Years(), 0.1);
+		matchingRule.addComparator(new AlbumDateComparator10Years(), 0.1);
 
 		// album duration comparators
-//		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15);
+		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15);
 
 		// create a blocker (blocking strategy)
 		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
