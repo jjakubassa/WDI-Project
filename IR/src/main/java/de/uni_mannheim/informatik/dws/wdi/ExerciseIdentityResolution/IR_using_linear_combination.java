@@ -56,34 +56,29 @@ public class IR_using_linear_combination
     {
 		// loading data
 		logger.info("*\tLoading datasets\t*");
-//		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
-//		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", dataWDC);
+		HashedDataSet<Album, Attribute> dataWDC = new HashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", dataWDC);
 		// new AlbumXMLReader().loadFromXML(new File("data/input/WDC_min.xml"), "/root/Albums/Album", dataWDC);
 		
 		HashedDataSet<Album, Attribute> dataSpotify = new HashedDataSet<>();
 		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/root/Albums/Album", dataSpotify);
 		// new AlbumXMLReader().loadFromXML(new File("data/input/spotify_min.xml"), "/root/Albums/Album", dataSpotify);
 		
-		// HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
-		// new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
-//		new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
-		
+		HashedDataSet<Album, Attribute> dataMB = new HashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
+		// new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		
 		Performance perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
-<<<<<<< Updated upstream
 		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
 		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
-=======
-//		Performance perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
-//		Performance perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
->>>>>>> Stashed changes
 
 		// print the evaluation result
-//		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
-//		printEvalPerf(perfTest_MB_SPY);
+		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+		printEvalPerf(perfTest_MB_SPY);
 		
-//		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
-//		printEvalPerf(perfTest_WDC_MB);
+		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+		printEvalPerf(perfTest_WDC_MB);
+
 		
 		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
 		printEvalPerf(perfTest_WDC_SPY);
