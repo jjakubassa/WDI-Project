@@ -68,7 +68,7 @@ public class AlbumTitleComparatorLowerCaseJaccard implements Comparator<Album, A
 		double similarity = sim.calculate(s1, s2);
 		
 		// postprocessing
-		int postSimilarity = 0;
+		double postSimilarity = 0;
 		if (similarity <= 0.3) {
 			postSimilarity = 0;
 		}
