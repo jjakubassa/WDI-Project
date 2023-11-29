@@ -70,7 +70,7 @@ public class AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity implements C
 		double similarity = sim.calculate(n1, n2);
 
 		// postprocessing
-//		int postSimilarity = 1;
+//		double postSimilarity = 1;
 //		if (similarity <= 0.3) {
 //			postSimilarity = 0;
 //		}
