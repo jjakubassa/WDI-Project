@@ -1,6 +1,8 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 
@@ -25,6 +27,7 @@ import de.uni_mannheim.informatik.dws.winter.matching.rules.WekaMatchingRule;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.HashedDataSet;
 import de.uni_mannheim.informatik.dws.winter.model.MatchingGoldStandard;
+import de.uni_mannheim.informatik.dws.winter.model.Pair;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter;
 import de.uni_mannheim.informatik.dws.winter.model.Performance;
@@ -72,31 +75,137 @@ public class IR_using_linear_combination
 		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", dataMB);
 		// new AlbumXMLReader().loadFromXML(new File("data/input/MB_min.xml"), "/root/Albums/Album", dataMB);
 		
+		Pair<Performance, String> result;
 		Performance perfTest_MB_SPY;
 		Performance perfTest_WDC_MB;
 		Performance perfTest_WDC_SPY;
+		String number_correspondences_MB_SPY;
+		String number_correspondences_WDC_MB;
+		String number_correspondences_WDC_SPY;
 		Boolean learn_weights = true;
+		long startTime;
+		long endTime;
+		long elapsedTime_MB_SPY;
+		long elapsedTime_WDC_MB;
+		long elapsedTime_WDC_SPY;
 
-		if (learn_weights == true) {
-			perfTest_MB_SPY = identityResolutionLearnedWeights(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
-			perfTest_WDC_MB = identityResolutionLearnedWeights(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
-			perfTest_WDC_SPY = identityResolutionLearnedWeights(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
-		}
-		else {
-			perfTest_MB_SPY = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy");
-			perfTest_WDC_MB = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb");
-			perfTest_WDC_SPY = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy");
-		}
-		
-		// print the evaluation result
-		logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
-		printEvalPerf(perfTest_MB_SPY);
-		
-		logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
-		printEvalPerf(perfTest_WDC_MB);
+		// Define a matching rule
+		Map<String, Boolean> comparatorMap1 = new HashMap<>();
+        comparatorMap1.put("AlbumTitleComparatorLevenshteinLowerCase", true);
+		comparatorMap1.put("AlbumTitleComparatorJaccard", true);
+		comparatorMap1.put("ArtistNameComporatorGeneralisedMaximumOfContainment", true);
+		comparatorMap1.put("ArtistNameComporatorGeneralizedJaccard", true);
+		comparatorMap1.put("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity", true);
+		comparatorMap1.put("TotalTracksComparatorDeviationSimilarity", true);
+		comparatorMap1.put("AlbumTotalTracksComparatorDeviationSimilarity", true);
+		comparatorMap1.put("TrackNameComporatorGeneralisedMaximumOfContainment", true);
+		comparatorMap1.put("AlbumDateComparator10Years", true);
+		comparatorMap1.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", true);
 
-		logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
-		printEvalPerf(perfTest_WDC_SPY);
+		Map<String, Boolean> comparatorMap2 = new HashMap<>();
+        comparatorMap2.put("AlbumTitleComparatorLevenshteinLowerCase", true);
+		comparatorMap2.put("AlbumTitleComparatorJaccard", true);
+		comparatorMap2.put("ArtistNameComporatorGeneralisedMaximumOfContainment", false);
+		comparatorMap2.put("ArtistNameComporatorGeneralizedJaccard", false);
+		comparatorMap2.put("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity", false);
+		comparatorMap2.put("TotalTracksComparatorDeviationSimilarity", false);
+		comparatorMap2.put("AlbumTotalTracksComparatorDeviationSimilarity", false);
+		comparatorMap2.put("TrackNameComporatorGeneralisedMaximumOfContainment", false);
+		comparatorMap2.put("AlbumDateComparator10Years", false);
+		comparatorMap2.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", false);
+		
+		// Create a Map to store matching rules
+		Map<String, Map<String, Boolean>> matchingRules = new HashMap<>();
+		matchingRules.put("mr1", comparatorMap1);
+		matchingRules.put("mr2", comparatorMap2);
+
+		// create a map to store blockers
+		Map<String, Blocker<Album, Attribute, Album, Attribute>> blockers = new HashMap<>();
+		blockers.put("b1", new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator()));
+
+		// Loop over matching rules
+		for (Map.Entry<String, Map<String, Boolean>> entry : matchingRules.entrySet()) {
+			String name = entry.getKey();
+			Map<String, Boolean> comparatorMap = entry.getValue();
+
+			logger.info("Matching rule: " + name);
+			if (learn_weights == true) {
+				// MB_SPY
+				startTime = System.currentTimeMillis();
+				result = identityResolutionLearnedWeights(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap);
+				perfTest_MB_SPY = result.getFirst();
+				number_correspondences_MB_SPY = result.getSecond();
+				endTime = System.currentTimeMillis();
+				elapsedTime_MB_SPY = endTime - startTime;
+				logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+				printEvalPerf(perfTest_MB_SPY);
+				logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
+				
+				// WDC_MB
+				startTime = System.currentTimeMillis();
+				result = identityResolutionLearnedWeights(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap);
+				perfTest_WDC_MB = result.getFirst();
+				number_correspondences_WDC_MB = result.getSecond();
+				endTime = System.currentTimeMillis();
+				elapsedTime_WDC_MB = endTime - startTime; 
+				logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+				printEvalPerf(perfTest_WDC_MB);
+				logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
+				
+				// WDC_SPY
+				startTime = System.currentTimeMillis();
+				result = identityResolutionLearnedWeights(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap);
+				perfTest_WDC_SPY = result.getFirst();
+				number_correspondences_WDC_SPY = result.getSecond();
+				endTime = System.currentTimeMillis();
+				elapsedTime_WDC_SPY = endTime - startTime;
+				logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+				printEvalPerf(perfTest_WDC_SPY);
+				logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);		
+			}
+			else {
+				// MB_SPY
+				startTime = System.currentTimeMillis();
+				result = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap);
+				perfTest_MB_SPY = result.getFirst();
+				number_correspondences_MB_SPY = result.getSecond();
+				endTime = System.currentTimeMillis();
+				elapsedTime_MB_SPY = endTime - startTime;
+				logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+				printEvalPerf(perfTest_MB_SPY);
+				logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
+				
+				// WDC_MB
+				startTime = System.currentTimeMillis();
+				result = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap);
+				perfTest_WDC_MB = result.getFirst();
+				number_correspondences_WDC_MB = result.getSecond();
+				endTime = System.currentTimeMillis();
+				elapsedTime_WDC_MB = endTime - startTime; 
+				logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+				printEvalPerf(perfTest_WDC_MB);
+				logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
+				
+				// WDC_SPY
+				startTime = System.currentTimeMillis();
+				result = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap);
+				perfTest_WDC_SPY = result.getFirst();
+				number_correspondences_WDC_SPY = result.getSecond();
+				endTime = System.currentTimeMillis();
+				elapsedTime_WDC_SPY = endTime - startTime;
+				logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+				printEvalPerf(perfTest_WDC_SPY);
+				logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);
+				
+			}
+			
+			// print summary in csv style
+			logger.info("Compact summary of evaluation results:");
+			logger.info("MatchingRule, Dataset, Precision, Recall, F1, # Corr, Time [ms]");
+			logger.info(name + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY);
+			logger.info(name + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB);
+			logger.info(name + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY);				
+		}
     }
 
 	private static void printEvalPerf(Performance perfTest) {
@@ -109,7 +218,7 @@ public class IR_using_linear_combination
 	}
     
     
-	private static Performance identityResolution(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name) throws Exception {
+	private static Pair<Performance, String> identityResolution(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name, Map<String, Boolean> comparatorMap) throws Exception {
 		// load the gold standard (test set)
 		logger.info("*\tLoading gold standard\t* " + d1_d2_name);
 		
@@ -122,6 +231,57 @@ public class IR_using_linear_combination
 		matchingRule.activateDebugReport("data/output/debugResultsMatchingRule" + d1_d2_name + ".csv", 100_000, gsTest);
 		
 		// add comparators
+		logger.info("*\tAdding comparators\t*");
+
+		// album title comparators
+		if (comparatorMap.get("AlbumTitleComparatorLevenshteinLowerCase")) {
+			matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.15); 
+			logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorLevenshteinLowerCase");
+		}
+		if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
+			matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.15); 
+			logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
+		}
+
+		// artist name comparators
+		if (comparatorMap.get("ArtistNameComporatorGeneralisedMaximumOfContainment")) {
+			matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.3); 
+			logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralisedMaximumOfContainment");
+		}
+		if (comparatorMap.get("ArtistNameComporatorGeneralizedJaccard")) {
+			matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard(), 0.2); 
+			logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralizedJaccard");
+		}
+
+		// album total tracks comparators	
+		if (comparatorMap.get("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity")) {
+			matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.1); 
+			logger.info("Attribute: AlbumTotalTracks, Comparator: AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity");
+		}
+
+		if (comparatorMap.get("TotalTracksComparatorDeviationSimilarity")) {
+			matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.1); 
+			logger.info("Attribute: AlbumTotalTracks, Comparator: TotalTracksComparatorDeviationSimilarity");
+		}
+		
+		// track names comparators
+		if (comparatorMap.get("TrackNameComporatorGeneralisedMaximumOfContainment")) {
+			matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2); 
+			logger.info("Attribute: TrackName, Comparator: TrackNameComporatorGeneralisedMaximumOfContainment");
+		}
+
+		// album date comparators
+		if (comparatorMap.get("AlbumDateComparator10Years")) {
+			matchingRule.addComparator(new AlbumDateComparator10Years(), 0.1); 
+			logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparator10Years");
+		}
+
+		// album duration comparators
+		if (comparatorMap.get("AlbumDurationComparatorAbsoluteDifferenceSimilarity")) {
+			matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15); 
+			logger.info("Attribute: AlbumDuration, Comparator: AlbumDurationComparatorAbsoluteDifferenceSimilarity");
+		}
+
 		// album title comparators
 		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.15); // WDC-MB: 0.15
 		matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.15); // WDC-MB: 0.15
@@ -177,14 +337,13 @@ public class IR_using_linear_combination
 		MatchingEvaluator<Album, Attribute> evaluator = new MatchingEvaluator<Album, Attribute>();
 		Performance perfTest = evaluator.evaluateMatching(correspondences,
 				gsTest);
-
+		
 		String numberCorrespondence = String.format("%d", correspondences.size());
 		logger.info("Found correspondences: " + numberCorrespondence);
 		
-		return perfTest;
+		return new Pair<Performance, String>(perfTest, numberCorrespondence);	
 	}
-
-	private static Performance identityResolutionLearnedWeights(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name) throws Exception {
+	private static Pair<Performance, String> identityResolutionLearnedWeights(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name, Map<String, Boolean> comparatorMap) throws Exception {
 		// load the gold standard (test set)
 		logger.info("*\tLoading gold standard\t* " + d1_d2_name);
 		
@@ -198,27 +357,56 @@ public class IR_using_linear_combination
 		matchingRule.activateDebugReport("data/output/debugResultsMatchingRuleLearnedWeights" + d1_d2_name + ".csv", 100_000, gsTraining);
 
 		// add comparators
+		logger.info("*\tAdding comparators\t*");
+
 		// album title comparators
-		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase()); 
-		matchingRule.addComparator(new AlbumTitleComparatorJaccard()); 
-		
+		if (comparatorMap.get("AlbumTitleComparatorLevenshteinLowerCase")) {
+			matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumTitle, Comparator: AlbumTitleComparatorLevenshteinLowerCase");
+		}
+		if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
+			matchingRule.addComparator(new AlbumTitleComparatorJaccard()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
+		}
+
 		// artist name comparators
-		matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment()); 
-		matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard()); 
-		
+		if (comparatorMap.get("ArtistNameComporatorGeneralisedMaximumOfContainment")) {
+			matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment()); 
+			logger.info("Model: " + modelType + " Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralisedMaximumOfContainment");
+		}
+		if (comparatorMap.get("ArtistNameComporatorGeneralizedJaccard")) {
+			matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard()); 
+			logger.info("Model: " + modelType + " Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralizedJaccard");
+		}
+
 		// album total tracks comparators	
-		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity());
-		matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity()); 
-		matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity()); // this does not work
+		if (comparatorMap.get("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity")) {
+			matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumTotalTracks, Comparator: AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity");
+		}
+
+		if (comparatorMap.get("TotalTracksComparatorDeviationSimilarity")) {
+			matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumTotalTracks, Comparator: TotalTracksComparatorDeviationSimilarity");
+		}
 		
 		// track names comparators
-		matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment());
-		
+		if (comparatorMap.get("TrackNameComporatorGeneralisedMaximumOfContainment")) {
+			matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment()); 
+			logger.info("Model: " + modelType + " Attribute: TrackName, Comparator: TrackNameComporatorGeneralisedMaximumOfContainment");
+		}
+
 		// album date comparators
-		matchingRule.addComparator(new AlbumDateComparator10Years());
+		if (comparatorMap.get("AlbumDateComparator10Years")) {
+			matchingRule.addComparator(new AlbumDateComparator10Years()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumDate, Comparator: AlbumDateComparator10Years");
+		}
 
 		// album duration comparators
-		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity());
+		if (comparatorMap.get("AlbumDurationComparatorAbsoluteDifferenceSimilarity")) {
+			matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumDuration, Comparator: AlbumDurationComparatorAbsoluteDifferenceSimilarity");
+		}
 
 		// train the matching rule's model
 		logger.info("*\tLearning matching rule\t*");
@@ -269,7 +457,6 @@ public class IR_using_linear_combination
 		String numberCorrespondence = String.format("%d", correspondences.size());
 		logger.info("Found correspondences: " + numberCorrespondence);
 		
-		return perfTest;	
+		return new Pair<Performance, String>(perfTest, numberCorrespondence);	
 	}
-
 }
