@@ -32,7 +32,7 @@ public class AlbumDurationComparatorAbsoluteDifferenceSimilarity implements Comp
 
 	private static final long serialVersionUID = 1L;
 //	TokenizingJaccardSimilarity sim = new TokenizingJaccardSimilarity();
-	AbsoluteDifferenceSimilarity sim = new AbsoluteDifferenceSimilarity(10);
+	AbsoluteDifferenceSimilarity sim = new AbsoluteDifferenceSimilarity(120);
 	
 	private ComparatorLogger comparisonLog;
 	
@@ -63,7 +63,7 @@ public class AlbumDurationComparatorAbsoluteDifferenceSimilarity implements Comp
 			this.comparisonLog.setComparatorName(getClass().getName());
 
 			this.comparisonLog.setRecord1Value(Double.toString(n1));
-			this.comparisonLog.setRecord1Value(Double.toString(n2));
+			this.comparisonLog.setRecord2Value(Double.toString(n2));
 
 			// only needed if null values can occur as in getTotalTracks()
 //			if (n1 != null) {

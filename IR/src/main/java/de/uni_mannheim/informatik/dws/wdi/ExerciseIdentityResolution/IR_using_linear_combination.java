@@ -9,13 +9,14 @@ import org.slf4j.Logger;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.AlbumBlockingKeyByTitleGenerator;
 // import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshtein;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshteinLowerCase;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorMaximumOfTokenContainnment;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.ArtistNameComporatorGeneralisedMaximumOfContainment;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.ArtistNameComporatorGeneralizedJaccard;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.TotalTracksComparatorDeviationSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.TrackNameComporatorGeneralisedMaximumOfContainment;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorDeviationSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparator10Years;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparatorWeightedDate;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDurationComparatorAbsoluteDifferenceSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorJaccard;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
@@ -83,7 +84,7 @@ public class IR_using_linear_combination
 		String number_correspondences_MB_SPY;
 		String number_correspondences_WDC_MB;
 		String number_correspondences_WDC_SPY;
-		Boolean learn_weights = true;
+		Boolean learn_weights = false;
 		long startTime;
 		long endTime;
 		long elapsedTime_MB_SPY;
@@ -94,6 +95,7 @@ public class IR_using_linear_combination
 		Map<String, Boolean> comparatorMap1 = new HashMap<>();
         comparatorMap1.put("AlbumTitleComparatorLevenshteinLowerCase", true);
 		comparatorMap1.put("AlbumTitleComparatorJaccard", true);
+		comparatorMap1.put("AlbumTitleComparatorMaximumOfTokenContainnment", true);
 		comparatorMap1.put("ArtistNameComporatorGeneralisedMaximumOfContainment", true);
 		comparatorMap1.put("ArtistNameComporatorGeneralizedJaccard", true);
 		comparatorMap1.put("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity", true);
@@ -101,11 +103,13 @@ public class IR_using_linear_combination
 		comparatorMap1.put("AlbumTotalTracksComparatorDeviationSimilarity", true);
 		comparatorMap1.put("TrackNameComporatorGeneralisedMaximumOfContainment", true);
 		comparatorMap1.put("AlbumDateComparator10Years", true);
+		comparatorMap1.put("AlbumDateComparatorWeightedDate", true);
 		comparatorMap1.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", true);
 
 		Map<String, Boolean> comparatorMap2 = new HashMap<>();
         comparatorMap2.put("AlbumTitleComparatorLevenshteinLowerCase", true);
 		comparatorMap2.put("AlbumTitleComparatorJaccard", true);
+		comparatorMap2.put("AlbumTitleComparatorMaximumOfTokenContainnment", true);
 		comparatorMap2.put("ArtistNameComporatorGeneralisedMaximumOfContainment", false);
 		comparatorMap2.put("ArtistNameComporatorGeneralizedJaccard", false);
 		comparatorMap2.put("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity", false);
@@ -113,6 +117,7 @@ public class IR_using_linear_combination
 		comparatorMap2.put("AlbumTotalTracksComparatorDeviationSimilarity", false);
 		comparatorMap2.put("TrackNameComporatorGeneralisedMaximumOfContainment", false);
 		comparatorMap2.put("AlbumDateComparator10Years", false);
+		comparatorMap2.put("AlbumDateComparatorWeightedDate", false);
 		comparatorMap2.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", false);
 		
 		// Create a Map to store matching rules
@@ -249,76 +254,142 @@ public class IR_using_linear_combination
 		// add comparators
 		logger.info("*\tAdding comparators\t*");
 
-		// album title comparators
-		if (comparatorMap.get("AlbumTitleComparatorLevenshteinLowerCase")) {
-			matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.15); 
-			logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorLevenshteinLowerCase");
-		}
-		if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
-			matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.15); 
-			logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
-		}
+		
+		if (d1_d2_name.equals("WDC_MB")) {
+			
+			// album title comparators	
+			if (comparatorMap.get("AlbumTitleComparatorLevenshteinLowerCase")) {
+				matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.1); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorLevenshteinLowerCase");
+			}
+			if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
+				matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.1); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
+			}
+			if (comparatorMap.get("AlbumTitleComparatorMaximumOfTokenContainnment")) {
+				matchingRule.addComparator(new AlbumTitleComparatorMaximumOfTokenContainnment(), 0.2); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorMaximumOfTokenContainnment");
+			}
 
-		// artist name comparators
-		if (comparatorMap.get("ArtistNameComporatorGeneralisedMaximumOfContainment")) {
-			matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.3); 
-			logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralisedMaximumOfContainment");
-		}
-		if (comparatorMap.get("ArtistNameComporatorGeneralizedJaccard")) {
-			matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard(), 0.2); 
-			logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralizedJaccard");
-		}
+			// artist name comparators
+			if (comparatorMap.get("ArtistNameComporatorGeneralisedMaximumOfContainment")) {
+				matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.2); 
+				logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralisedMaximumOfContainment");
+			}
+			if (comparatorMap.get("ArtistNameComporatorGeneralizedJaccard")) {
+				matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard(), 0.2); 
+				logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralizedJaccard");
+			}
 
-		// album total tracks comparators	
-		if (comparatorMap.get("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity")) {
-			matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.1); 
-			logger.info("Attribute: AlbumTotalTracks, Comparator: AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity");
-		}
+			// album total tracks comparators	
+			if (comparatorMap.get("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity")) {
+				matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.15); 
+				logger.info("Attribute: AlbumTotalTracks, Comparator: AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity");
+			}
 
-		if (comparatorMap.get("TotalTracksComparatorDeviationSimilarity")) {
-			matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.1); 
-			logger.info("Attribute: AlbumTotalTracks, Comparator: TotalTracksComparatorDeviationSimilarity");
+			if (comparatorMap.get("TotalTracksComparatorDeviationSimilarity")) {
+				matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.05); 
+				logger.info("Attribute: AlbumTotalTracks, Comparator: TotalTracksComparatorDeviationSimilarity");
+			}
+			
 		}
 		
-		// track names comparators
-		if (comparatorMap.get("TrackNameComporatorGeneralisedMaximumOfContainment")) {
-			matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2); 
-			logger.info("Attribute: TrackName, Comparator: TrackNameComporatorGeneralisedMaximumOfContainment");
+		else if (d1_d2_name.equals("MB_SPY")) {
+		
+			// album title comparators	
+			if (comparatorMap.get("AlbumTitleComparatorLevenshteinLowerCase")) {
+				matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.15); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorLevenshteinLowerCase");
+			}
+			if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
+				matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.05); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
+			}
+			if (comparatorMap.get("AlbumTitleComparatorMaximumOfTokenContainnment")) {
+				matchingRule.addComparator(new AlbumTitleComparatorMaximumOfTokenContainnment(), 0.1); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorMaximumOfTokenContainnment");
+			}
+
+			// artist name comparators
+			if (comparatorMap.get("ArtistNameComporatorGeneralisedMaximumOfContainment")) {
+				matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.2); 
+				logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralisedMaximumOfContainment");
+			}
+			if (comparatorMap.get("ArtistNameComporatorGeneralizedJaccard")) {
+				matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard(), 0.2); 
+				logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralizedJaccard");
+			}
+
+			// album total tracks comparators	
+			if (comparatorMap.get("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity")) {
+				matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.15); 
+				logger.info("Attribute: AlbumTotalTracks, Comparator: AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity");
+			}
+
+			if (comparatorMap.get("TotalTracksComparatorDeviationSimilarity")) {
+				matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.05); 
+				logger.info("Attribute: AlbumTotalTracks, Comparator: TotalTracksComparatorDeviationSimilarity");
+			}
+			
+			// album date comparators
+			if (comparatorMap.get("AlbumDateComparator10Years")) {
+				matchingRule.addComparator(new AlbumDateComparator10Years(), 0.03); 
+				logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparator10Years");
+			}
+			
+			if (comparatorMap.get("AlbumDateComparatorWeightedDate")) {
+				matchingRule.addComparator(new AlbumDateComparatorWeightedDate(), 0.07); 
+				logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparatorWeightedDate");
+
+			}
+			
 		}
+		
+		
+		else if (d1_d2_name.equals("WDC_SPY")) {
+			
+			// album title comparators	
+			if (comparatorMap.get("AlbumTitleComparatorLevenshteinLowerCase")) {
+				matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.15); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorLevenshteinLowerCase");
+			}
+			if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
+				matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.05); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
+			}
+			if (comparatorMap.get("AlbumTitleComparatorMaximumOfTokenContainnment")) {
+				matchingRule.addComparator(new AlbumTitleComparatorMaximumOfTokenContainnment(), 0.1); 
+				logger.info("Attribute: AlbumTitle, Comparator: AlbumTitleComparatorMaximumOfTokenContainnment");
+			}
 
-		// album date comparators
-		if (comparatorMap.get("AlbumDateComparator10Years")) {
-			matchingRule.addComparator(new AlbumDateComparator10Years(), 0.1); 
-			logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparator10Years");
+			// artist name comparators
+			if (comparatorMap.get("ArtistNameComporatorGeneralisedMaximumOfContainment")) {
+				matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.2); 
+				logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralisedMaximumOfContainment");
+			}
+			if (comparatorMap.get("ArtistNameComporatorGeneralizedJaccard")) {
+				matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard(), 0.1); 
+				logger.info("Attribute: ArtistName, Comparator: ArtistNameComporatorGeneralizedJaccard");
+			}
+
+			// album total tracks comparators	
+			if (comparatorMap.get("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity")) {
+				matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.15); 
+				logger.info("Attribute: AlbumTotalTracks, Comparator: AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity");
+			}
+
+			if (comparatorMap.get("TotalTracksComparatorDeviationSimilarity")) {
+				matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.05); 
+				logger.info("Attribute: AlbumTotalTracks, Comparator: TotalTracksComparatorDeviationSimilarity");
+			}			
+			
+			// album duration comparators
+			if (comparatorMap.get("AlbumDurationComparatorAbsoluteDifferenceSimilarity")) {
+				matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.2); 
+				logger.info("Attribute: AlbumDuration, Comparator: AlbumDurationComparatorAbsoluteDifferenceSimilarity");
+			}
+			
 		}
-
-		// album duration comparators
-		if (comparatorMap.get("AlbumDurationComparatorAbsoluteDifferenceSimilarity")) {
-			matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15); 
-			logger.info("Attribute: AlbumDuration, Comparator: AlbumDurationComparatorAbsoluteDifferenceSimilarity");
-		}
-
-		// album title comparators
-		matchingRule.addComparator(new AlbumTitleComparatorLevenshteinLowerCase(), 0.15); // WDC-MB: 0.15
-		matchingRule.addComparator(new AlbumTitleComparatorJaccard(), 0.15); // WDC-MB: 0.15
-		
-		// artist name comparators
-		matchingRule.addComparator(new ArtistNameComporatorGeneralisedMaximumOfContainment(), 0.3); // WDC-MB: 0.3
-		matchingRule.addComparator(new ArtistNameComporatorGeneralizedJaccard(), 0.2); // WDC-MB: 0.2
-		
-		// album total tracks comparators	
-		matchingRule.addComparator(new AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity(), 0.1); // WDC-MB: 0.1
-		matchingRule.addComparator(new TotalTracksComparatorDeviationSimilarity(), 0.1); // WDC-MB: 0.1
-		// matchingRule.addComparator(new AlbumTotalTracksComparatorDeviationSimilarity(), 0.2); // this does not work
-		
-		// track names comparators
-		// matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.2);
-		
-		// album date comparators
-		matchingRule.addComparator(new AlbumDateComparator10Years(), 0.1);
-
-		// album duration comparators
-		matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15);
 		
 		// create a blocker (blocking strategy)
 		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
@@ -383,6 +454,10 @@ public class IR_using_linear_combination
 		if (comparatorMap.get("AlbumTitleComparatorJaccard")) {
 			matchingRule.addComparator(new AlbumTitleComparatorJaccard()); 
 			logger.info("Model: " + modelType + " Attribute: AlbumTitle, Comparator: AlbumTitleComparatorJaccard");
+		}
+		if (comparatorMap.get("AlbumTitleComparatorMaximumOfTokenContainnment")) {
+			matchingRule.addComparator(new AlbumTitleComparatorMaximumOfTokenContainnment()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumTitle, Comparator: AlbumTitleComparatorMaximumOfTokenContainnment");
 		}
 
 		// artist name comparators
