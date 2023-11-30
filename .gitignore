@@ -6,7 +6,8 @@
 
 # Folder to not ignore
 !/IR/
-!/DataFusion/
+!/DataFusion
+!/Mapping
 
 # Files to ignore
 IR/.idea

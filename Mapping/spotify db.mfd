@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Edited with Altova MapForce 2023r2 -->
+<mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="26">
+	<resources>
+		<datasources>
+			<datasource name="spotify_sqlite3">
+				<properties JDBCDriver="org.sqlite.JDBC" JDBCDatabaseURL="jdbc:sqlite:C:/Users/patri/Patrick/Uni/Master/3. Semester/WDI/Project/spotify sqlite.db" DBDataSource="C:\Users\patri\Patrick\Uni\Master\3. Semester\WDI\Project\spotify sqlite.db" DBCatalog="main"/>
+				<database_connection database_kind="SQLite" import_kind="SQLite" version="3.43" ConnectionString="C:\Users\patri\Patrick\Uni\Master\3. Semester\WDI\Project\spotify sqlite.db" name="spotify_sqlite3" path="spotify_sqlite3">
+					<properties>
+						<property name="Database Kind" value="SQLite"/>
+						<property name="Import Kind" value="SQLite"/>
+						<property name="Root Object" value="main"/>
+						<property name="Connect Script"/>
+						<property name="Data Source" value="C:\Users\patri\Patrick\Uni\Master\3. Semester\WDI\Project\spotify sqlite.db"/>
+						<property name="Disable Foreign Keys"/>
+					</properties>
+				</database_connection>
+			</datasource>
+		</datasources>
+	</resources>
+	<component name="defaultmap" uid="1" editable="1" blackbox="0">
+		<properties SelectedLanguage="builtin"/>
+		<structure>
+			<children>
+				<component name="constant" library="core" uid="4" kind="2">
+					<targets>
+						<datapoint pos="0" key="14"/>
+					</targets>
+					<view ltx="475" lty="-11" rbx="534" rby="6"/>
+					<data>
+						<constant value="spy_" datatype="string"/>
+					</data>
+				</component>
+				<component name="constant" library="core" uid="7" kind="2">
+					<targets>
+						<datapoint pos="0" key="16"/>
+					</targets>
+					<view ltx="386" lty="396" rbx="439" rby="413"/>
+					<data>
+						<constant value="1000" datatype="decimal"/>
+					</data>
+				</component>
+				<component name="divide" library="core" uid="9" kind="5">
+					<sources>
+						<datapoint pos="0" key="21"/>
+						<datapoint pos="1" key="17"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="22"/>
+					</targets>
+					<view ltx="587" lty="294" rbx="659" rby="346"/>
+				</component>
+				<component name="sum" library="core" uid="10" kind="5">
+					<sources>
+						<datapoint pos="0" key="24"/>
+						<datapoint pos="1" key="19"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="20"/>
+					</targets>
+					<view ltx="437" lty="442" rbx="548" rby="494"/>
+				</component>
+				<component name="auto-number" library="core" uid="6" kind="5">
+					<sources>
+						<datapoint/>
+						<datapoint/>
+						<datapoint/>
+						<datapoint/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="12"/>
+					</targets>
+					<view ltx="490" lty="-123" rbx="616" rby="-38"/>
+				</component>
+				<component name="concat" library="core" uid="5" kind="5" growable="1" growablebasename="value">
+					<sources>
+						<datapoint pos="0" key="15"/>
+						<datapoint pos="1" key="13"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="41"/>
+					</targets>
+					<view ltx="691" lty="-51" rbx="763" rby="3"/>
+				</component>
+				<component name="round" library="core" uid="8" kind="5">
+					<sources>
+						<datapoint pos="0" key="23"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="18"/>
+					</targets>
+					<view ltx="697" lty="344" rbx="763" rby="380"/>
+				</component>
+				<component name="substring-after" library="core" uid="13" kind="5">
+					<sources>
+						<datapoint pos="0" key="44"/>
+						<datapoint pos="1" key="45"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="46"/>
+					</targets>
+					<view ltx="525" lty="531" rbx="619" rby="583"/>
+				</component>
+				<component name="structure" library="db" uid="2" kind="15">
+					<view rbx="294" rby="564"/>
+					<data>
+						<root>
+							<header>
+								<namespaces>
+									<namespace/>
+									<namespace uid="http://www.altova.com/mapforce"/>
+								</namespaces>
+							</header>
+							<entry name="document" ns="1" expanded="1">
+								<entry name="albums" type="table" outkey="26" expanded="1">
+									<entry name="album_name" outkey="27"/>
+									<entry name="album_release_date" outkey="28"/>
+									<entry name="album_total_tracks" outkey="29"/>
+									<entry name="artist_genres" outkey="43"/>
+									<entry name="albums_artists|albums_id" type="table" expanded="1">
+										<entry name="artists|artists_id" type="table" expanded="1">
+											<entry name="name" outkey="30"/>
+										</entry>
+									</entry>
+									<entry name="albums_tracks|albums_id" type="table" expanded="1">
+										<entry name="tracks|tracks_id" type="table" expanded="1">
+											<entry name="duration_ms" outkey="31"/>
+											<entry name="name" outkey="32"/>
+										</entry>
+									</entry>
+								</entry>
+							</entry>
+						</root>
+						<database ref="spotify_sqlite3">
+							<data>
+								<selections>
+									<selection>
+										<PathElement Name="main" Kind="Database"/>
+										<PathElement Name="albums" Kind="Table"/>
+									</selection>
+									<selection>
+										<PathElement Name="main" Kind="Database"/>
+										<PathElement Name="albums_artists" Kind="Table"/>
+									</selection>
+									<selection>
+										<PathElement Name="main" Kind="Database"/>
+										<PathElement Name="albums_tracks" Kind="Table"/>
+									</selection>
+									<selection>
+										<PathElement Name="main" Kind="Database"/>
+										<PathElement Name="artists" Kind="Table"/>
+									</selection>
+									<selection>
+										<PathElement Name="main" Kind="Database"/>
+										<PathElement Name="tracks" Kind="Table"/>
+									</selection>
+								</selections>
+							</data>
+						</database>
+					</data>
+				</component>
+				<component name="target schema_0611" library="xml" uid="19" kind="14">
+					<properties XSLTDefaultOutput="1"/>
+					<view ltx="1172" lty="23" rbx="1416" rby="441"/>
+					<data>
+						<root>
+							<header>
+								<namespaces>
+									<namespace/>
+									<namespace uid="http://www.altova.com/mapforce"/>
+								</namespaces>
+							</header>
+							<entry name="FileInstance" ns="1" expanded="1">
+								<entry name="document" ns="1" expanded="1" casttotargettypemode="cast-in-subtree">
+									<entry name="root" inpkey="47" expanded="1">
+										<entry name="Albums" expanded="1">
+											<entry name="Album" expanded="1">
+												<entry name="id" type="attribute" inpkey="48"/>
+												<entry name="Title" inpkey="49"/>
+												<entry name="ReleaseDate" inpkey="50"/>
+												<entry name="Duration" inpkey="51"/>
+												<entry name="Artists">
+													<entry name="ArtistName" inpkey="52"/>
+												</entry>
+												<entry name="Tracks" expanded="1">
+													<entry name="TrackTitle" inpkey="53"/>
+												</entry>
+												<entry name="TotalTracks" inpkey="54"/>
+												<entry name="Genres" expanded="1">
+													<entry name="GenreName" inpkey="55"/>
+												</entry>
+												<entry name="Labels" expanded="1"/>
+											</entry>
+										</entry>
+									</entry>
+								</entry>
+							</entry>
+						</root>
+						<document schema="target schema_0611.xsd" instanceroot="{}root" inputinstance="target schema_0611.xml" outputinstance="target schema_0611.xml"/>
+					</data>
+				</component>
+				<component name="constant" library="core" uid="20" kind="2">
+					<targets>
+						<datapoint pos="0" key="56"/>
+					</targets>
+					<view ltx="447" lty="566" rbx="489" rby="583"/>
+					<data>
+						<constant value="[" datatype="string"/>
+					</data>
+				</component>
+				<component name="substring-before" library="core" uid="15" kind="5">
+					<sources>
+						<datapoint pos="0" key="57"/>
+						<datapoint pos="1" key="58"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="59"/>
+					</targets>
+					<view ltx="696" lty="506" rbx="799" rby="558"/>
+				</component>
+				<component name="constant" library="core" uid="21" kind="2">
+					<targets>
+						<datapoint pos="0" key="60"/>
+					</targets>
+					<view ltx="577" lty="582" rbx="619" rby="599"/>
+					<data>
+						<constant value="]" datatype="string"/>
+					</data>
+				</component>
+				<component name="tokenize" library="core" uid="17" kind="5">
+					<sources>
+						<datapoint pos="0" key="61"/>
+						<datapoint pos="1" key="62"/>
+					</sources>
+					<targets>
+						<datapoint pos="0" key="63"/>
+					</targets>
+					<view ltx="921" lty="442" rbx="1005" rby="494"/>
+				</component>
+				<component name="constant" library="core" uid="22" kind="2">
+					<targets>
+						<datapoint pos="0" key="64"/>
+					</targets>
+					<view ltx="758" lty="557" rbx="799" rby="574"/>
+					<data>
+						<constant value="," datatype="string"/>
+					</data>
+				</component>
+			</children>
+			<graph directed="1">
+				<edges/>
+				<vertices>
+					<vertex vertexkey="12">
+						<edges>
+							<edge vertexkey="13"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="14">
+						<edges>
+							<edge vertexkey="15"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="16">
+						<edges>
+							<edge vertexkey="17"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="31">
+						<edges>
+							<edge vertexkey="19"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="20">
+						<edges>
+							<edge vertexkey="21"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="22">
+						<edges>
+							<edge vertexkey="23"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="26">
+						<edges>
+							<edge vertexkey="24"/>
+							<edge vertexkey="47"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="43">
+						<edges>
+							<edge vertexkey="44"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="56">
+						<edges>
+							<edge vertexkey="45"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="41">
+						<edges>
+							<edge vertexkey="48"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="27">
+						<edges>
+							<edge vertexkey="49"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="28">
+						<edges>
+							<edge vertexkey="50"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="18">
+						<edges>
+							<edge vertexkey="51"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="30">
+						<edges>
+							<edge vertexkey="52"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="32">
+						<edges>
+							<edge vertexkey="53"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="29">
+						<edges>
+							<edge vertexkey="54"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="63">
+						<edges>
+							<edge vertexkey="55"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="46">
+						<edges>
+							<edge vertexkey="57"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="60">
+						<edges>
+							<edge vertexkey="58"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="59">
+						<edges>
+							<edge vertexkey="61"/>
+						</edges>
+					</vertex>
+					<vertex vertexkey="64">
+						<edges>
+							<edge vertexkey="62"/>
+						</edges>
+					</vertex>
+				</vertices>
+			</graph>
+		</structure>
+	</component>
+</mapping>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <Albums>
+        <Album id="album_1">
+            <Title>T1</Title>
+            <ReleaseDate>01.01.2000</ReleaseDate>
+            <Price>10.00</Price>
+            <Duration>100</Duration>
+            <Artists>
+        	    <ArtistName>"A1"</ArtistName>
+                <ArtistName>"A2"</ArtistName>
+            </Artists>
+            <Tracks>
+                <TrackTitle>"track_1"</TrackTitle>
+        	    <TrackTitle>"track_1"</TrackTitle>
+            </Tracks>
+            <TotalTracks>10000</TotalTracks>
+            <Country>"Germany"</Country>
+            <Language>"German"</Language>
+            <Genres>
+                <GenreName>"Genre1"</GenreName>
+                <GenreName>"Genre2"</GenreName>
+            </Genres>
+            <Labels>
+                <LabelName>"Studio1"</LabelName>
+                <LabelName>"Studio2"</LabelName>
+            </Labels>
+        </Album>
+        <Album id="album_2">
+                        <Title>T1</Title>
+            <ReleaseDate>01.01.2000</ReleaseDate>
+            <Price>10.00</Price>
+            <Duration>100</Duration>
+            <Artists>
+        	    <ArtistName>"A1"</ArtistName>
+                <ArtistName>"A2"</ArtistName>
+            </Artists>
+            <Tracks>
+                <TrackTitle>"track_1"</TrackTitle>
+        	    <TrackTitle>"track_1"</TrackTitle>
+            </Tracks>
+            <TotalTracks>10000</TotalTracks>
+            <Country>"Germany"</Country>
+            <Language>"German"</Language>
+            <Genres>
+                <GenreName>"Genre1"</GenreName>
+                <GenreName>"Genre2"</GenreName>
+            </Genres>
+            <Labels>
+                <LabelName>"Studio1"</LabelName>
+                <LabelName>"Studio2"</LabelName>
+            </Labels>
+        </Album>
+    </Albums>
+</root>    
