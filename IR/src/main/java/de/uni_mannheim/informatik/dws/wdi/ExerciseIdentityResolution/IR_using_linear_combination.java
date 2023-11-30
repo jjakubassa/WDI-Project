@@ -84,7 +84,7 @@ public class IR_using_linear_combination
 		String number_correspondences_MB_SPY;
 		String number_correspondences_WDC_MB;
 		String number_correspondences_WDC_SPY;
-		Boolean learn_weights = false;
+		Boolean learn_weights = true;
 		long startTime;
 		long endTime;
 		long elapsedTime_MB_SPY;
@@ -213,10 +213,10 @@ public class IR_using_linear_combination
 				
 				// print summary in csv style
 				logger.info("Compact summary of evaluation results:");
-				logger.info("MatchingRule, Blocker, Dataset, Precision, Recall, F1, # Corr, Time [ms]");
-				logger.info(name_mr + ", " + name_blocker + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY);
-				logger.info(name_mr + ", " + name_blocker + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB);
-				logger.info(name_mr + ", " + name_blocker + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY);				
+				logger.info("MatchingRule, Blocker, Dataset, Precision, Recall, F1, # Corr, Time [ms], weights_learned");
+				logger.info(name_mr + ", " + name_blocker + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY + ", " + learn_weights);
+				logger.info(name_mr + ", " + name_blocker + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB + ", " + learn_weights);
+				logger.info(name_mr + ", " + name_blocker + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY + ", " + learn_weights);
 			}
 		}
     }
