@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Track;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLMatchableReader;
 /**
@@ -75,15 +76,25 @@ public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> {
 		String tracks = getValueFromChildElement(node, "Tracks");
 		if (tracks != null){
 
-			List<Track> trackList = new ArrayList<Track>();
+			String replace = tracks.replace("[","");
+			String replace1 = replace.replace("]","");
+			// List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split("'")));
+			List<Track> trackList = strList.stream().map(a -> new Track(stripQuotes(a))).collect(Collectors.toList());
+			Album.setTracks(trackList);
+			
+			List<Track> TrackList = new ArrayList<Track>();
 			for (String s : tracks.split("\n")){
 				String s_normalized = stripQuotes(s.replace("\n","").trim());
 				Track t = new Track(s_normalized);
 				t.setName(s_normalized);
 				// System.out.println(t.getName());
-				trackList.add(t);
+				TrackList.add(t);
 			}
-			Album.setTracks(trackList);
+			Album.setTracks(TrackList);
+		}
+		else {
+			Album.setTracks(null);
 		}
 
 		String labels = getValueFromChildElement(node, "Labels");
