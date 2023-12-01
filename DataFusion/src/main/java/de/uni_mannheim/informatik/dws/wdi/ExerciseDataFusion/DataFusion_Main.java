@@ -98,42 +98,42 @@ public class DataFusion_Main
 		DataSet<Album, Attribute> gs = new FusibleHashedDataSet<>();
 		new AlbumXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "root/Albums/Album", gs);
 
-		// for(Album m : gs.get()) {
-		// 	logger.info(String.format("gs: %s", m.getIdentifier()));
-		// }
+		for(Album m : gs.get()) {
+			logger.info(String.format("gs: %s", m.getIdentifier()));
+		}
 
-		// // define the fusion strategy
-		// DataFusionStrategy<Album, Attribute> strategy = new DataFusionStrategy<>(new AlbumXMLReader());
-		// // write debug results to file
-		// strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
+		// define the fusion strategy
+		DataFusionStrategy<Album, Attribute> strategy = new DataFusionStrategy<>(new AlbumXMLReader());
+		// write debug results to file
+		strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
 		
-		// // add attribute fusers
-		// strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new TitleEvaluationRule());
+		// add attribute fusers
+		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new TitleEvaluationRule());
 		// strategy.addAttributeFuser(Album.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
 		// strategy.addAttributeFuser(Album.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
 		// strategy.addAttributeFuser(Album.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
 		
-		// // create the fusion engine
-		// DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);
+		// create the fusion engine
+		DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);
 
-		// // print consistency report
-		// engine.printClusterConsistencyReport(correspondences, null);
+		// print consistency report
+		engine.printClusterConsistencyReport(correspondences, null);
 		
-		// // print record groups sorted by consistency
-		// engine.writeRecordGroupsByConsistency(new File("data/output/recordGroupConsistencies.csv"), correspondences, null);
+		// print record groups sorted by consistency
+		engine.writeRecordGroupsByConsistency(new File("data/output/recordGroupConsistencies.csv"), correspondences, null);
 
-		// // run the fusion
-		// logger.info("*\tRunning data fusion\t*");
-		// FusibleDataSet<Album, Attribute> fusedDataSet = engine.run(correspondences, null);
+		// run the fusion
+		logger.info("*\tRunning data fusion\t*");
+		FusibleDataSet<Album, Attribute> fusedDataSet = engine.run(correspondences, null);
 
-		// // write the result
-		// new AlbumXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
+		// write the result
+		new AlbumXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
 
-		// // evaluate
-		// DataFusionEvaluator<Album, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Album, Attribute>());
+		// evaluate
+		DataFusionEvaluator<Album, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Album, Attribute>());
 		
-		// double accuracy = evaluator.evaluate(fusedDataSet, gs, null);
+		double accuracy = evaluator.evaluate(fusedDataSet, gs, null);
 
-		// logger.info(String.format("*\tAccuracy: %.2f", accuracy));
+		logger.info(String.format("*\tAccuracy: %.2f", accuracy));
     }
 }

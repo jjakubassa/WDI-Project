@@ -11,6 +11,7 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation;
 
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
 import de.uni_mannheim.informatik.dws.winter.datafusion.EvaluationRule;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
@@ -27,12 +28,12 @@ import de.uni_mannheim.informatik.dws.winter.similarity.string.TokenizingJaccard
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class TitleEvaluationRule extends EvaluationRule<Movie, Attribute> {
+public class TitleEvaluationRule extends EvaluationRule<Album, Attribute> {
 
 	SimilarityMeasure<String> sim = new TokenizingJaccardSimilarity();
 
 	@Override
-	public boolean isEqual(Movie record1, Movie record2, Attribute schemaElement) {
+	public boolean isEqual(Album record1, Album record2, Attribute schemaElement) {
 		// the title is correct if all tokens are there, but the order does not
 		// matter
 		return sim.calculate(record1.getTitle(), record2.getTitle()) == 1.0;
@@ -42,7 +43,7 @@ public class TitleEvaluationRule extends EvaluationRule<Movie, Attribute> {
 	 * @see de.uni_mannheim.informatik.wdi.datafusion.EvaluationRule#isEqual(java.lang.Object, java.lang.Object, de.uni_mannheim.informatik.wdi.model.Correspondence)
 	 */
 	@Override
-	public boolean isEqual(Movie record1, Movie record2,
+	public boolean isEqual(Album record1, Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondence) {
 		return isEqual(record1, record2, (Attribute)null);
 	}
