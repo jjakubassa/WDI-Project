@@ -13,6 +13,7 @@ package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Artist;
@@ -37,22 +38,51 @@ public class TrackTitlesEvaluationRule extends EvaluationRule<Album, Attribute> 
 
 	SimilarityMeasure<String> sim = new TokenizingJaccardSimilarity();
 
+//	@Override
+//	public boolean isEqual(Album record1, Album record2, Attribute schemaElement) {
+//		Set<String> tracks1 = new HashSet<>();
+//
+//		for (Track t : record1.getTracks()) {
+//			// remove quotation marks (both single and double) and (Explicit) or [Explicit] (case-insensitive)
+//			tracks1.add(t.getName().replaceAll("[\"']|(?i)\\(Explicit\\)|\\[Explicit\\]", "").trim());		   
+//		}
+//
+//		Set<String> tracks2 = new HashSet<>();
+//		
+//		for (Track t : record2.getTracks()) {
+//			tracks2.add(t.getName().replaceAll("[\"']|(?i)\\(Explicit\\)|\\[Explicit\\]", "").trim());		   
+//		}
+//
+//		return tracks1.containsAll(tracks2) && tracks2.containsAll(tracks1);
+//	}
+	
 	@Override
 	public boolean isEqual(Album record1, Album record2, Attribute schemaElement) {
-		Set<String> tracks1 = new HashSet<>();
+        Set<String> tracks1 = cleanAndCreateSet(record1.getTracks());
+        Set<String> tracks2 = cleanAndCreateSet(record2.getTracks());
 
-		for (Track t : record1.getTracks()) {
-			tracks1.add(t.getName());
-		}
+        return tracks1.containsAll(tracks2) && tracks2.containsAll(tracks1);
+    }
 
-		Set<String> tracks2 = new HashSet<>();
-		
-		for (Track t : record2.getTracks()) {
-			tracks2.add(t.getName());
-		}
+    private Set<String> cleanAndCreateSet(List<Track> tracks) {
+        Set<String> cleanedTracks = new HashSet<>();
 
-		return tracks1.containsAll(tracks2) && tracks2.containsAll(tracks1);
-	}
+        for (Track t : tracks) {
+            String cleanedName = cleanTrackName(t.getName());
+            cleanedTracks.add(cleanedName);
+        }
+
+        return cleanedTracks;
+    }
+
+    private String cleanTrackName(String trackName) {
+        // Remove quotation marks (both single and double) and anything in parentheses
+        trackName = trackName.replaceAll("[\"']", "");
+        trackName = trackName.replaceAll("\\([^)]*\\)", "").trim();
+
+        return trackName;
+    }
+    
 
 	/* (non-Javadoc)
 	 * @see de.uni_mannheim.informatik.wdi.datafusion.EvaluationRule#isEqual(java.lang.Object, java.lang.Object, de.uni_mannheim.informatik.wdi.model.Correspondence)
