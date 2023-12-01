@@ -11,12 +11,12 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Actor;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
 import de.uni_mannheim.informatik.dws.winter.datafusion.AttributeValueFuser;
-import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.list.IntersectionKSources;
+import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.Voting;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.FusedValue;
 import de.uni_mannheim.informatik.dws.winter.model.Matchable;
@@ -31,33 +31,27 @@ import de.uni_mannheim.informatik.dws.winter.processing.Processable;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class ActorsFuserIntersectionKSources extends
-		AttributeValueFuser<List<Actor>, Movie, Attribute> {
+public class TotalTracksFuserVoting extends AttributeValueFuser<Integer, Album, Attribute> {
 
-	/**
-	 * 
-	 * @param k specifies the number of sources 
-	 */
-	public ActorsFuserIntersectionKSources(int k) {
-		super(new IntersectionKSources<Actor, Movie, Attribute>(k));
+	public TotalTracksFuserVoting() {
+		super(new Voting<Integer, Album, Attribute>());
 	}
 
 	@Override
-	public boolean hasValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.hasValue(Movie.ACTORS);
+	public boolean hasValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.hasValue(Album.TOTALTRACKS);
 	}
 
 	@Override
-	public List<Actor> getValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.getActors();
+	public Integer getValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.getTotalTracks();
 	}
 
 	@Override
-	public void fuse(RecordGroup<Movie, Attribute> group, Movie fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
-		FusedValue<List<Actor>, Movie, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
-		fusedRecord.setActors(fused.getValue());
-		fusedRecord
-				.setAttributeProvenance(Movie.ACTORS, fused.getOriginalIds());
+	public void fuse(RecordGroup<Album, Attribute> group, Album fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
+		FusedValue<Integer, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
+		fusedRecord.setTotalTracks(fused.getValue());
+		fusedRecord.setAttributeProvenance(Album.TOTALTRACKS, fused.getOriginalIds());
 	}
 
 }
