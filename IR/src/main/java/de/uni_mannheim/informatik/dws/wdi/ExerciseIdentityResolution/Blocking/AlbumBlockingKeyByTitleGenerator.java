@@ -23,7 +23,7 @@ import de.uni_mannheim.informatik.dws.winter.processing.DataIterator;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 
 /**
- * {@link BlockingKeyGenerator} for {@link Movie}s, which generates a blocking
+ * {@link BlockingKeyGenerator} for {@link Album}s, which generates a blocking
  * key based on the title
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
