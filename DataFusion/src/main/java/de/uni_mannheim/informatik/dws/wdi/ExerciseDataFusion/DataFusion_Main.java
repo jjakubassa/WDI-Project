@@ -78,7 +78,7 @@ public class DataFusion_Main
 		        .toFormatter(Locale.ENGLISH);
 		
 		ds1.setDate(LocalDateTime.parse("2020-12-01", formatter));
-		ds2.setDate(LocalDateTime.parse("2023-10-10", formatter));
+		ds2.setDate(LocalDateTime.parse("2021-03-12", formatter));
 		ds3.setDate(LocalDateTime.parse("2023-10-01", formatter));
 
 		// load correspondences
