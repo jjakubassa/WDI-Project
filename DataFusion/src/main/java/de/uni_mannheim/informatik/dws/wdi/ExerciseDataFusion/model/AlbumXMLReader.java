@@ -20,10 +20,6 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -42,22 +38,22 @@ import de.uni_mannheim.informatik.dws.winter.model.RecordGroup;
 public class AlbumXMLReader extends XMLMatchableReader<Album, Attribute> implements
 FusibleFactory<Album, Attribute> {
 	
-@Override
-protected void initialiseDataset(DataSet<Album, Attribute> dataset) {
-super.initialiseDataset(dataset);
+	@Override
+	protected void initialiseDataset(DataSet<Album, Attribute> dataset) {
+	super.initialiseDataset(dataset);
 
-// the schema is defined in the Movie class and not interpreted from the file, so we have to set the attributes manually
-dataset.addAttribute(Album.TITLE);
-dataset.addAttribute(Album.RELEASEDATE);
-dataset.addAttribute(Album.PRICE);
-dataset.addAttribute(Album.ARTISTS);
-dataset.addAttribute(Album.TRACKS);
-dataset.addAttribute(Album.LABELS);
-dataset.addAttribute(Album.TOTALTRACKS);
-dataset.addAttribute(Album.GENRE);
-dataset.addAttribute(Album.COUNTRY);
-dataset.addAttribute(Album.LANGUAGE);
-dataset.addAttribute(Album.DURATION);
+		// the schema is defined in the Movie class and not interpreted from the file, so we have to set the attributes manually
+		dataset.addAttribute(Album.TITLE);
+		dataset.addAttribute(Album.RELEASEDATE);
+		dataset.addAttribute(Album.PRICE);
+		dataset.addAttribute(Album.ARTISTS);
+		dataset.addAttribute(Album.TRACKS);
+		dataset.addAttribute(Album.LABELS);
+		dataset.addAttribute(Album.TOTALTRACKS);
+		dataset.addAttribute(Album.GENRE);
+		dataset.addAttribute(Album.COUNTRY);
+		dataset.addAttribute(Album.LANGUAGE);
+		dataset.addAttribute(Album.DURATION);
 
 	}
 		
@@ -181,8 +177,24 @@ dataset.addAttribute(Album.DURATION);
 		}
 
 		return Album;
-	}
+		}
 
+		@Override
+		public Album createInstanceForFusion(RecordGroup<Album, Attribute> cluster) {
+		
+		List<String> ids = new LinkedList<>();
+		
+		for (Album a : cluster.getRecords()) {
+			ids.add(a.getIdentifier());
+		}
+		
+		Collections.sort(ids);
+		
+		String mergedId = StringUtils.join(ids, '+');
+		
+		return new Album(mergedId, "fused");
+	}
+	
 	private String stripQuotes(String title) {
 		if (title == null) {
 			return null;
@@ -191,22 +203,4 @@ dataset.addAttribute(Album.DURATION);
 			return title.replaceFirst("\"$", "").replaceFirst("^\"", "");
 		}
 	}
-	
-	
-	@Override
-	public Album createInstanceForFusion(RecordGroup<Album, Attribute> cluster) {
-	
-	List<String> ids = new LinkedList<>();
-	
-	for (Album m : cluster.getRecords()) {
-		ids.add(m.getIdentifier());
-	}
-	
-	Collections.sort(ids);
-	
-	String mergedId = StringUtils.join(ids, '+');
-	
-	return new Album(mergedId, "fused");
-	}
-
 }

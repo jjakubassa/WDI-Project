@@ -94,9 +94,9 @@ public class DataFusion_Main
 		correspondences.printGroupSizeDistribution();
 
 		// // load the gold standard
-		// logger.info("*\tEvaluating results\t*");
-		// DataSet<Album, Attribute> gs = new FusibleHashedDataSet<>();
-		// new AlbumXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "root/Albums/Album", gs);
+		logger.info("*\tEvaluating results\t*");
+		DataSet<Album, Attribute> gs = new FusibleHashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "root/Albums/Album", gs);
 
 		// for(Album m : gs.get()) {
 		// 	logger.info(String.format("gs: %s", m.getIdentifier()));

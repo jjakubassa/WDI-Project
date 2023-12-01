@@ -46,7 +46,7 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 
 	public Album(String identifier, String provenance) {
 		super(identifier, provenance);
-//		id = identifier;
+		id = identifier;
 //		this.provenance = provenance;
 		artists = new LinkedList<>();
 		tracks = new LinkedList<>();
