@@ -464,7 +464,8 @@ public class IR_using_linear_combination
 				matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15); 
 				logger.info("Attribute: AlbumDuration, Comparator: AlbumDurationComparatorAbsoluteDifferenceSimilarity");
 			}
-			
+
+			// track name comparator
 			if (comparatorMap.get("TrackNameComporatorGeneralisedMaximumOfContainment")) {
 				matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.05); 
 				logger.info("Attribute: AlbumTrackNames, Comparator: TrackNameComporatorGeneralisedMaximumOfContainment");
