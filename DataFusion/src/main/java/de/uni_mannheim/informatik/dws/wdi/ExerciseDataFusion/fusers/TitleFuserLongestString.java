@@ -41,7 +41,15 @@ public class TitleFuserLongestString extends
 
 	@Override
 	public String getValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.getTitle();
+		String title = record.getTitle();
+
+	    // check if the title contains '(explicit)' or '[explicit]' (case-insensitive)
+	    if (title != null && (title.toLowerCase().contains("(explicit)") || title.toLowerCase().contains("[explicit]"))) {
+	        // remove '(explicit)' or '[explicit]' from the title
+	        title = title.replaceAll("(?i)\\(explicit\\)|\\[explicit\\]|\\(explicit ver\\.\\)|explicit album version|\\(explicit version\\)|explicit", "").trim();
+	        }
+
+	    return title;
 	}
 
 	@Override
