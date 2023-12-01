@@ -461,8 +461,13 @@ public class IR_using_linear_combination
 			
 			// album duration comparators
 			if (comparatorMap.get("AlbumDurationComparatorAbsoluteDifferenceSimilarity")) {
-				matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.2); 
+				matchingRule.addComparator(new AlbumDurationComparatorAbsoluteDifferenceSimilarity(), 0.15); 
 				logger.info("Attribute: AlbumDuration, Comparator: AlbumDurationComparatorAbsoluteDifferenceSimilarity");
+			}
+			
+			if (comparatorMap.get("TrackNameComporatorGeneralisedMaximumOfContainment")) {
+				matchingRule.addComparator(new TrackNameComporatorGeneralisedMaximumOfContainment(), 0.05); 
+				logger.info("Attribute: AlbumTrackNames, Comparator: TrackNameComporatorGeneralisedMaximumOfContainment");
 			}
 			
 		}
