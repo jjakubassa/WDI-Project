@@ -34,7 +34,7 @@ public class ReleaseDateEvaluationRule extends EvaluationRule<Album, Attribute> 
 		else if(record1.getReleaseDate()==null ^ record2.getReleaseDate()==null)
 			return false;
 		else
-			return record1.getReleaseDate() == record2.getReleaseDate();
+			return record1.getReleaseDate().isEqual(record2.getReleaseDate());
 	}
 
 	/* (non-Javadoc)

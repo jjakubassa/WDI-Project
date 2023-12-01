@@ -8,17 +8,25 @@ import java.time.temporal.ChronoField;
 import java.util.Locale;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.AlbumTitleEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ArtistsEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DurationEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ReleaseDateEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TotalTracksEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TrackTitlesEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ArtistFuserFavourSource;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ArtistFuserIntersectionKSources;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ArtistFuserMostRecent;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserMostRecent;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
-
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserShortestString;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TotalTracksFuserVoting;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TrackTitleFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.FusibleAlbumFactory;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.AlbumXMLFormatter;
@@ -112,14 +120,16 @@ public class DataFusion_Main
 		strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
 		
 		// add attribute fusers
-		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new AlbumTitleEvaluationRule());
-		strategy.addAttributeFuser(Album.DURATION, new DurationFuserAverage(),new DurationEvaluationRule());
-		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(),new TotalTracksEvaluationRule());
-		strategy.addAttributeFuser(Album.RELEASEDATE, new DateFuserVoting(),new ReleaseDateEvaluationRule());
-
-		// strategy.addAttributeFuser(Album.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
-		// strategy.addAttributeFuser(Album.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
-		// strategy.addAttributeFuser(Album.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
+		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(), new AlbumTitleEvaluationRule());
+//		strategy.addAttributeFuser(Album.TITLE, new TitleFuserFavourSource(), new AlbumTitleEvaluationRule());
+//		strategy.addAttributeFuser(Album.TITLE, new TitleFuserShortestString(), new AlbumTitleEvaluationRule());
+		strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserFavourSource(), new ArtistsEvaluationRule());
+//		strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserMostRecent(), new ArtistsEvaluationRule());
+//		strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserIntersectionKSources(2), new ArtistsEvaluationRule());
+		strategy.addAttributeFuser(Album.DURATION, new DurationFuserAverage(), new DurationEvaluationRule());
+		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(), new TotalTracksEvaluationRule());
+		strategy.addAttributeFuser(Album.TRACKS, new TrackTitleFuserFavourSource(), new TrackTitlesEvaluationRule());
+		strategy.addAttributeFuser(Album.RELEASEDATE, new DateFuserMostRecent(), new ReleaseDateEvaluationRule());
 		
 		// create the fusion engine
 		DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);

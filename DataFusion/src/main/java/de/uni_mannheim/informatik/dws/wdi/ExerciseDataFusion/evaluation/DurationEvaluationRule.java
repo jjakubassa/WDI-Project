@@ -30,9 +30,9 @@ public class DurationEvaluationRule extends EvaluationRule<Album, Attribute> {
 	@Override
 	public boolean isEqual(Album record1, Album record2, Attribute schemaElement) {
 
-        if(record1.getDuration() == 0 && record2.getDuration() == 0)
+        if (record1.getDuration() == 0 && record2.getDuration() == 0)
             return true;
-        else if(Math.abs(record1.getDuration() - record2.getDuration()) <= 120)
+        else if (Math.abs(record1.getDuration() - record2.getDuration()) <= 120)
             return true;
         else
             return false;
