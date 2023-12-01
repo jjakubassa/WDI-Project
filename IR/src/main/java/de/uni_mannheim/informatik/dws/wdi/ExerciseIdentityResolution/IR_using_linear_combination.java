@@ -290,9 +290,6 @@ public class IR_using_linear_combination
 						}
 					}
 				}
-
-				
-
 			}
 		}
     }
