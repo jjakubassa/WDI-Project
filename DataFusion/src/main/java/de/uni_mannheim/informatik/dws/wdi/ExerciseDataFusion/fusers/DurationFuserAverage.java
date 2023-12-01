@@ -11,9 +11,9 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
+import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.numeric.Average;
 import de.uni_mannheim.informatik.dws.winter.datafusion.AttributeValueFuser;
-import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.meta.FavourSources;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.FusedValue;
 import de.uni_mannheim.informatik.dws.winter.model.Matchable;
@@ -27,28 +27,29 @@ import de.uni_mannheim.informatik.dws.winter.processing.Processable;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class DirectorFuserFavourSource extends AttributeValueFuser<String, Movie, Attribute> {
+public class DurationFuserAverage extends AttributeValueFuser<Double, Album, Attribute> {
 
-	public DirectorFuserFavourSource() {
-		super(new FavourSources<String, Movie, Attribute>());
+	public DurationFuserAverage() {
+		super(new Average<Album, Attribute>());
 	}
 
 	@Override
-	public boolean hasValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.hasValue(Movie.DIRECTOR);
+	public boolean hasValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.hasValue(Album.DURATION);
 	}
 
 	@Override
-	public String getValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.getDirector();
+	public Double getValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return Double.valueOf(record.getDuration());
 	}
 
 	@Override
-	public void fuse(RecordGroup<Movie, Attribute> group, Movie fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
-		FusedValue<String, Movie, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
-		fusedRecord.setDirector(fused.getValue());
-		fusedRecord.setAttributeProvenance(Movie.DIRECTOR,
+	public void fuse(RecordGroup<Album, Attribute> group, Album fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
+		FusedValue<Double, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
+		fusedRecord.setDuration(fused.getValue().intValue());
+		fusedRecord.setAttributeProvenance(Album.DURATION,
 				fused.getOriginalIds());
 	}
 
 }
+
