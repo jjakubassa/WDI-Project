@@ -54,3 +54,4 @@ public class DateFuserMostRecent extends AttributeValueFuser<LocalDate, Album, A
 	}
 
 }
+

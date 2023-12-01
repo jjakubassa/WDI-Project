@@ -13,8 +13,8 @@ package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers;
 
 import java.util.List;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Actor;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Artist;
 import de.uni_mannheim.informatik.dws.winter.datafusion.AttributeValueFuser;
 import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.meta.FavourSources;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
@@ -31,29 +31,28 @@ import de.uni_mannheim.informatik.dws.winter.processing.Processable;
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class ActorsFuserFavourSource extends
-		AttributeValueFuser<List<Actor>, Movie, Attribute> {
+public class ArtistFuserFavourSource extends
+		AttributeValueFuser<List<Artist>, Album, Attribute> {
 
-	public ActorsFuserFavourSource() {
-		super(new FavourSources<List<Actor>, Movie, Attribute>());
+	public ArtistFuserFavourSource() {
+		super(new FavourSources<List<Artist>, Album, Attribute>());
 	}
 
 	@Override
-	public boolean hasValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.hasValue(Movie.ACTORS);
+	public boolean hasValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.hasValue(Album.ARTISTS);
 	}
 
 	@Override
-	public List<Actor> getValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.getActors();
+	public List<Artist> getValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.getArtists();
 	}
 
 	@Override
-	public void fuse(RecordGroup<Movie, Attribute> group, Movie fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
-		FusedValue<List<Actor>, Movie, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
-		fusedRecord.setActors(fused.getValue());
-		fusedRecord
-				.setAttributeProvenance(Movie.ACTORS, fused.getOriginalIds());
+	public void fuse(RecordGroup<Album, Attribute> group, Album fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
+		FusedValue<List<Artist>, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
+		fusedRecord.setArtists(fused.getValue());
+		fusedRecord.setAttributeProvenance(Album.ARTISTS, fused.getOriginalIds());
 	}
 
 }
