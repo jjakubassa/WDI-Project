@@ -11,8 +11,13 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Artist;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Track;
 import de.uni_mannheim.informatik.dws.winter.datafusion.EvaluationRule;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.Matchable;
@@ -21,22 +26,32 @@ import de.uni_mannheim.informatik.dws.winter.similarity.SimilarityMeasure;
 import de.uni_mannheim.informatik.dws.winter.similarity.string.TokenizingJaccardSimilarity;
 
 /**
- * {@link EvaluationRule} for the titles of {@link Movie}s. The rule simply
- * compares the titles of two {@link Movie}s and returns true, in case their
+ * {@link EvaluationRule} for the titles of {@link Album}s. The rule simply
+ * compares the titles of two {@link Album}s and returns true, in case their
  * similarity based on {@link TokenizingJaccardSimilarity} is 1.0.
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class TitleEvaluationRule extends EvaluationRule<Album, Attribute> {
+public class TrackTitlesEvaluationRule extends EvaluationRule<Album, Attribute> {
 
 	SimilarityMeasure<String> sim = new TokenizingJaccardSimilarity();
 
 	@Override
 	public boolean isEqual(Album record1, Album record2, Attribute schemaElement) {
-		// the title is correct if all tokens are there, but the order does not
-		// matter
-		return sim.calculate(record1.getTitle(), record2.getTitle()) == 1.0;
+		Set<String> tracks1 = new HashSet<>();
+
+		for (Track t : record1.getTracks()) {
+			tracks1.add(t.getName());
+		}
+
+		Set<String> tracks2 = new HashSet<>();
+		
+		for (Track t : record2.getTracks()) {
+			tracks2.add(t.getName());
+		}
+
+		return tracks1.containsAll(tracks2) && tracks2.containsAll(tracks1);
 	}
 
 	/* (non-Javadoc)

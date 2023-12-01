@@ -11,36 +11,48 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Artist;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Track;
 import de.uni_mannheim.informatik.dws.winter.datafusion.EvaluationRule;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.Matchable;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
+import de.uni_mannheim.informatik.dws.winter.similarity.SimilarityMeasure;
+import de.uni_mannheim.informatik.dws.winter.similarity.string.TokenizingJaccardSimilarity;
 
 /**
- * {@link EvaluationRule} for the date of {@link Movie}s. The rule simply
- * compares the year of the dates of two {@link Movie}s.
+ * {@link EvaluationRule} for the titles of {@link Album}s. The rule simply
+ * compares the titles of two {@link Album}s and returns true, in case their
+ * similarity based on {@link TokenizingJaccardSimilarity} is 1.0.
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class DateEvaluationRule extends EvaluationRule<Movie, Attribute> {
+public class TotalTracksEvaluationRule extends EvaluationRule<Album, Attribute> {
+
+	SimilarityMeasure<String> sim = new TokenizingJaccardSimilarity();
 
 	@Override
-	public boolean isEqual(Movie record1, Movie record2, Attribute schemaElement) {
-		if(record1.getDate()==null && record2.getDate()==null)
-			return true;
-		else if(record1.getDate()==null ^ record2.getDate()==null)
-			return false;
-		else
-			return record1.getDate().getYear() == record2.getDate().getYear();
+	public boolean isEqual(Album record1, Album record2, Attribute schemaElement) {
+		
+		if (record1.getTotalTracks() == 0 && record2.getTotalTracks() == 0)
+            return true;
+        else if (record1.getTotalTracks() - record2.getTotalTracks() == 0)
+            return true;
+        else
+            return false;
 	}
 
 	/* (non-Javadoc)
 	 * @see de.uni_mannheim.informatik.wdi.datafusion.EvaluationRule#isEqual(java.lang.Object, java.lang.Object, de.uni_mannheim.informatik.wdi.model.Correspondence)
 	 */
 	@Override
-	public boolean isEqual(Movie record1, Movie record2,
+	public boolean isEqual(Album record1, Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondence) {
 		return isEqual(record1, record2, (Attribute)null);
 	}
