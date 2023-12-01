@@ -10,10 +10,13 @@ import java.util.Locale;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.AlbumTitleEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DurationEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ReleaseDateEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TotalTracksEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TotalTracksFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.FusibleAlbumFactory;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.AlbumXMLFormatter;
@@ -109,6 +112,9 @@ public class DataFusion_Main
 		// add attribute fusers
 		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new AlbumTitleEvaluationRule());
 		strategy.addAttributeFuser(Album.DURATION, new DurationFuserAverage(),new DurationEvaluationRule());
+		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(),new TotalTracksEvaluationRule());
+		strategy.addAttributeFuser(Album.RELEASEDATE, new DateFuserVoting(),new ReleaseDateEvaluationRule());
+
 		// strategy.addAttributeFuser(Album.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
 		// strategy.addAttributeFuser(Album.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
 		// strategy.addAttributeFuser(Album.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
