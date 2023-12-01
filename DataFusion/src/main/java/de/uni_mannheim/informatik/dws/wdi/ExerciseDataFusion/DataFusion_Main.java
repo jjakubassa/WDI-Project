@@ -7,10 +7,8 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ActorsEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DateEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.AlbumTitleEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TitleEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ActorsFuserUnion;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
@@ -109,7 +107,7 @@ public class DataFusion_Main
 		strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
 		
 		// add attribute fusers
-		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new TitleEvaluationRule());
+		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new AlbumTitleEvaluationRule());
 		// strategy.addAttributeFuser(Album.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
 		// strategy.addAttributeFuser(Album.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
 		// strategy.addAttributeFuser(Album.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
