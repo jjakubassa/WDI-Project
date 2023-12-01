@@ -51,26 +51,34 @@ public class TrackNameComporatorGeneralisedMaximumOfContainment implements Compa
 		List<Track> l1_init = record1.getTracks();
 		List l1 = new ArrayList();
 
-		for (Track t : l1_init) {
-//			System.out.println(a.getName());
-//			System.out.println(record1.getIdentifier());
-			String name = t.getName();
-			if (name == null) {
-				name = "";
-			}
-            l1.add(name.toLowerCase());
-        }
+		if (l1_init != null) {
+			for (Track t : l1_init) {
+	//			System.out.println(a.getName());
+	//			System.out.println(record1.getIdentifier());
+				String name = t.getName();
+				if (name == null) {
+					name = "";
+				}
+	            l1.add(name.toLowerCase());
+	        }
+		} else {
+			return 0;
+		}
 		
 		List<Track> l2_init = record2.getTracks();
 		List l2 = new ArrayList();
 		
-		for (Track t : l2_init) {
-			String name = t.getName();
-			if (name == null) {
-				name = "";
-			}
-            l2.add(name.toLowerCase());
-        }
+		if (l2_init != null) {
+			for (Track t : l2_init) {
+				String name = t.getName();
+				if (name == null) {
+					name = "";
+				}
+	            l2.add(name.toLowerCase());
+	        }
+		} else {
+			return 0;
+		}
 		
 		// calculate similarity
 		double similarity = generalizedMaxOfContainmentSimilarity.calculate(l1, l2);
