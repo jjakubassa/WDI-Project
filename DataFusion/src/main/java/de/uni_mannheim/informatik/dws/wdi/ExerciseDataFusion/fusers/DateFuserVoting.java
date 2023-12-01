@@ -11,9 +11,9 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.winter.datafusion.AttributeValueFuser;
 import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.Voting;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
@@ -23,32 +23,32 @@ import de.uni_mannheim.informatik.dws.winter.model.RecordGroup;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 /**
- * {@link AttributeValueFuser} for the date of {@link Movie}s. 
+ * {@link AttributeValueFuser} for the date of {@link Album}s. 
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
  */
-public class DateFuserVoting extends AttributeValueFuser<LocalDateTime, Movie, Attribute> {
+public class DateFuserVoting extends AttributeValueFuser<LocalDate, Album, Attribute> {
 
 	public DateFuserVoting() {
-		super(new Voting<LocalDateTime, Movie, Attribute>());
+		super(new Voting<LocalDate, Album, Attribute>());
 	}
 	
 	@Override
-	public boolean hasValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.hasValue(Movie.DATE);
+	public boolean hasValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.hasValue(Album.RELEASEDATE);
 	}
 	
 	@Override
-	public LocalDateTime getValue(Movie record, Correspondence<Attribute, Matchable> correspondence) {
-		return record.getDate();
+	public LocalDate getValue(Album record, Correspondence<Attribute, Matchable> correspondence) {
+		return record.getReleaseDate();
 	}
 
 	@Override
-	public void fuse(RecordGroup<Movie, Attribute> group, Movie fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
-		FusedValue<LocalDateTime, Movie, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
-		fusedRecord.setDate(fused.getValue());
-		fusedRecord.setAttributeProvenance(Movie.DATE, fused.getOriginalIds());
+	public void fuse(RecordGroup<Album, Attribute> group, Album fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
+		FusedValue<LocalDate, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
+		fusedRecord.setReleaseDate(fused.getValue());
+		fusedRecord.setAttributeProvenance(Album.RELEASEDATE, fused.getOriginalIds());
 	}
 
 }
