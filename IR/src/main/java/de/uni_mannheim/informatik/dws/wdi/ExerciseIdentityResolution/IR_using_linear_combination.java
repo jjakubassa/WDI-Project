@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.AlbumBlockingKeyByTitleGenerator;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Blocking.AlbumBlockingKeyByTitleandYear;
 // import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshtein;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorLevenshteinLowerCase;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorMaximumOfTokenContainnment;
@@ -130,6 +131,8 @@ public class IR_using_linear_combination
 		Map<String, AbstractBlocker> blockers = new HashMap<>();
 		blockers.put("StandardRecordBlocker AlbumBlockingKeyByTitleGenerator", new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator()));
 		blockers.put("SortedNeighbourhoodBlocker AlbumBlockingKeyByTitleGenerator", new SortedNeighbourhoodBlocker<Album, Attribute,  Attribute>(new AlbumBlockingKeyByTitleGenerator(), 1));
+		blockers.put("StandardRecordBlocker AlbumBlockingKeyByTitleandYear", new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleandYear()));
+		blockers.put("SortedNeighbourhoodBlocker AlbumBlockingKeyByTitleandYear", new SortedNeighbourhoodBlocker<Album, Attribute,  Attribute>(new AlbumBlockingKeyByTitleandYear(), 1));
 
 		// Loop over matching rules
 		for (Map.Entry<String, Map<String, Boolean>> entry : matchingRules.entrySet()) {
