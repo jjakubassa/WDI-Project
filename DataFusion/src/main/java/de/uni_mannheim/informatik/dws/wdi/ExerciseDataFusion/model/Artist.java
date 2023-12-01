@@ -95,10 +95,9 @@ public class Artist extends AbstractRecord<Attribute> implements Serializable {
 			return false;
 	}
 	
-// SHOULD HAVE THIS OR NOT?	
-//	@Override
-//	public String toString() {
-//		return String.format("[Actor: %s]", getName());
-//	}
+	@Override
+	public String toString() {
+		return String.format("[Actor: %s]", getName());
+	}
 	
 }

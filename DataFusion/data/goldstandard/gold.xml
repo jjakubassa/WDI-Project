@@ -1,400 +1,398 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <Albums>
-        <!-- https://en.wikipedia.org/wiki/I_Love_You_(A_Dedication_to_My_Fans) -->
-        <Album id="spy_11307">
-            <Title>I LOVE YOU (A Dedication To My Fans) The Mixtape</Title>
-            <ReleaseDate>2011-05-23</ReleaseDate>
-            <Duration>1920</Duration>
-            <Artists>
-        	    <ArtistName>Jadakiss</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Intro</TrackTitle>
-        	    <TrackTitle>Hold You Down (feat. Emanny)</TrackTitle>
-                <TrackTitle>Lil Bruh</TrackTitle>
-                <TrackTitle>How I Feel</TrackTitle>
-                <TrackTitle>Hold You Down (feat. Emanny)</TrackTitle>
-                <TrackTitle>Rock Wit Me (feat. Teyana Taylor)</TrackTitle>
-                <TrackTitle>In The Streets</TrackTitle>
-                <TrackTitle>Lay Em Down (feat. Styles P, Chynk Show)</TrackTitle>
-                <TrackTitle>Toast To That (feat. Fred The Godson)</TrackTitle>
-                <TrackTitle>Inkredible Remix (feat. Trae Tha Truth, Rick Ross)</TrackTitle>
-                <TrackTitle>Gone Too Long</TrackTitle>
-            </Tracks>
-            <TotalTracks>11</TotalTracks>
-        </Album>
-        <Album id="spy_232">
-            <Title>The Human Condition</Title>
-            <ReleaseDate>2016-06-10</ReleaseDate>
-            <Duration>3311</Duration>
-            <Artists>
-        	    <ArtistName>Jon Bellion</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>He Is The Same</TrackTitle>
-        	    <TrackTitle>80's Films</TrackTitle>
-                <TrackTitle>All Time Low (New Mix)</TrackTitle>
-                <TrackTitle>New York Soul (Pt. ii)</TrackTitle>
-                <TrackTitle>Fashion</TrackTitle>
-                <TrackTitle>Maybe IDK</TrackTitle>
-                <TrackTitle>Woke The F*ck Up (New Mix)</TrackTitle>
-                <TrackTitle>Overwhelming</TrackTitle>
-                <TrackTitle>Weight Of The World</TrackTitle>
-                <TrackTitle>The Good In Me</TrackTitle>
-                <TrackTitle>Morning In America</TrackTitle>
-                <TrackTitle>iRobot</TrackTitle>
-                <TrackTitle>Guillotine</TrackTitle>
-                <TrackTitle>Hand Of God (Outro)</TrackTitle>
-            </Tracks>
-            <TotalTracks>14</TotalTracks>
-        </Album>
-        <Album id="spy_13762">
-            <Title>Barrio Estación</Title>
-            <ReleaseDate>2022-11-24</ReleaseDate>
-            <Duration>3180</Duration>
-            <Artists>
-        	    <ArtistName>Los Bunkers</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Coma</TrackTitle>
-        	    <TrackTitle>Me Muelen A Palos</TrackTitle>
-                <TrackTitle>Fiesta</TrackTitle>
-                <TrackTitle>Una Nube Cuelga Sobre Mí</TrackTitle>
-                <TrackTitle>Andén</TrackTitle>
-                <TrackTitle>Si Todo Esto Es Lo Que Hay</TrackTitle>
-                <TrackTitle>Capablanca</TrackTitle>
-                <TrackTitle>Deudas</TrackTitle>
-                <TrackTitle>Nada Nuevo Bajo El Sol</TrackTitle>
-                <TrackTitle>El Tiempo Que Se Va</TrackTitle>
-                <TrackTitle>El Mismo Lugar</TrackTitle>
-                <TrackTitle>Tarde</TrackTitle>
-                <TrackTitle>Abril</TrackTitle>
-            </Tracks>
-            <TotalTracks>13</TotalTracks>
-        </Album>
-        <Album id="spy_16030">
-            <Title>Man on the Moon 2: the Legend of Mr.Rager</Title>
-            <ReleaseDate>2010-11-08</ReleaseDate>
-            <Duration>3602</Duration>
-            <Artists>
-        	    <ArtistName>Kid Cudi</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Scott Mescudi Vs. The World (feat. Cee-Lo)</TrackTitle>
-        	    <TrackTitle>REVOFEV</TrackTitle>
-                <TrackTitle>Don’t Play This Song (feat. Mary J. Blige)</TrackTitle>
-                <TrackTitle>We Aite (Wake Your Mind Up)</TrackTitle>
-                <TrackTitle>Marijuana</TrackTitle>
-                <TrackTitle>Mojo So Dope</TrackTitle>
-                <TrackTitle>Ashin’ Kusher</TrackTitle>
-                <TrackTitle>Erase Me (Main) (feat. Kanye West)</TrackTitle>
-                <TrackTitle>Wild’n Cuz I’m Young</TrackTitle>
-                <TrackTitle>The Mood</TrackTitle>
-                <TrackTitle>MANIAC (fat. Cage, St. Vincent)</TrackTitle>
-                <TrackTitle>Mr. Rager</TrackTitle>
-                <TrackTitle>These Worries (feat. Mary J. Blige)</TrackTitle>
-                <TrackTitle>The End (feat. GLC, Chip Tha Ripper, Nicole Wray)</TrackTitle>
-                <TrackTitle>All Along</TrackTitle>
-                <TrackTitle>GHOST!</TrackTitle>
-                <TrackTitle>Trapped In My Mind</TrackTitle>
-            </Tracks>
-            <TotalTracks>17</TotalTracks>
-        </Album>
-        <Album id="spy_5996">
-            <Title>In My Defense</Title>
-            <ReleaseDate>2019-07-19</ReleaseDate>
-            <Duration>2100</Duration>
-            <Artists>
-        	    <ArtistName>Iggy Azalea</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Thanks I Get</TrackTitle>
-        	    <TrackTitle>Clap Back</TrackTitle>
-                <TrackTitle>Sally Walker</TrackTitle>
-                <TrackTitle>Hoemita (feat. Lil Yachty)</TrackTitle>
-                <TrackTitle>Started</TrackTitle>
-                <TrackTitle>Spend It</TrackTitle>
-                <TrackTitle>Fuck It Up (feat. Kash Doll)</TrackTitle>
-                <TrackTitle>Big Bag (feat. Stini)</TrackTitle>
-                <TrackTitle>Comme Des Garcons</TrackTitle>
-                <TrackTitle>Freak Of The Week (feat. Juicy J)</TrackTitle>
-                <TrackTitle>Pussy Pop</TrackTitle>
-            </Tracks>
-            <TotalTracks>12</TotalTracks>
-        </Album>
-        <Album id="spy_14766">
-            <Title>August And Everything After</Title>
-            <ReleaseDate>1993-09-14</ReleaseDate>
-            <Duration>3060</Duration>
-            <Artists>
-        	    <ArtistName>Counting Crows</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Round Here</TrackTitle>
-        	    <TrackTitle>Omaha</TrackTitle>
-                <TrackTitle>Mr. Jones</TrackTitle>
-                <TrackTitle>Perfect Blue Buildings</TrackTitle>
-                <TrackTitle>Anna Begins</TrackTitle>
-                <TrackTitle>Time and Time Again</TrackTitle>
-                <TrackTitle>Sullivan Street</TrackTitle>
-                <TrackTitle>Rain King</TrackTitle>
-                <TrackTitle>Raining in Baltimore</TrackTitle>
-                <TrackTitle>Ghost Train</TrackTitle>
-                <TrackTitle>A Murder of One</TrackTitle>
-            </Tracks>
-            <TotalTracks>11</TotalTracks>
-        </Album>
-        <Album id="spy_19146">
-            <Title>Lovers Rock</Title>
-            <ReleaseDate>2018-09-07</ReleaseDate>
-            <Duration>2880</Duration>
-            <Artists>
-        	    <ArtistName>Estelle</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>So Easy (feat. Luke James)</TrackTitle>
-        	    <TrackTitle>Meet Up (feat. Maleek Berry)</TrackTitle>
-                <TrackTitle>Really Want (feat. Konshens, Nick, Navi)</TrackTitle>
-                <TrackTitle>Better</TrackTitle>
-                <TrackTitle>Don't Wanna (feat. Kranium)</TrackTitle>
-                <TrackTitle>Queen (feat. Chronixx)</TrackTitle>
-                <TrackTitle>Slow Down (feat. Alicai Harley)</TrackTitle>
-                <TrackTitle>Ain't Yo Bitch</TrackTitle>
-                <TrackTitle>Sweetly</TrackTitle>
-                <TrackTitle>Karma (feat. HoodCelebrityy)</TrackTitle>
-                <TrackTitle>Lights Out</TrackTitle>
-                <TrackTitle>Love Like Ours (feat. Tarrus Riley)</TrackTitle>
-                <TrackTitle>One More Time</TrackTitle>
-                <TrackTitle>Good For Us</TrackTitle>
-            </Tracks>
-            <TotalTracks>14</TotalTracks>
-        </Album>
-        <Album id="spy_12330">
-            <Title>Turn Up The Quiet</Title>
-            <ReleaseDate>2016-05-05</ReleaseDate>
-            <Duration>2880</Duration>
-            <Artists>
-        	    <ArtistName>Diana Krall</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Like Someone In Love</TrackTitle>
-        	    <TrackTitle>Isn't It Romantic</TrackTitle>
-                <TrackTitle>L-O-V-E</TrackTitle>
-                <TrackTitle>Night And Day</TrackTitle>
-                <TrackTitle>I'm Confessin' (That I Love You)</TrackTitle>
-                <TrackTitle>Moonglow</TrackTitle>
-                <TrackTitle>Blue Skies</TrackTitle>
-                <TrackTitle>Sway</TrackTitle>
-                <TrackTitle>No Moon At All</TrackTitle>
-                <TrackTitle>Dream</TrackTitle>
-                <TrackTitle>I'll See You In My Dreams</TrackTitle>
-            </Tracks>
-            <TotalTracks>11</TotalTracks>
-        </Album>
-        <Album id="spy_17422">
-            <Title>Lioness: Hidden Treasures</Title>
-            <ReleaseDate>2011-12-02</ReleaseDate>
-            <Duration>2700</Duration>
-            <Artists>
-        	    <ArtistName>Amy Winehouse</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Our Day Will Come</TrackTitle>
-        	    <TrackTitle>Between The Cheats</TrackTitle>
-                <TrackTitle>Tears Dry (Original Version)</TrackTitle>
-                <TrackTitle>Will You Still Love Me Tomorrow? (2011)</TrackTitle>
-                <TrackTitle>Like Smoke (feat. Nas)</TrackTitle>
-                <TrackTitle>The Girl From Ipanema</TrackTitle>
-                <TrackTitle>Half Time</TrackTitle>
-                <TrackTitle>Wake Up Alone</TrackTitle>
-                <TrackTitle>Best Friends, Right?</TrackTitle>
-                <TrackTitle>A Song For You</TrackTitle>
-            </Tracks>
-            <TotalTracks>10</TotalTracks>
-        </Album>
-        <Album id="spy_7868">
-            <Title>Costello Music</Title>
-            <ReleaseDate>2006-09-11</ReleaseDate>
-            <Duration>2640</Duration>
-            <Artists>
-        	    <ArtistName>The Fratellis</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Henrietta</TrackTitle>
-        	    <TrackTitle>Flathead</TrackTitle>
-                <TrackTitle>Whistle For The Choir</TrackTitle>
-                <TrackTitle>Chelsea Dagger</TrackTitle>
-                <TrackTitle>For The Girl</TrackTitle>
-                <TrackTitle>Doginabag</TrackTitle>
-                <TrackTitle>Creepin Up The Backstairs</TrackTitle>
-                <TrackTitle>Vince The Loveable Stoner</TrackTitle>
-                <TrackTitle>Everybody Knows You Cried Last Night</TrackTitle>
-                <TrackTitle>Baby Fratelli</TrackTitle>
-                <TrackTitle>Got Ma Nuts From A Hippie</TrackTitle>
-                <TrackTitle>Ole Black 'n' Blue Eyes</TrackTitle>
-                <TrackTitle>Cuntry Boys, City Girls</TrackTitle>
-            </Tracks>
-            <TotalTracks>13</TotalTracks>
-        </Album>
-        <Album id="spy_3059">
-            <Title>Glory Sound Prep</Title>
-            <ReleaseDate>2018-11-09</ReleaseDate>
-            <Duration>2580</Duration>
-            <Artists>
-        	    <ArtistName>Jon Bellion</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Conversations with my Wife</TrackTitle>
-        	    <TrackTitle>JT</TrackTitle>
-                <TrackTitle>Let's Begin (feat. Roc Marciano, RZA, B.Keyz, Travis Mendes)</TrackTitle>
-                <TrackTitle>Stupid Deep</TrackTitle>
-                <TrackTitle>The Internet</TrackTitle>
-                <TrackTitle>Blu</TrackTitle>
-                <TrackTitle>Adult Swim (feat. Tuamie)</TrackTitle>
-                <TrackTitle>Couples Retreat</TrackTitle>
-                <TrackTitle>Cautionary Tales</TrackTitle>
-                <TrackTitle>Mah's Joint (feat. Quincy Jones)</TrackTitle>
-            </Tracks>
-            <TotalTracks>10</TotalTracks>
-        </Album>
-        <Album id="spy_12147">
-            <Title>Once Upon Another Time</Title>
-            <ReleaseDate>2012-05-22</ReleaseDate>
-            <Duration>1440</Duration>
-            <Artists>
-        	    <ArtistName>Sara Bareilles</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Once Upon Another Time</TrackTitle>
-        	    <TrackTitle>Stay</TrackTitle>
-                <TrackTitle>Lie To Me</TrackTitle>
-                <TrackTitle>Sweet As Whole</TrackTitle>
-                <TrackTitle>Bright Lights and Cityscapes</TrackTitle>
-            </Tracks>
-            <TotalTracks>5</TotalTracks>
-        </Album>
-        <Album id="spy_6951">
-            <Title>Für dich.</Title>
-            <ReleaseDate>2017-11-24</ReleaseDate>
-            <Duration>3360</Duration>
-            <Artists>
-        	    <ArtistName>Xavier Naidoo</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Nimm mich mit</TrackTitle>
-        	    <TrackTitle>Zuhause</TrackTitle>
-                <TrackTitle>Für dich</TrackTitle>
-                <TrackTitle>Allein</TrackTitle>
-                <TrackTitle>Gib mir Liebe</TrackTitle>
-                <TrackTitle>Drück diesem Leben deinen Stempel auf</TrackTitle>
-                <TrackTitle>Bei dir sein</TrackTitle>
-                <TrackTitle>Stille</TrackTitle>
-                <TrackTitle>Solange ich noch darf</TrackTitle>
-                <TrackTitle>Hoch entwickelt</TrackTitle>
-                <TrackTitle>Tropfen für Tropfen</TrackTitle>
-                <TrackTitle>Bereit für die Liebe</TrackTitle>
-                <TrackTitle>Was ist schon für immer</TrackTitle>
-                <TrackTitle>Mach dir keine Sorgen</TrackTitle>
-            </Tracks>
-            <TotalTracks>14</TotalTracks>
-        </Album>
-        <Album id="spy_17218">
-            <Title>Unleash The Dragon</Title>
-            <ReleaseDate>1999-11-30</ReleaseDate>
-            <Duration>3626</Duration>
-            <Artists>
-        	    <ArtistName>Sisqo</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Unleash The Dragon (feat. Beanie Sigel)</TrackTitle>
-        	    <TrackTitle>Got To Get It (feat. Make It Hot)</TrackTitle>
-                <TrackTitle>Is Love Enough (feat. Lovher)</TrackTitle>
-                <TrackTitle>2Nite (Interlude)</TrackTitle>
-                <TrackTitle>How Can I Love U 2Nite</TrackTitle>
-                <TrackTitle>Your Love Is Incredible</TrackTitle>
-                <TrackTitle>So Sexual</TrackTitle>
-                <TrackTitle>Thong Song</TrackTitle>
-                <TrackTitle>Incomplete</TrackTitle>
-                <TrackTitle>Addicted</TrackTitle>
-                <TrackTitle>Dru World Order (Interlude / Dedicated To Dru Hill)</TrackTitle>
-                <TrackTitle>Enchantment Passing Through</TrackTitle>
-                <TrackTitle>You Are Everything (Remix) (feat. Ja Rule)</TrackTitle>
-            </Tracks>
-            <TotalTracks>13</TotalTracks>
-        </Album>
-        <Album id="spy_11304">
-            <Title>Top 5 Dead Or Alive</Title>
-            <ReleaseDate>2015-11-20</ReleaseDate>
-            <Duration>3601</Duration>
-            <Artists>
-        	    <ArtistName>Jadakiss</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>First 48 (Intro)</TrackTitle>
-        	    <TrackTitle>Shop Talk (Skit)</TrackTitle>
-                <TrackTitle>You Don't Eat (feat. Puff Daddy)</TrackTitle>
-                <TrackTitle>You Can See (feat. Future)</TrackTitle>
-                <TrackTitle>Y. O. (Youthful Offenders) (feat. Akon)</TrackTitle>
-                <TrackTitle>Jason (feat. Swizz Beatz)</TrackTitle>
-                <TrackTitle>Kill (feat. Lil Wayne)</TrackTitle>
-                <TrackTitle>Man In The Mirror</TrackTitle>
-                <TrackTitle>Synergy (feat. Styles P)</TrackTitle>
-                <TrackTitle>Aint Nothin New (feat. Ne-Yo, Nipsey Hussle)</TrackTitle>
-                <TrackTitle>So High (feat. Wiz Khalifa)</TrackTitle>
-                <TrackTitle>Ahaa Interview (Skit)</TrackTitle>
-                <TrackTitle>Critical (feat. Jeezy)</TrackTitle>
-                <TrackTitle>Confetti (Skit) (feat. Young Adz)</TrackTitle>
-                <TrackTitle>Cutlass (feat. Ex.od.us)</TrackTitle>
-                <TrackTitle>Realest In The Game (feat. Young Buck, Sheek Louch)</TrackTitle>
-                <TrackTitle>Rain (feat. Nas)</TrackTitle>
-                <TrackTitle>One More Mile To Go (feat. Chayse)</TrackTitle>
-            </Tracks>
-            <TotalTracks>18</TotalTracks>
-        </Album>
-        <Album id="spy_15190">
-            <Title>Master of My Make-Believe</Title>
-            <ReleaseDate>2012-04-16</ReleaseDate>
-            <Duration>2220</Duration>
-            <Artists>
-        	    <ArtistName>Santigold</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Go! (Feat. Karen O)</TrackTitle>
-        	    <TrackTitle>Disparate Youth</TrackTitle>
-                <TrackTitle>God from the Machine</TrackTitle>
-                <TrackTitle>Fame</TrackTitle>
-                <TrackTitle>Freak Like Me</TrackTitle>
-                <TrackTitle>This Isn't Our Parade</TrackTitle>
-                <TrackTitle>The Riot's Gone</TrackTitle>
-                <TrackTitle>Pirate in the Water</TrackTitle>
-                <TrackTitle>The Keepers</TrackTitle>
-                <TrackTitle>Look at These Hoes</TrackTitle>
-                <TrackTitle>Big Mouth</TrackTitle>
-            </Tracks>
-            <TotalTracks>11</TotalTracks>
-        </Album>
-        <Album id="spy_18257">
-            <Title>Labyrinths</Title>
-            <ReleaseDate>2016-10-28</ReleaseDate>
-            <Duration>2580</Duration>
-            <Artists>
-        	    <ArtistName>Daedelus</ArtistName>
-            </Artists>
-            <Tracks>
-                <TrackTitle>Aries</TrackTitle>
-        	    <TrackTitle>Tussle</TrackTitle>
-                <TrackTitle>Special Re: Quest</TrackTitle>
-                <TrackTitle>Setting Out</TrackTitle>
-                <TrackTitle>Labyrinths</TrackTitle>
-                <TrackTitle>Minotaur</TrackTitle>
-                <TrackTitle>In Your Hands</TrackTitle>
-                <TrackTitle>A Maze Amazing</TrackTitle>
-                <TrackTitle>Crime of Passion</TrackTitle>
-                <TrackTitle>War Drums</TrackTitle>
-                <TrackTitle>Hold Sway</TrackTitle>
-            </Tracks>
-            <TotalTracks>12</TotalTracks>
-        </Album>
-    </Albums>
-</root>    
+<Albums>
+    <!-- https://en.wikipedia.org/wiki/I_Love_You_(A_Dedication_to_My_Fans) -->
+    <Album id="spy_11307">
+        <Title>I LOVE YOU (A Dedication To My Fans) The Mixtape</Title>
+        <ReleaseDate>2011-05-23</ReleaseDate>
+        <Duration>1920</Duration>
+        <Artists>
+            <ArtistName>Jadakiss</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Intro</TrackTitle>
+            <TrackTitle>Hold You Down (feat. Emanny)</TrackTitle>
+            <TrackTitle>Lil Bruh</TrackTitle>
+            <TrackTitle>How I Feel</TrackTitle>
+            <TrackTitle>Hold You Down (feat. Emanny)</TrackTitle>
+            <TrackTitle>Rock Wit Me (feat. Teyana Taylor)</TrackTitle>
+            <TrackTitle>In The Streets</TrackTitle>
+            <TrackTitle>Lay Em Down (feat. Styles P, Chynk Show)</TrackTitle>
+            <TrackTitle>Toast To That (feat. Fred The Godson)</TrackTitle>
+            <TrackTitle>Inkredible Remix (feat. Trae Tha Truth, Rick Ross)</TrackTitle>
+            <TrackTitle>Gone Too Long</TrackTitle>
+        </Tracks>
+        <TotalTracks>11</TotalTracks>
+    </Album>
+    <Album id="spy_232">
+        <Title>The Human Condition</Title>
+        <ReleaseDate>2016-06-10</ReleaseDate>
+        <Duration>3311</Duration>
+        <Artists>
+            <ArtistName>Jon Bellion</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>He Is The Same</TrackTitle>
+            <TrackTitle>80's Films</TrackTitle>
+            <TrackTitle>All Time Low (New Mix)</TrackTitle>
+            <TrackTitle>New York Soul (Pt. ii)</TrackTitle>
+            <TrackTitle>Fashion</TrackTitle>
+            <TrackTitle>Maybe IDK</TrackTitle>
+            <TrackTitle>Woke The F*ck Up (New Mix)</TrackTitle>
+            <TrackTitle>Overwhelming</TrackTitle>
+            <TrackTitle>Weight Of The World</TrackTitle>
+            <TrackTitle>The Good In Me</TrackTitle>
+            <TrackTitle>Morning In America</TrackTitle>
+            <TrackTitle>iRobot</TrackTitle>
+            <TrackTitle>Guillotine</TrackTitle>
+            <TrackTitle>Hand Of God (Outro)</TrackTitle>
+        </Tracks>
+        <TotalTracks>14</TotalTracks>
+    </Album>
+    <Album id="spy_13762">
+        <Title>Barrio Estación</Title>
+        <ReleaseDate>2022-11-24</ReleaseDate>
+        <Duration>3180</Duration>
+        <Artists>
+            <ArtistName>Los Bunkers</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Coma</TrackTitle>
+            <TrackTitle>Me Muelen A Palos</TrackTitle>
+            <TrackTitle>Fiesta</TrackTitle>
+            <TrackTitle>Una Nube Cuelga Sobre Mí</TrackTitle>
+            <TrackTitle>Andén</TrackTitle>
+            <TrackTitle>Si Todo Esto Es Lo Que Hay</TrackTitle>
+            <TrackTitle>Capablanca</TrackTitle>
+            <TrackTitle>Deudas</TrackTitle>
+            <TrackTitle>Nada Nuevo Bajo El Sol</TrackTitle>
+            <TrackTitle>El Tiempo Que Se Va</TrackTitle>
+            <TrackTitle>El Mismo Lugar</TrackTitle>
+            <TrackTitle>Tarde</TrackTitle>
+            <TrackTitle>Abril</TrackTitle>
+        </Tracks>
+        <TotalTracks>13</TotalTracks>
+    </Album>
+    <Album id="spy_16030">
+        <Title>Man on the Moon 2: the Legend of Mr.Rager</Title>
+        <ReleaseDate>2010-11-08</ReleaseDate>
+        <Duration>3602</Duration>
+        <Artists>
+            <ArtistName>Kid Cudi</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Scott Mescudi Vs. The World (feat. Cee-Lo)</TrackTitle>
+            <TrackTitle>REVOFEV</TrackTitle>
+            <TrackTitle>Don’t Play This Song (feat. Mary J. Blige)</TrackTitle>
+            <TrackTitle>We Aite (Wake Your Mind Up)</TrackTitle>
+            <TrackTitle>Marijuana</TrackTitle>
+            <TrackTitle>Mojo So Dope</TrackTitle>
+            <TrackTitle>Ashin’ Kusher</TrackTitle>
+            <TrackTitle>Erase Me (Main) (feat. Kanye West)</TrackTitle>
+            <TrackTitle>Wild’n Cuz I’m Young</TrackTitle>
+            <TrackTitle>The Mood</TrackTitle>
+            <TrackTitle>MANIAC (fat. Cage, St. Vincent)</TrackTitle>
+            <TrackTitle>Mr. Rager</TrackTitle>
+            <TrackTitle>These Worries (feat. Mary J. Blige)</TrackTitle>
+            <TrackTitle>The End (feat. GLC, Chip Tha Ripper, Nicole Wray)</TrackTitle>
+            <TrackTitle>All Along</TrackTitle>
+            <TrackTitle>GHOST!</TrackTitle>
+            <TrackTitle>Trapped In My Mind</TrackTitle>
+        </Tracks>
+        <TotalTracks>17</TotalTracks>
+    </Album>
+    <Album id="spy_5996">
+        <Title>In My Defense</Title>
+        <ReleaseDate>2019-07-19</ReleaseDate>
+        <Duration>2100</Duration>
+        <Artists>
+            <ArtistName>Iggy Azalea</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Thanks I Get</TrackTitle>
+            <TrackTitle>Clap Back</TrackTitle>
+            <TrackTitle>Sally Walker</TrackTitle>
+            <TrackTitle>Hoemita (feat. Lil Yachty)</TrackTitle>
+            <TrackTitle>Started</TrackTitle>
+            <TrackTitle>Spend It</TrackTitle>
+            <TrackTitle>Fuck It Up (feat. Kash Doll)</TrackTitle>
+            <TrackTitle>Big Bag (feat. Stini)</TrackTitle>
+            <TrackTitle>Comme Des Garcons</TrackTitle>
+            <TrackTitle>Freak Of The Week (feat. Juicy J)</TrackTitle>
+            <TrackTitle>Pussy Pop</TrackTitle>
+        </Tracks>
+        <TotalTracks>12</TotalTracks>
+    </Album>
+    <Album id="spy_14766">
+        <Title>August And Everything After</Title>
+        <ReleaseDate>1993-09-14</ReleaseDate>
+        <Duration>3060</Duration>
+        <Artists>
+            <ArtistName>Counting Crows</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Round Here</TrackTitle>
+            <TrackTitle>Omaha</TrackTitle>
+            <TrackTitle>Mr. Jones</TrackTitle>
+            <TrackTitle>Perfect Blue Buildings</TrackTitle>
+            <TrackTitle>Anna Begins</TrackTitle>
+            <TrackTitle>Time and Time Again</TrackTitle>
+            <TrackTitle>Sullivan Street</TrackTitle>
+            <TrackTitle>Rain King</TrackTitle>
+            <TrackTitle>Raining in Baltimore</TrackTitle>
+            <TrackTitle>Ghost Train</TrackTitle>
+            <TrackTitle>A Murder of One</TrackTitle>
+        </Tracks>
+        <TotalTracks>11</TotalTracks>
+    </Album>
+    <Album id="spy_19146">
+        <Title>Lovers Rock</Title>
+        <ReleaseDate>2018-09-07</ReleaseDate>
+        <Duration>2880</Duration>
+        <Artists>
+            <ArtistName>Estelle</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>So Easy (feat. Luke James)</TrackTitle>
+            <TrackTitle>Meet Up (feat. Maleek Berry)</TrackTitle>
+            <TrackTitle>Really Want (feat. Konshens, Nick, Navi)</TrackTitle>
+            <TrackTitle>Better</TrackTitle>
+            <TrackTitle>Don't Wanna (feat. Kranium)</TrackTitle>
+            <TrackTitle>Queen (feat. Chronixx)</TrackTitle>
+            <TrackTitle>Slow Down (feat. Alicai Harley)</TrackTitle>
+            <TrackTitle>Ain't Yo Bitch</TrackTitle>
+            <TrackTitle>Sweetly</TrackTitle>
+            <TrackTitle>Karma (feat. HoodCelebrityy)</TrackTitle>
+            <TrackTitle>Lights Out</TrackTitle>
+            <TrackTitle>Love Like Ours (feat. Tarrus Riley)</TrackTitle>
+            <TrackTitle>One More Time</TrackTitle>
+            <TrackTitle>Good For Us</TrackTitle>
+        </Tracks>
+        <TotalTracks>14</TotalTracks>
+    </Album>
+    <Album id="spy_12330">
+        <Title>Turn Up The Quiet</Title>
+        <ReleaseDate>2016-05-05</ReleaseDate>
+        <Duration>2880</Duration>
+        <Artists>
+            <ArtistName>Diana Krall</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Like Someone In Love</TrackTitle>
+            <TrackTitle>Isn't It Romantic</TrackTitle>
+            <TrackTitle>L-O-V-E</TrackTitle>
+            <TrackTitle>Night And Day</TrackTitle>
+            <TrackTitle>I'm Confessin' (That I Love You)</TrackTitle>
+            <TrackTitle>Moonglow</TrackTitle>
+            <TrackTitle>Blue Skies</TrackTitle>
+            <TrackTitle>Sway</TrackTitle>
+            <TrackTitle>No Moon At All</TrackTitle>
+            <TrackTitle>Dream</TrackTitle>
+            <TrackTitle>I'll See You In My Dreams</TrackTitle>
+        </Tracks>
+        <TotalTracks>11</TotalTracks>
+    </Album>
+    <Album id="spy_17422">
+        <Title>Lioness: Hidden Treasures</Title>
+        <ReleaseDate>2011-12-02</ReleaseDate>
+        <Duration>2700</Duration>
+        <Artists>
+            <ArtistName>Amy Winehouse</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Our Day Will Come</TrackTitle>
+            <TrackTitle>Between The Cheats</TrackTitle>
+            <TrackTitle>Tears Dry (Original Version)</TrackTitle>
+            <TrackTitle>Will You Still Love Me Tomorrow? (2011)</TrackTitle>
+            <TrackTitle>Like Smoke (feat. Nas)</TrackTitle>
+            <TrackTitle>The Girl From Ipanema</TrackTitle>
+            <TrackTitle>Half Time</TrackTitle>
+            <TrackTitle>Wake Up Alone</TrackTitle>
+            <TrackTitle>Best Friends, Right?</TrackTitle>
+            <TrackTitle>A Song For You</TrackTitle>
+        </Tracks>
+        <TotalTracks>10</TotalTracks>
+    </Album>
+    <Album id="spy_7868">
+        <Title>Costello Music</Title>
+        <ReleaseDate>2006-09-11</ReleaseDate>
+        <Duration>2640</Duration>
+        <Artists>
+            <ArtistName>The Fratellis</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Henrietta</TrackTitle>
+            <TrackTitle>Flathead</TrackTitle>
+            <TrackTitle>Whistle For The Choir</TrackTitle>
+            <TrackTitle>Chelsea Dagger</TrackTitle>
+            <TrackTitle>For The Girl</TrackTitle>
+            <TrackTitle>Doginabag</TrackTitle>
+            <TrackTitle>Creepin Up The Backstairs</TrackTitle>
+            <TrackTitle>Vince The Loveable Stoner</TrackTitle>
+            <TrackTitle>Everybody Knows You Cried Last Night</TrackTitle>
+            <TrackTitle>Baby Fratelli</TrackTitle>
+            <TrackTitle>Got Ma Nuts From A Hippie</TrackTitle>
+            <TrackTitle>Ole Black 'n' Blue Eyes</TrackTitle>
+            <TrackTitle>Cuntry Boys, City Girls</TrackTitle>
+        </Tracks>
+        <TotalTracks>13</TotalTracks>
+    </Album>
+    <Album id="spy_3059">
+        <Title>Glory Sound Prep</Title>
+        <ReleaseDate>2018-11-09</ReleaseDate>
+        <Duration>2580</Duration>
+        <Artists>
+            <ArtistName>Jon Bellion</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Conversations with my Wife</TrackTitle>
+            <TrackTitle>JT</TrackTitle>
+            <TrackTitle>Let's Begin (feat. Roc Marciano, RZA, B.Keyz, Travis Mendes)</TrackTitle>
+            <TrackTitle>Stupid Deep</TrackTitle>
+            <TrackTitle>The Internet</TrackTitle>
+            <TrackTitle>Blu</TrackTitle>
+            <TrackTitle>Adult Swim (feat. Tuamie)</TrackTitle>
+            <TrackTitle>Couples Retreat</TrackTitle>
+            <TrackTitle>Cautionary Tales</TrackTitle>
+            <TrackTitle>Mah's Joint (feat. Quincy Jones)</TrackTitle>
+        </Tracks>
+        <TotalTracks>10</TotalTracks>
+    </Album>
+    <Album id="spy_12147">
+        <Title>Once Upon Another Time</Title>
+        <ReleaseDate>2012-05-22</ReleaseDate>
+        <Duration>1440</Duration>
+        <Artists>
+            <ArtistName>Sara Bareilles</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Once Upon Another Time</TrackTitle>
+            <TrackTitle>Stay</TrackTitle>
+            <TrackTitle>Lie To Me</TrackTitle>
+            <TrackTitle>Sweet As Whole</TrackTitle>
+            <TrackTitle>Bright Lights and Cityscapes</TrackTitle>
+        </Tracks>
+        <TotalTracks>5</TotalTracks>
+    </Album>
+    <Album id="spy_6951">
+        <Title>Für dich.</Title>
+        <ReleaseDate>2017-11-24</ReleaseDate>
+        <Duration>3360</Duration>
+        <Artists>
+            <ArtistName>Xavier Naidoo</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Nimm mich mit</TrackTitle>
+            <TrackTitle>Zuhause</TrackTitle>
+            <TrackTitle>Für dich</TrackTitle>
+            <TrackTitle>Allein</TrackTitle>
+            <TrackTitle>Gib mir Liebe</TrackTitle>
+            <TrackTitle>Drück diesem Leben deinen Stempel auf</TrackTitle>
+            <TrackTitle>Bei dir sein</TrackTitle>
+            <TrackTitle>Stille</TrackTitle>
+            <TrackTitle>Solange ich noch darf</TrackTitle>
+            <TrackTitle>Hoch entwickelt</TrackTitle>
+            <TrackTitle>Tropfen für Tropfen</TrackTitle>
+            <TrackTitle>Bereit für die Liebe</TrackTitle>
+            <TrackTitle>Was ist schon für immer</TrackTitle>
+            <TrackTitle>Mach dir keine Sorgen</TrackTitle>
+        </Tracks>
+        <TotalTracks>14</TotalTracks>
+    </Album>
+    <Album id="spy_17218">
+        <Title>Unleash The Dragon</Title>
+        <ReleaseDate>1999-11-30</ReleaseDate>
+        <Duration>3626</Duration>
+        <Artists>
+            <ArtistName>Sisqo</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Unleash The Dragon (feat. Beanie Sigel)</TrackTitle>
+            <TrackTitle>Got To Get It (feat. Make It Hot)</TrackTitle>
+            <TrackTitle>Is Love Enough (feat. Lovher)</TrackTitle>
+            <TrackTitle>2Nite (Interlude)</TrackTitle>
+            <TrackTitle>How Can I Love U 2Nite</TrackTitle>
+            <TrackTitle>Your Love Is Incredible</TrackTitle>
+            <TrackTitle>So Sexual</TrackTitle>
+            <TrackTitle>Thong Song</TrackTitle>
+            <TrackTitle>Incomplete</TrackTitle>
+            <TrackTitle>Addicted</TrackTitle>
+            <TrackTitle>Dru World Order (Interlude / Dedicated To Dru Hill)</TrackTitle>
+            <TrackTitle>Enchantment Passing Through</TrackTitle>
+            <TrackTitle>You Are Everything (Remix) (feat. Ja Rule)</TrackTitle>
+        </Tracks>
+        <TotalTracks>13</TotalTracks>
+    </Album>
+    <Album id="spy_11304">
+        <Title>Top 5 Dead Or Alive</Title>
+        <ReleaseDate>2015-11-20</ReleaseDate>
+        <Duration>3601</Duration>
+        <Artists>
+            <ArtistName>Jadakiss</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>First 48 (Intro)</TrackTitle>
+            <TrackTitle>Shop Talk (Skit)</TrackTitle>
+            <TrackTitle>You Don't Eat (feat. Puff Daddy)</TrackTitle>
+            <TrackTitle>You Can See (feat. Future)</TrackTitle>
+            <TrackTitle>Y. O. (Youthful Offenders) (feat. Akon)</TrackTitle>
+            <TrackTitle>Jason (feat. Swizz Beatz)</TrackTitle>
+            <TrackTitle>Kill (feat. Lil Wayne)</TrackTitle>
+            <TrackTitle>Man In The Mirror</TrackTitle>
+            <TrackTitle>Synergy (feat. Styles P)</TrackTitle>
+            <TrackTitle>Aint Nothin New (feat. Ne-Yo, Nipsey Hussle)</TrackTitle>
+            <TrackTitle>So High (feat. Wiz Khalifa)</TrackTitle>
+            <TrackTitle>Ahaa Interview (Skit)</TrackTitle>
+            <TrackTitle>Critical (feat. Jeezy)</TrackTitle>
+            <TrackTitle>Confetti (Skit) (feat. Young Adz)</TrackTitle>
+            <TrackTitle>Cutlass (feat. Ex.od.us)</TrackTitle>
+            <TrackTitle>Realest In The Game (feat. Young Buck, Sheek Louch)</TrackTitle>
+            <TrackTitle>Rain (feat. Nas)</TrackTitle>
+            <TrackTitle>One More Mile To Go (feat. Chayse)</TrackTitle>
+        </Tracks>
+        <TotalTracks>18</TotalTracks>
+    </Album>
+    <Album id="spy_15190">
+        <Title>Master of My Make-Believe</Title>
+        <ReleaseDate>2012-04-16</ReleaseDate>
+        <Duration>2220</Duration>
+        <Artists>
+            <ArtistName>Santigold</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Go! (Feat. Karen O)</TrackTitle>
+            <TrackTitle>Disparate Youth</TrackTitle>
+            <TrackTitle>God from the Machine</TrackTitle>
+            <TrackTitle>Fame</TrackTitle>
+            <TrackTitle>Freak Like Me</TrackTitle>
+            <TrackTitle>This Isn't Our Parade</TrackTitle>
+            <TrackTitle>The Riot's Gone</TrackTitle>
+            <TrackTitle>Pirate in the Water</TrackTitle>
+            <TrackTitle>The Keepers</TrackTitle>
+            <TrackTitle>Look at These Hoes</TrackTitle>
+            <TrackTitle>Big Mouth</TrackTitle>
+        </Tracks>
+        <TotalTracks>11</TotalTracks>
+    </Album>
+    <Album id="spy_18257">
+        <Title>Labyrinths</Title>
+        <ReleaseDate>2016-10-28</ReleaseDate>
+        <Duration>2580</Duration>
+        <Artists>
+            <ArtistName>Daedelus</ArtistName>
+        </Artists>
+        <Tracks>
+            <TrackTitle>Aries</TrackTitle>
+            <TrackTitle>Tussle</TrackTitle>
+            <TrackTitle>Special Re: Quest</TrackTitle>
+            <TrackTitle>Setting Out</TrackTitle>
+            <TrackTitle>Labyrinths</TrackTitle>
+            <TrackTitle>Minotaur</TrackTitle>
+            <TrackTitle>In Your Hands</TrackTitle>
+            <TrackTitle>A Maze Amazing</TrackTitle>
+            <TrackTitle>Crime of Passion</TrackTitle>
+            <TrackTitle>War Drums</TrackTitle>
+            <TrackTitle>Hold Sway</TrackTitle>
+        </Tracks>
+        <TotalTracks>12</TotalTracks>
+    </Album>
+</Albums>

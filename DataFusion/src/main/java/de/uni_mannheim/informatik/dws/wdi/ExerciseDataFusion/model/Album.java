@@ -65,7 +65,7 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 	private List<String> genre;
 	private String country;
 	private String language;
-	private int duration;
+	private Integer duration;
 	
 	
 	@Override
@@ -142,11 +142,11 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 		this.language = language;
 	}
 
-	public int getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(int duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 
@@ -235,15 +235,16 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 		else if(attribute==LANGUAGE)
 			return getLanguage() != null;
 		else if(attribute==DURATION)
-			return getDuration() > 0;
+			return getDuration() != null;
 		else
 			return false;
 	}
 
+	// TODO: add more attributes?
 	@Override
 	public String toString() {
-		return String.format("[Album %s: %s / %s / %s]", getIdentifier(), getTitle(),
-				getArtists(), getReleaseDate().toString());
+		return String.format("[Album %s: %s / %s]", getIdentifier(), getTitle(),
+				getArtists());
 	}
 
 	@Override

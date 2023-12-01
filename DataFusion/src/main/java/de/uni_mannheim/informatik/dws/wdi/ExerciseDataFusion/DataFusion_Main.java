@@ -54,15 +54,15 @@ public class DataFusion_Main
 		// Load the Data into FusibleDataSet
 		logger.info("*\tLoading datasets\t*");
 		FusibleDataSet<Album, Attribute> ds1 = new FusibleHashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", ds1);
+		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/Albums/Album", ds1);
 		ds1.printDataSetDensityReport();
 
 		FusibleDataSet<Album, Attribute> ds2 = new FusibleHashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", ds2);
+		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/Albums/Album", ds2);
 		ds2.printDataSetDensityReport();
 
 		FusibleDataSet<Album, Attribute> ds3 = new FusibleHashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/root/Albums/Album", ds3);
+		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/Albums/Album", ds3);
 		ds3.printDataSetDensityReport();
 
 		// Maintain Provenance
@@ -84,6 +84,7 @@ public class DataFusion_Main
 		ds3.setDate(LocalDateTime.parse("2008-01-01", formatter));
 
 		// load correspondences
+		// TODO: find correct data of our data
 		logger.info("*\tLoading correspondences\t*");
 		CorrespondenceSet<Album, Attribute> correspondences = new CorrespondenceSet<>();
 		correspondences.loadCorrespondences(new File("data/correspondences/WDC_MB_correspondences.csv"),ds1, ds2);
@@ -96,7 +97,7 @@ public class DataFusion_Main
 		// // load the gold standard
 		logger.info("*\tEvaluating results\t*");
 		DataSet<Album, Attribute> gs = new FusibleHashedDataSet<>();
-		new AlbumXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "root/Albums/Album", gs);
+		new AlbumXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "Albums/Album", gs);
 
 		for(Album m : gs.get()) {
 			logger.info(String.format("gs: %s", m.getIdentifier()));

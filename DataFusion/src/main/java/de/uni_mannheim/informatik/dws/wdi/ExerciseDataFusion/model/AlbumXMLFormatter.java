@@ -29,26 +29,56 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 
 	@Override
 	public Element createRootElement(Document doc) {
-		return doc.createElement("albums");
+		return doc.createElement("Albums");
 	}
 
 	@Override
 	public Element createElementFromRecord(Album record, Document doc) {
-		Element album = doc.createElement("album");
+		Element album = doc.createElement("Album");
 
 		album.appendChild(createTextElement("id", record.getIdentifier(), doc));
 
-		album.appendChild(createTextElement("title",
+		album.appendChild(createTextElementWithProvenance("title",
 				record.getTitle(),
+				record.getMergedAttributeProvenance(Album.TITLE),
 				doc));
-		album.appendChild(createTextElement("duration",
-				String.valueOf(record.getDuration()),
-				doc));
-		album.appendChild(createTextElement("totalTracks",
+
+		if (record.getDuration() == null) {
+			album.appendChild(createTextElementWithProvenance(
+				"duration", 
+				"null",
+				record.getMergedAttributeProvenance(Album.DURATION), doc));
+		} else {
+			album.appendChild(createTextElementWithProvenance(
+				"duration",
+				record.getDuration().toString(),
+				record.getMergedAttributeProvenance(Album.DURATION), doc));
+		}
+
+		if (record.getTotalTracks() == null) {
+			album.appendChild(createTextElementWithProvenance(
+				"totalTracks", 
+				"null",
+				record.getMergedAttributeProvenance(Album.TOTALTRACKS), doc));
+		} else {
+			album.appendChild(createTextElementWithProvenance(
+				"totalTracks",
 				record.getTotalTracks().toString(),
-				doc));
-		album.appendChild(createTextElement("releaseDate", record
-				.getReleaseDate().toString(), doc));
+				record.getMergedAttributeProvenance(Album.TOTALTRACKS), doc));
+		}
+
+		if (record.getReleaseDate() == null) {
+			album.appendChild(createTextElementWithProvenance(
+				"releaseDate", 
+				"null",
+				record.getMergedAttributeProvenance(Album.RELEASEDATE), doc));
+		} else {
+			album.appendChild(createTextElementWithProvenance(
+				"releaseDate",
+				record.getReleaseDate().toString(),
+				record.getMergedAttributeProvenance(Album.RELEASEDATE), doc));
+		}
+
 		
 		album.appendChild(createArtistElement(record, doc));
 

@@ -43,6 +43,7 @@ FusibleFactory<Album, Attribute> {
 	super.initialiseDataset(dataset);
 
 		// the schema is defined in the Movie class and not interpreted from the file, so we have to set the attributes manually
+		
 		dataset.addAttribute(Album.TITLE);
 		dataset.addAttribute(Album.RELEASEDATE);
 		dataset.addAttribute(Album.PRICE);
@@ -68,7 +69,10 @@ FusibleFactory<Album, Attribute> {
 		// fill the attributes
 		String title = getValueFromChildElement(node, "Title");
 		Album.setTitle(stripQuotes(title)); 
-		
+		if (title == null) {
+			System.out.println("Title: " + Album.getTitle());
+		}
+
 		// Album.setReleaseDate(getValueFromChildElement(node, "ReleaseDate"));
 		
 		String country = getValueFromChildElement(node, "Country");
@@ -97,6 +101,14 @@ FusibleFactory<Album, Attribute> {
 			
 			Album.setArtists(ArtistList);
 		}
+		else {
+			Album.setArtists(null);
+		}
+		// print artist
+		if (Album.getArtists() == null) {
+			System.out.println("Artists: " + Album.getArtists());
+		}
+
 
 		String tracks = getValueFromChildElement(node, "Tracks");
 		if (tracks != null){
@@ -111,6 +123,9 @@ FusibleFactory<Album, Attribute> {
 			}
 			Album.setTracks(trackList);
 		}
+		else {
+			Album.setTracks(null);
+		}
 
 		String labels = getValueFromChildElement(node, "Labels");
 		if (labels != null){
@@ -119,6 +134,9 @@ FusibleFactory<Album, Attribute> {
 			List<String> labelList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
 			labelList = labelList.stream().map(l -> stripQuotes(l)).collect(Collectors.toList());
 			Album.setLabels(labelList);
+		}
+		else {
+			Album.setLabels(null);
 		}
 
 		String genres = getValueFromChildElement(node, "Genres");
@@ -129,6 +147,9 @@ FusibleFactory<Album, Attribute> {
 			genreList = genreList.stream().map(g -> stripQuotes(g)).collect(Collectors.toList());
 			Album.setGenres(genreList);
 		}
+		else {
+			Album.setGenres(null);
+		}
 
         
       // Deal with missing values
@@ -137,20 +158,28 @@ FusibleFactory<Album, Attribute> {
 			int TotalTracks = Integer.parseInt(getValueFromChildElement(node, "TotalTracks"));
 			Album.setTotalTracks(TotalTracks);
 		} 
+		else {
+			Album.setTotalTracks(null);
+		}
 		
         String DurationStr  = getValueFromChildElement(node, "Duration");
         if (DurationStr != null) {
         	int Duration = Integer.parseInt(getValueFromChildElement(node, "Duration"));
         	Album.setDuration(Duration);
         }
+		else {
+			Album.setDuration(null);
+		}
 		
         String PriceStr  = getValueFromChildElement(node, "Price");
         if (PriceStr != null) {
         	double Price = Double.parseDouble(getValueFromChildElement(node, "Price"));
         	Album.setPrice(Price);
         }
+		else {
+			Album.setPrice(0.0);
+		}
         
-		
 		
 		// convert the date string into a DateTime object
 		try {
@@ -172,6 +201,10 @@ FusibleFactory<Album, Attribute> {
 				LocalDate dt = LocalDate.parse(date, formatter);
 				Album.setReleaseDate(dt);
 			}
+			else {
+				Album.setReleaseDate(null);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
