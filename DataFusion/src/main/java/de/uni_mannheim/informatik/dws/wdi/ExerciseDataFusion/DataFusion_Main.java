@@ -9,10 +9,10 @@ import java.util.Locale;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.AlbumTitleEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ActorsFuserUnion;
+
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DirectorFuserLongestString;
+
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.FusibleAlbumFactory;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
@@ -65,9 +65,9 @@ public class DataFusion_Main
 
 		// Maintain Provenance
 		// Scores (e.g. from rating)
-		ds1.setScore(1.0);
+		ds1.setScore(3.0);
 		ds2.setScore(2.0);
-		ds3.setScore(3.0);
+		ds3.setScore(1.0);
 
 		// Date (e.g. last update)
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
@@ -77,9 +77,9 @@ public class DataFusion_Main
 		        .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
 		        .toFormatter(Locale.ENGLISH);
 		
-		ds1.setDate(LocalDateTime.parse("2012-01-01", formatter));
-		ds2.setDate(LocalDateTime.parse("2010-01-01", formatter));
-		ds3.setDate(LocalDateTime.parse("2008-01-01", formatter));
+		ds1.setDate(LocalDateTime.parse("2020-12-01", formatter));
+		ds2.setDate(LocalDateTime.parse("2023-10-10", formatter));
+		ds3.setDate(LocalDateTime.parse("2023-10-01", formatter));
 
 		// load correspondences
 		// TODO: find correct data of our data
