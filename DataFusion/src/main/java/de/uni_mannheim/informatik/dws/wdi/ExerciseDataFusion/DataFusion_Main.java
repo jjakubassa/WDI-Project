@@ -15,11 +15,11 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ActorsFuserU
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DirectorFuserLongestString;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserShortestString;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.FusibleMovieFactory;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Movie;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.MovieXMLFormatter;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.MovieXMLReader;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.FusibleAlbumFactory;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.AlbumXMLFormatter;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.AlbumXMLReader;
 import de.uni_mannheim.informatik.dws.winter.datafusion.CorrespondenceSet;
 import de.uni_mannheim.informatik.dws.winter.datafusion.DataFusionEngine;
 import de.uni_mannheim.informatik.dws.winter.datafusion.DataFusionEvaluator;
@@ -53,16 +53,16 @@ public class DataFusion_Main
     {
 		// Load the Data into FusibleDataSet
 		logger.info("*\tLoading datasets\t*");
-		FusibleDataSet<Movie, Attribute> ds1 = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/input/academy_awards.xml"), "/movies/movie", ds1);
+		FusibleDataSet<Album, Attribute> ds1 = new FusibleHashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/input/WDC.xml"), "/root/Albums/Album", ds1);
 		ds1.printDataSetDensityReport();
 
-		FusibleDataSet<Movie, Attribute> ds2 = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/input/actors.xml"), "/movies/movie", ds2);
+		FusibleDataSet<Album, Attribute> ds2 = new FusibleHashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/input/MB.xml"), "/root/Albums/Album", ds2);
 		ds2.printDataSetDensityReport();
 
-		FusibleDataSet<Movie, Attribute> ds3 = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/input/golden_globes.xml"), "/movies/movie", ds3);
+		FusibleDataSet<Album, Attribute> ds3 = new FusibleHashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/input/SPY.xml"), "/root/Albums/Album", ds3);
 		ds3.printDataSetDensityReport();
 
 		// Maintain Provenance
@@ -85,54 +85,55 @@ public class DataFusion_Main
 
 		// load correspondences
 		logger.info("*\tLoading correspondences\t*");
-		CorrespondenceSet<Movie, Attribute> correspondences = new CorrespondenceSet<>();
-		correspondences.loadCorrespondences(new File("data/correspondences/academy_awards_2_actors_correspondences.csv"),ds1, ds2);
-		correspondences.loadCorrespondences(new File("data/correspondences/actors_2_golden_globes_correspondences.csv"),ds2, ds3);
+		CorrespondenceSet<Album, Attribute> correspondences = new CorrespondenceSet<>();
+		correspondences.loadCorrespondences(new File("data/correspondences/WDC_MB_correspondences.csv"),ds1, ds2);
+		correspondences.loadCorrespondences(new File("data/correspondences/WDC_SPY_correspondences.csv"),ds1, ds3);
+		correspondences.loadCorrespondences(new File("data/correspondences/MB_SPY_correspondences.csv"),ds2, ds3);
 
 		// write group size distribution
 		correspondences.printGroupSizeDistribution();
 
-		// load the gold standard
-		logger.info("*\tEvaluating results\t*");
-		DataSet<Movie, Attribute> gs = new FusibleHashedDataSet<>();
-		new MovieXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "/movies/movie", gs);
+		// // load the gold standard
+		// logger.info("*\tEvaluating results\t*");
+		// DataSet<Album, Attribute> gs = new FusibleHashedDataSet<>();
+		// new AlbumXMLReader().loadFromXML(new File("data/goldstandard/gold.xml"), "root/Albums/Album", gs);
 
-		for(Movie m : gs.get()) {
-			logger.info(String.format("gs: %s", m.getIdentifier()));
-		}
+		// for(Album m : gs.get()) {
+		// 	logger.info(String.format("gs: %s", m.getIdentifier()));
+		// }
 
-		// define the fusion strategy
-		DataFusionStrategy<Movie, Attribute> strategy = new DataFusionStrategy<>(new MovieXMLReader());
-		// write debug results to file
-		strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
+		// // define the fusion strategy
+		// DataFusionStrategy<Album, Attribute> strategy = new DataFusionStrategy<>(new AlbumXMLReader());
+		// // write debug results to file
+		// strategy.activateDebugReport("data/output/debugResultsDatafusion.csv", -1, gs);
 		
-		// add attribute fusers
-		strategy.addAttributeFuser(Movie.TITLE, new TitleFuserShortestString(),new TitleEvaluationRule());
-		strategy.addAttributeFuser(Movie.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
-		strategy.addAttributeFuser(Movie.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
-		strategy.addAttributeFuser(Movie.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
+		// // add attribute fusers
+		// strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(),new TitleEvaluationRule());
+		// strategy.addAttributeFuser(Album.DIRECTOR,new DirectorFuserLongestString(), new DirectorEvaluationRule());
+		// strategy.addAttributeFuser(Album.DATE, new DateFuserFavourSource(),new DateEvaluationRule());
+		// strategy.addAttributeFuser(Album.ACTORS,new ActorsFuserUnion(),new ActorsEvaluationRule());
 		
-		// create the fusion engine
-		DataFusionEngine<Movie, Attribute> engine = new DataFusionEngine<>(strategy);
+		// // create the fusion engine
+		// DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);
 
-		// print consistency report
-		engine.printClusterConsistencyReport(correspondences, null);
+		// // print consistency report
+		// engine.printClusterConsistencyReport(correspondences, null);
 		
-		// print record groups sorted by consistency
-		engine.writeRecordGroupsByConsistency(new File("data/output/recordGroupConsistencies.csv"), correspondences, null);
+		// // print record groups sorted by consistency
+		// engine.writeRecordGroupsByConsistency(new File("data/output/recordGroupConsistencies.csv"), correspondences, null);
 
-		// run the fusion
-		logger.info("*\tRunning data fusion\t*");
-		FusibleDataSet<Movie, Attribute> fusedDataSet = engine.run(correspondences, null);
+		// // run the fusion
+		// logger.info("*\tRunning data fusion\t*");
+		// FusibleDataSet<Album, Attribute> fusedDataSet = engine.run(correspondences, null);
 
-		// write the result
-		new MovieXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
+		// // write the result
+		// new AlbumXMLFormatter().writeXML(new File("data/output/fused.xml"), fusedDataSet);
 
-		// evaluate
-		DataFusionEvaluator<Movie, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Movie, Attribute>());
+		// // evaluate
+		// DataFusionEvaluator<Album, Attribute> evaluator = new DataFusionEvaluator<>(strategy, new RecordGroupFactory<Album, Attribute>());
 		
-		double accuracy = evaluator.evaluate(fusedDataSet, gs, null);
+		// double accuracy = evaluator.evaluate(fusedDataSet, gs, null);
 
-		logger.info(String.format("*\tAccuracy: %.2f", accuracy));
+		// logger.info(String.format("*\tAccuracy: %.2f", accuracy));
     }
 }
