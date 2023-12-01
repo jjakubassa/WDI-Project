@@ -85,7 +85,8 @@ public class IR_using_linear_combination
 		String number_correspondences_MB_SPY;
 		String number_correspondences_WDC_MB;
 		String number_correspondences_WDC_SPY;
-		Boolean learn_weights = false;
+		Boolean learn_weights_lr = false;
+		Boolean learn_weights_dt = true;
 		long startTime;
 		long endTime;
 		long elapsedTime_MB_SPY;
@@ -145,81 +146,153 @@ public class IR_using_linear_combination
 				AbstractBlocker blocker = entry2.getValue();
 				
 				logger.info("Blocker: " + name_blocker);
-				if (learn_weights == true) {
-					// MB_SPY
-					startTime = System.currentTimeMillis();
-					result = identityResolutionLearnedWeights(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap, blocker);
-					perfTest_MB_SPY = result.getFirst();
-					number_correspondences_MB_SPY = result.getSecond();
-					endTime = System.currentTimeMillis();
-					elapsedTime_MB_SPY = endTime - startTime;
-					logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
-					printEvalPerf(perfTest_MB_SPY);
-					logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
-					
-					// WDC_MB
-					startTime = System.currentTimeMillis();
-					result = identityResolutionLearnedWeights(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap, blocker);
-					perfTest_WDC_MB = result.getFirst();
-					number_correspondences_WDC_MB = result.getSecond();
-					endTime = System.currentTimeMillis();
-					elapsedTime_WDC_MB = endTime - startTime; 
-					logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
-					printEvalPerf(perfTest_WDC_MB);
-					logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
-					
-					// WDC_SPY
-					startTime = System.currentTimeMillis();
-					result = identityResolutionLearnedWeights(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap, blocker);
-					perfTest_WDC_SPY = result.getFirst();
-					number_correspondences_WDC_SPY = result.getSecond();
-					endTime = System.currentTimeMillis();
-					elapsedTime_WDC_SPY = endTime - startTime;
-					logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
-					printEvalPerf(perfTest_WDC_SPY);
-					logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);		
+				Boolean[] weight_learning = new Boolean[] {learn_weights_lr, learn_weights_dt, false};
+				for (int i = 0; i < 3; i++) {
+					// Logistic Regression
+					if (i == 0){
+						if (weight_learning[i] == true) {
+
+							String options[] = new String[]{"-S"}; // use stopping criterion on training set instead of cross-validation
+							String modelType = "SimpleLogistic"; // use a logistic regression
+							// MB_SPY
+							startTime = System.currentTimeMillis();
+							result = identityResolutionLearnedWeights(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap, blocker, modelType, options);
+							perfTest_MB_SPY = result.getFirst();
+							number_correspondences_MB_SPY = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_MB_SPY = endTime - startTime;
+							logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+							printEvalPerf(perfTest_MB_SPY);
+							logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
+
+							// WDC_MB
+							startTime = System.currentTimeMillis();
+							result = identityResolutionLearnedWeights(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap, blocker, modelType, options);
+							perfTest_WDC_MB = result.getFirst();
+							number_correspondences_WDC_MB = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_WDC_MB = endTime - startTime;
+							logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+							printEvalPerf(perfTest_WDC_MB);
+							logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
+
+							// WDC_SPY
+							startTime = System.currentTimeMillis();
+							result = identityResolutionLearnedWeights(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap, blocker, modelType, options);
+							perfTest_WDC_SPY = result.getFirst();
+							number_correspondences_WDC_SPY = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_WDC_SPY = endTime - startTime;
+							logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+							printEvalPerf(perfTest_WDC_SPY);
+							logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);
+
+
+							// print summary in csv style
+							logger.info("Compact summary of evaluation results:");
+							logger.info("MatchingRule, Blocker, Dataset, Precision, Recall, F1, # Corr, Time [ms], weights_learned, Algorithm");
+							logger.info(name_mr + ", " + name_blocker + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY + ", " + learn_weights_lr + ", Logistic Regression");
+							logger.info(name_mr + ", " + name_blocker + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB + ", " + learn_weights_lr + ", Logistic Regression");
+							logger.info(name_mr + ", " + name_blocker + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY + ", " + learn_weights_lr + ", Logistic Regression");
+						}
+						else {}
+					}
+					// decision tree
+					if (i == 1) {
+						if (weight_learning[i] == true) {
+
+							String options[] = new String[]{"-R", "-B"}; // use reduced error pruning and only binary splits in decision tree
+							String modelType = "J48"; // use a decision tree
+							// MB_SPY
+							startTime = System.currentTimeMillis();
+							result = identityResolutionLearnedWeights(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap, blocker, modelType, options);
+							perfTest_MB_SPY = result.getFirst();
+							number_correspondences_MB_SPY = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_MB_SPY = endTime - startTime;
+							logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+							printEvalPerf(perfTest_MB_SPY);
+							logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
+
+							// WDC_MB
+							startTime = System.currentTimeMillis();
+							result = identityResolutionLearnedWeights(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap, blocker, modelType, options);
+							perfTest_WDC_MB = result.getFirst();
+							number_correspondences_WDC_MB = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_WDC_MB = endTime - startTime;
+							logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+							printEvalPerf(perfTest_WDC_MB);
+							logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
+
+							// WDC_SPY
+							startTime = System.currentTimeMillis();
+							result = identityResolutionLearnedWeights(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap, blocker, modelType, options);
+							perfTest_WDC_SPY = result.getFirst();
+							number_correspondences_WDC_SPY = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_WDC_SPY = endTime - startTime;
+							logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+							printEvalPerf(perfTest_WDC_SPY);
+							logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);
+
+
+							// print summary in csv style
+							logger.info("Compact summary of evaluation results:");
+							logger.info("MatchingRule, Blocker, Dataset, Precision, Recall, F1, # Corr, Time [ms], weights_learned, Algorithm");
+							logger.info(name_mr + ", " + name_blocker + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY + ", " + learn_weights_dt + ", Decision Tree");
+							logger.info(name_mr + ", " + name_blocker + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB + ", " + learn_weights_dt + ", Decision Tree");
+							logger.info(name_mr + ", " + name_blocker + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY + ", " + learn_weights_dt + ", Decision Tree");
+						}
+						else{}
+					}
+					// no weight learning
+					if ( i == 2) {
+						if (weight_learning[i] == true) {}
+						else{
+							// MB_SPY
+							startTime = System.currentTimeMillis();
+							result = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap);
+							perfTest_MB_SPY = result.getFirst();
+							number_correspondences_MB_SPY = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_MB_SPY = endTime - startTime;
+							logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
+							printEvalPerf(perfTest_MB_SPY);
+							logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
+
+							// WDC_MB
+							startTime = System.currentTimeMillis();
+							result = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap);
+							perfTest_WDC_MB = result.getFirst();
+							number_correspondences_WDC_MB = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_WDC_MB = endTime - startTime;
+							logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
+							printEvalPerf(perfTest_WDC_MB);
+							logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
+
+							// WDC_SPY
+							startTime = System.currentTimeMillis();
+							result = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap);
+							perfTest_WDC_SPY = result.getFirst();
+							number_correspondences_WDC_SPY = result.getSecond();
+							endTime = System.currentTimeMillis();
+							elapsedTime_WDC_SPY = endTime - startTime;
+							logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
+							printEvalPerf(perfTest_WDC_SPY);
+							logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);
+
+
+							// print summary in csv style
+							logger.info("Compact summary of evaluation results:");
+							logger.info("MatchingRule, Blocker, Dataset, Precision, Recall, F1, # Corr, Time [ms], weights_learned, Algorithm");
+							logger.info(name_mr + ", " + name_blocker + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY + ", false, None");
+							logger.info(name_mr + ", " + name_blocker + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB + ", false, None");
+							logger.info(name_mr + ", " + name_blocker + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY + ", false, None");
+						}
+					}
 				}
-				else {
-					// MB_SPY
-					startTime = System.currentTimeMillis();
-					result = identityResolution(dataMB, dataSpotify, "MB_SPY", "gs_mb_spy", comparatorMap);
-					perfTest_MB_SPY = result.getFirst();
-					number_correspondences_MB_SPY = result.getSecond();
-					endTime = System.currentTimeMillis();
-					elapsedTime_MB_SPY = endTime - startTime;
-					logger.info("*\tEvaluating result: MusicBrainz <-> Spotify");
-					printEvalPerf(perfTest_MB_SPY);
-					logger.info("Number of correspondences: " + number_correspondences_MB_SPY);
-					
-					// WDC_MB
-					startTime = System.currentTimeMillis();
-					result = identityResolution(dataWDC, dataMB, "WDC_MB", "gs_wdc_mb", comparatorMap);
-					perfTest_WDC_MB = result.getFirst();
-					number_correspondences_WDC_MB = result.getSecond();
-					endTime = System.currentTimeMillis();
-					elapsedTime_WDC_MB = endTime - startTime; 
-					logger.info("*\tEvaluating result: WebDataCommons <-> MusicBrainz");
-					printEvalPerf(perfTest_WDC_MB);
-					logger.info("Number of correspondences: " + number_correspondences_WDC_MB);
-					
-					// WDC_SPY
-					startTime = System.currentTimeMillis();
-					result = identityResolution(dataWDC, dataSpotify, "WDC_SPY", "gs_wdc_spy", comparatorMap);
-					perfTest_WDC_SPY = result.getFirst();
-					number_correspondences_WDC_SPY = result.getSecond();
-					endTime = System.currentTimeMillis();
-					elapsedTime_WDC_SPY = endTime - startTime;
-					logger.info("*\tEvaluating result: WebDataCommons <-> Spotify");
-					printEvalPerf(perfTest_WDC_SPY);
-					logger.info("Number of correspondences: " + number_correspondences_WDC_SPY);
-				}
-				
-				// print summary in csv style
-				logger.info("Compact summary of evaluation results:");
-				logger.info("MatchingRule, Blocker, Dataset, Precision, Recall, F1, # Corr, Time [ms], weights_learned");
-				logger.info(name_mr + ", " + name_blocker + ", MB_SPY, " + perfTest_MB_SPY.getPrecision() + ", " + perfTest_MB_SPY.getRecall() + ", " + perfTest_MB_SPY.getF1() + ", " + number_correspondences_MB_SPY + ", " + elapsedTime_MB_SPY + ", " + learn_weights);
-				logger.info(name_mr + ", " + name_blocker + ", WDC_MB, " + perfTest_WDC_MB.getPrecision() + ", " + perfTest_WDC_MB.getRecall() + ", " + perfTest_WDC_MB.getF1() + ", " + number_correspondences_WDC_MB + ", " + elapsedTime_WDC_MB + ", " + learn_weights);
-				logger.info(name_mr + ", " + name_blocker + ", WDC_SPY, " + perfTest_WDC_SPY.getPrecision() + ", " + perfTest_WDC_SPY.getRecall() + ", " + perfTest_WDC_SPY.getF1() + ", " + number_correspondences_WDC_SPY + ", " + elapsedTime_WDC_SPY + ", " + learn_weights);
 			}
 		}
     }
@@ -433,7 +506,7 @@ public class IR_using_linear_combination
 		
 		return new Pair<Performance, String>(perfTest, numberCorrespondence);	
 	}
-	private static Pair<Performance, String> identityResolutionLearnedWeights(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name, Map<String, Boolean> comparatorMap, AbstractBlocker blocker2) throws Exception {
+	private static Pair<Performance, String> identityResolutionLearnedWeights(HashedDataSet<Album, Attribute> d1, HashedDataSet<Album, Attribute> d2, String d1_d2_name, String gs_name, Map<String, Boolean> comparatorMap, AbstractBlocker blocker2, String modelType, String[] options) throws Exception {
 		// load the gold standard (test set)
 		logger.info("*\tLoading gold standard\t* " + d1_d2_name);
 		
@@ -441,8 +514,6 @@ public class IR_using_linear_combination
 		gsTraining.loadFromCSVFile(new File("data/goldstandard/" + gs_name  + "_train.csv"));
 
 		// create a matching rule
-		String options[] = new String[] { "-S" }; // save model? or what is this for?
-		String modelType = "SimpleLogistic"; // use a logistic regression
 		WekaMatchingRule<Album, Attribute> matchingRule = new WekaMatchingRule<>(0.7, modelType, options);
 		matchingRule.activateDebugReport("data/output/debugResultsMatchingRuleLearnedWeights" + d1_d2_name + ".csv", 100_000, gsTraining);
 
