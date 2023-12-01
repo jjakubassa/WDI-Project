@@ -113,15 +113,22 @@ FusibleFactory<Album, Attribute> {
 		String tracks = getValueFromChildElement(node, "Tracks");
 		if (tracks != null){
 
-			List<Track> trackList = new ArrayList<Track>();
+			String replace = tracks.replace("[","");
+			String replace1 = replace.replace("]","");
+			// List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
+			List<String> strList = new ArrayList<String>(Arrays.asList(replace1.split("'")));
+			List<Track> trackList = strList.stream().map(a -> new Track(stripQuotes(a))).collect(Collectors.toList());
+			Album.setTracks(trackList);
+			
+			List<Track> TrackList = new ArrayList<Track>();
 			for (String s : tracks.split("\n")){
 				String s_normalized = stripQuotes(s.replace("\n","").trim());
 				Track t = new Track(s_normalized);
 				t.setName(s_normalized);
 				// System.out.println(t.getName());
-				trackList.add(t);
+				TrackList.add(t);
 			}
-			Album.setTracks(trackList);
+			Album.setTracks(TrackList);
 		}
 		else {
 			Album.setTracks(null);

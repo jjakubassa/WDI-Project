@@ -90,4 +90,9 @@ public class Track extends AbstractRecord<Attribute> implements Serializable{
 		else
 			return false;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("[Track: %s]", getName());
+	}
 }
