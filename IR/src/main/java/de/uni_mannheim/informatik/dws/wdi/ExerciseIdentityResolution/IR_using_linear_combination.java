@@ -102,7 +102,7 @@ public class IR_using_linear_combination
 		comparatorMap1.put("ArtistNameComporatorGeneralizedJaccard", true);
 		comparatorMap1.put("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity", true);
 		comparatorMap1.put("TotalTracksComparatorDeviationSimilarity", true);
-		comparatorMap1.put("AlbumTotalTracksComparatorDeviationSimilarity", true);
+//		comparatorMap1.put("AlbumTotalTracksComparatorDeviationSimilarity", true);
 		comparatorMap1.put("TrackNameComporatorGeneralisedMaximumOfContainment", true);
 		comparatorMap1.put("AlbumDateComparator10Years", true);
 		comparatorMap1.put("AlbumDateComparatorWeightedDate", true);
@@ -116,7 +116,7 @@ public class IR_using_linear_combination
 		comparatorMap2.put("ArtistNameComporatorGeneralizedJaccard", false);
 		comparatorMap2.put("AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity", false);
 		comparatorMap2.put("TotalTracksComparatorDeviationSimilarity", false);
-		comparatorMap2.put("AlbumTotalTracksComparatorDeviationSimilarity", false);
+//		comparatorMap2.put("AlbumTotalTracksComparatorDeviationSimilarity", false);
 		comparatorMap2.put("TrackNameComporatorGeneralisedMaximumOfContainment", false);
 		comparatorMap2.put("AlbumDateComparator10Years", false);
 		comparatorMap2.put("AlbumDateComparatorWeightedDate", false);
