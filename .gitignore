@@ -21,3 +21,4 @@ IR/data/.DS_Store
 IR/data/goldstandard/.DS_Store
 IR/data/output/*
 IR/*.pdf
+IR/logs/winter.log

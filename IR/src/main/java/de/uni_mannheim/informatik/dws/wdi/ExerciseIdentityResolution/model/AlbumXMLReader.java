@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Track;
+
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.model.io.XMLMatchableReader;
 /**

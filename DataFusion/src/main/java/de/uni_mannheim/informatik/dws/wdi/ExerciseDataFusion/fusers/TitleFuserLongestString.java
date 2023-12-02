@@ -22,7 +22,7 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 
 /**
- * {@link AttributeValueFuser} for the director of {@link Movie}s.
+ * {@link AttributeValueFuser} for the director of {@link Album}s.
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
