@@ -61,7 +61,16 @@ FusibleFactory<Album, Attribute> {
 	@Override
 	public Album createModelFromElement(Node node, String provenanceInfo) {
 		NamedNodeMap id_attribute = node.getAttributes();
-		String id = id_attribute.getNamedItem("id").getNodeValue();
+		Node id_node = id_attribute.getNamedItem("id");
+
+		String id;
+		// deal with fused.xml
+		if (id_node == null) {
+			id = getValueFromChildElement(node, "id");
+		}
+		else {
+			id = id_attribute.getNamedItem("id").getNodeValue();
+		}
 		
 		// create the object with id and provenance information
 		Album Album = new Album(id, provenanceInfo);
@@ -69,9 +78,9 @@ FusibleFactory<Album, Attribute> {
 		// fill the attributes
 		String title = getValueFromChildElement(node, "Title");
 		Album.setTitle(stripQuotes(title)); 
-		if (title == null) {
-			System.out.println("Title: " + Album.getTitle());
-		}
+		// if (title == null) {
+		// 	System.out.println("Title: " + Album.getTitle());
+		// }
 
 		// Album.setReleaseDate(getValueFromChildElement(node, "ReleaseDate"));
 		
@@ -110,9 +119,9 @@ FusibleFactory<Album, Attribute> {
 			Album.setArtists(null);
 		}
 		// print artist
-		if (Album.getArtists() == null) {
-			System.out.println("Artists: " + Album.getArtists());
-		}
+		// if (Album.getArtists() == null) {
+		// 	System.out.println("Artists: " + Album.getArtists());
+		// }
 
 
 		String tracks = getValueFromChildElement(node, "Tracks");

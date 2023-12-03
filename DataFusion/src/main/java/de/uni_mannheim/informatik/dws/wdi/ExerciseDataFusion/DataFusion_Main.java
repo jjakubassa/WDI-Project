@@ -72,6 +72,7 @@ public class DataFusion_Main
 	
 	public static void main( String[] args ) throws Exception
     {
+
 		// Load the Data into FusibleDataSet
 		logger.info("*\tLoading datasets\t*");
 		FusibleDataSet<Album, Attribute> ds1 = new FusibleHashedDataSet<>();
@@ -131,11 +132,11 @@ public class DataFusion_Main
 		
 		// add attribute fusers
 		strategy.addAttributeFuser(Album.TITLE, new TitleFuserLongestString(), new AlbumTitleEvaluationRule());
-//		strategy.addAttributeFuser(Album.TITLE, new TitleFuserFavourSource(), new AlbumTitleEvaluationRule());
-//		strategy.addAttributeFuser(Album.TITLE, new TitleFuserShortestString(), new AlbumTitleEvaluationRule());
+		// strategy.addAttributeFuser(Album.TITLE, new TitleFuserFavourSource(), new AlbumTitleEvaluationRule());
+		// strategy.addAttributeFuser(Album.TITLE, new TitleFuserShortestString(), new AlbumTitleEvaluationRule());
 		strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserFavourSource(), new ArtistsEvaluationRule());
 //		strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserMostRecent(), new ArtistsEvaluationRule());
-//		strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserIntersectionKSources(2), new ArtistsEvaluationRule());
+		// strategy.addAttributeFuser(Album.ARTISTS, new ArtistFuserIntersectionKSources(2), new ArtistsEvaluationRule());
 		strategy.addAttributeFuser(Album.DURATION, new DurationFuserAverage(), new DurationEvaluationRule());
 		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(), new TotalTracksEvaluationRule());
 		strategy.addAttributeFuser(Album.TRACKS, new TrackTitleFuserFavourSource(), new TrackTitlesEvaluationRule());
@@ -170,5 +171,9 @@ public class DataFusion_Main
 		double accuracy = evaluator.evaluate(fusedDataSet, gs, null);
 
 		logger.info(String.format("*\tAccuracy: %.2f", accuracy));
+
+		FusibleDataSet<Album, Attribute> fused_ds = new FusibleHashedDataSet<>();
+		new AlbumXMLReader().loadFromXML(new File("data/output/fused.xml"), "/Albums/Album", fused_ds);
+		fused_ds.printDataSetDensityReport();
     }
 }

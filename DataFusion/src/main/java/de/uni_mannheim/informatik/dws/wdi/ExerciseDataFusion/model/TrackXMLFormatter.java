@@ -26,14 +26,14 @@ public class TrackXMLFormatter extends XMLFormatter<Track> {
 
 	@Override
 	public Element createRootElement(Document doc) {
-		return doc.createElement("tracks");
+		return doc.createElement("Tracks");
 	}
 
 	@Override
 	public Element createElementFromRecord(Track record, Document doc) {
-		Element track = doc.createElement("tracks");
+		Element track = doc.createElement("Track");
 
-		track.appendChild(createTextElement("name", record.getName(), doc));
+		track.appendChild(createTextElement("TrackTitle", record.getName(), doc));
 
 		return track;
 	}

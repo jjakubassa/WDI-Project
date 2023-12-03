@@ -26,14 +26,14 @@ public class ArtistXMLFormatter extends XMLFormatter<Artist> {
 
 	@Override
 	public Element createRootElement(Document doc) {
-		return doc.createElement("artists");
+		return doc.createElement("Artists");
 	}
 
 	@Override
 	public Element createElementFromRecord(Artist record, Document doc) {
-		Element artist = doc.createElement("artist");
+		Element artist = doc.createElement("Artist");
 
-		artist.appendChild(createTextElement("name", 
+		artist.appendChild(createTextElement("ArtistName", 
 			record.getName(), 
 			doc));
 		return artist;
