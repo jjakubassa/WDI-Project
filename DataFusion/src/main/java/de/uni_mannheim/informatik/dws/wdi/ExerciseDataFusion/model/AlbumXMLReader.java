@@ -184,7 +184,7 @@ FusibleFactory<Album, Attribute> {
         	Album.setPrice(Price);
         }
 		else {
-			Album.setPrice(0.0);
+			Album.setPrice(null);
 		}
         
 		

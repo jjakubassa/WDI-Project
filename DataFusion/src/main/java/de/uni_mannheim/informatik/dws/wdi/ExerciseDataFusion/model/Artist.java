@@ -12,6 +12,11 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 import de.uni_mannheim.informatik.dws.winter.model.AbstractRecord;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
@@ -81,12 +86,38 @@ public class Artist extends AbstractRecord<Attribute> implements Serializable {
 			return false;
 		return true;
 	}
+	private Map<Attribute, Collection<String>> provenance = new HashMap<>();
+	private Collection<String> recordProvenance;
+
+	public void setRecordProvenance(Collection<String> provenance) {
+		recordProvenance = provenance;
+	}
+
+	public Collection<String> getRecordProvenance() {
+		return recordProvenance;
+	}
+
+	public void setAttributeProvenance(Attribute attribute,
+			Collection<String> provenance) {
+		this.provenance.put(attribute, provenance);
+	}
+
+	public Collection<String> getAttributeProvenance(String attribute) {
+		return provenance.get(attribute);
+	}
+
+	public String getMergedAttributeProvenance(Attribute attribute) {
+		Collection<String> prov = provenance.get(attribute);
+
+		if (prov != null) {
+			return StringUtils.join(prov, "+");
+		} else {
+			return "";
+		}
+	}
 
 	public static final Attribute NAME = new Attribute("Name");
 	
-	/* (non-Javadoc)
-	 * @see de.uni_mannheim.informatik.wdi.model.Record#hasValue(java.lang.Object)
-	 */
 	@Override
 	public boolean hasValue(Attribute attribute) {
 		if(attribute==NAME)
@@ -99,5 +130,5 @@ public class Artist extends AbstractRecord<Attribute> implements Serializable {
 	public String toString() {
 		return String.format("[Artist: %s]", getName());
 	}
-	
+
 }

@@ -79,7 +79,18 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 				record.getMergedAttributeProvenance(Album.RELEASEDATE), doc));
 		}
 
-		
+		if (record.getPrice() == null) {
+			album.appendChild(createTextElementWithProvenance(
+				"price", 
+				"null",
+				record.getMergedAttributeProvenance(Album.PRICE), doc));
+		} else {
+			album.appendChild(createTextElementWithProvenance(
+				"price",
+				roundToDecimals(record.getPrice(), 2).toString(),
+				record.getMergedAttributeProvenance(Album.PRICE), doc));
+		}
+
 		album.appendChild(createArtistElement(record, doc));
 
 		return album;
@@ -115,4 +126,8 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 		return elem;
 	}
 
+	private static Double roundToDecimals(Double value, Integer decimalPlaces) {
+        Double factor = Math.pow(10, decimalPlaces);
+        return Math.round(value * factor) / factor;
+    }
 }

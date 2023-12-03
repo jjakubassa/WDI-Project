@@ -12,6 +12,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ArtistsE
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DurationEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.PriceEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ReleaseDateEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TotalTracksEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TrackTitlesEvaluationRule;
@@ -22,6 +23,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFav
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserMostRecent;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.PriceFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserShortestString;
@@ -78,6 +80,7 @@ public class DataFusion_Main
 
 		// Maintain Provenance
 		// Scores (e.g. from rating)
+		// TODO: discuss which scores to use
 		ds1.setScore(3.0);
 		ds2.setScore(2.0);
 		ds3.setScore(1.0);
@@ -95,7 +98,6 @@ public class DataFusion_Main
 		ds3.setDate(LocalDateTime.parse("2023-10-01", formatter));
 
 		// load correspondences
-		// TODO: find correct data of our data
 		logger.info("*\tLoading correspondences\t*");
 		CorrespondenceSet<Album, Attribute> correspondences = new CorrespondenceSet<>();
 		correspondences.loadCorrespondences(new File("data/correspondences/WDC_MB_correspondences.csv"),ds1, ds2);
@@ -130,7 +132,13 @@ public class DataFusion_Main
 		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(), new TotalTracksEvaluationRule());
 		strategy.addAttributeFuser(Album.TRACKS, new TrackTitleFuserFavourSource(), new TrackTitlesEvaluationRule());
 		strategy.addAttributeFuser(Album.RELEASEDATE, new DateFuserMostRecent(), new ReleaseDateEvaluationRule());
-		
+		// strategy.addAttributeFuser(Album.PRICE, new PriceFuserFavourSource(), new PriceEvaluationRule());
+		// price WDC
+		// country MB
+		// language MB
+		// genre Spotify
+		// label MB
+
 		// create the fusion engine
 		DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);
 

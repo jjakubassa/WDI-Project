@@ -14,7 +14,6 @@ package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers;
 import java.util.List;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Artist;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Track;
 import de.uni_mannheim.informatik.dws.winter.datafusion.AttributeValueFuser;
 import de.uni_mannheim.informatik.dws.winter.datafusion.conflictresolution.meta.FavourSources;
@@ -26,7 +25,7 @@ import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 
 /**
- * {@link AttributeValueFuser} for the actors of {@link Movie}s. 
+ * {@link AttributeValueFuser} for the actors of {@link Album}s. 
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 

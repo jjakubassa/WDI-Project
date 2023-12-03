@@ -33,18 +33,11 @@ public class ArtistXMLFormatter extends XMLFormatter<Artist> {
 	public Element createElementFromRecord(Artist record, Document doc) {
 		Element artist = doc.createElement("artist");
 
-		artist.appendChild(createTextElement("name", record.getName(), doc));
-
+		artist.appendChild(createTextElement("name", 
+			record.getName(), 
+			doc));
 		return artist;
 	}
 	
 	// NEWLY ADDED -- IS IT NECESSARY?
-	
-	protected Element createTextElementWithProvenance(String name,
-			String value, String provenance, Document doc) {
-		Element elem = createTextElement(name, value, doc);
-		elem.setAttribute("provenance", provenance);
-		return elem;
-	}
-
 }
