@@ -146,16 +146,19 @@ FusibleFactory<Album, Attribute> {
 			Album.setLabels(null);
 		}
 
+		
 		String genres = getValueFromChildElement(node, "Genres");
-		if (genres != null){
-			String replace = genres.replace("[","");
-			String replace1 = replace.replace("]","");
-			List<String> genreList = new ArrayList<String>(Arrays.asList(replace1.split(",")));
-			genreList = genreList.stream().map(g -> stripQuotes(g)).collect(Collectors.toList());
-			Album.setGenres(genreList);
-		}
-		else {
-			Album.setGenres(null);
+		if (genres != null) {
+		    String replace = genres.replace("[", "");
+		    String replace1 = replace.replace("]", "");
+
+		    String[] genreArray = Arrays.stream(replace1.split("'"))
+		            .map(String::trim)
+		            .toArray(String[]::new);
+
+		    Album.setGenres(genreArray);
+		} else {
+		    Album.setGenres(new String[]{""});
 		}
 
         

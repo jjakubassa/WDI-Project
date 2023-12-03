@@ -78,7 +78,7 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 				record.getReleaseDate().toString(),
 				record.getMergedAttributeProvenance(Album.RELEASEDATE), doc));
 		}
-
+		
 		if (record.getPrice() == null) {
 			album.appendChild(createTextElementWithProvenance(
 				"price", 
@@ -92,9 +92,13 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 		}
 
 		album.appendChild(createArtistElement(record, doc));
+		album.appendChild(createGenresElement(record, doc));
+	
 
 		return album;
 	}
+	
+	
 	
 	protected Element createArtistElement(Album record, Document doc) {
 		Element artistRoot = artistFormatter.createRootElement(doc);
@@ -105,6 +109,22 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 		}
 
 		return artistRoot;
+	}
+	
+	protected Element createGenresElement(Album record, Document doc) {
+		Element genresRoot = doc.createElement("genres");
+		
+		genresRoot.setAttribute("provenance",
+				record.getMergedAttributeProvenance(Album.GENRE));
+
+		for (String a : record.getGenres()) {
+			if (!a.isEmpty()) {
+				genresRoot.appendChild(createTextElement("genre", a, doc));
+			}
+			
+		}
+
+		return genresRoot;
 	}
 	
 	protected Element createTrackElement(Album record, Document doc) {

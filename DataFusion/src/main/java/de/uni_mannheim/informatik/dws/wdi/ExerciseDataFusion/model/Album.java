@@ -62,7 +62,7 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 	private List<Track> tracks;
 	private List<String> labels;
 	private Integer totalTracks;
-	private List<String> genre;
+	private String[] genre;
 	private String country;
 	private String language;
 	private Integer duration;
@@ -159,11 +159,11 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 	}
 
 
-	public List<String> getGenres() {
+	public String[] getGenres() {
 		return genre;
 	}
 
-	public void setGenres(List<String> genre) {
+	public void setGenres(String[] genre) {
 		this.genre = genre;
 	}
 

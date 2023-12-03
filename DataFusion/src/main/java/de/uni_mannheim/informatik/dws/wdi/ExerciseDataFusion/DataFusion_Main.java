@@ -12,6 +12,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ArtistsE
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DurationEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.GenresEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.PriceEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ReleaseDateEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TotalTracksEvaluationRule;
@@ -23,6 +24,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFav
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserMostRecent;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.GenresFuserUnion;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.PriceFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
@@ -132,11 +134,13 @@ public class DataFusion_Main
 		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(), new TotalTracksEvaluationRule());
 		strategy.addAttributeFuser(Album.TRACKS, new TrackTitleFuserFavourSource(), new TrackTitlesEvaluationRule());
 		strategy.addAttributeFuser(Album.RELEASEDATE, new DateFuserMostRecent(), new ReleaseDateEvaluationRule());
+
 		// strategy.addAttributeFuser(Album.PRICE, new PriceFuserFavourSource(), new PriceEvaluationRule());
 		// price WDC
 		// country MB
 		// language MB
 		// genre Spotify
+		strategy.addAttributeFuser(Album.GENRE, new GenresFuserUnion(), new GenresEvaluationRule());
 		// label MB
 
 		// create the fusion engine
