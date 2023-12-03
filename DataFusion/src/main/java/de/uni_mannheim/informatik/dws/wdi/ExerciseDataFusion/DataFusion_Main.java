@@ -27,7 +27,9 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserMos
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.GenresFuserUnion;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.GenresFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.LabelsFuserUnion;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.LabelsFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.LanguageFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.PriceFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserFavourSource;
@@ -141,8 +143,10 @@ public class DataFusion_Main
 		strategy.addAttributeFuser(Album.PRICE, new PriceFuserFavourSource(), new PriceEvaluationRule());
 		strategy.addAttributeFuser(Album.COUNTRY, new CountryFuserVoting(), new CountryEvaluationRule());
 		strategy.addAttributeFuser(Album.LANGUAGE, new LanguageFuserVoting(), new LanguageEvaluationRule());
-		strategy.addAttributeFuser(Album.GENRE, new GenresFuserUnion(), new GenresEvaluationRule());
-		strategy.addAttributeFuser(Album.LABELS, new LabelsFuserUnion(), new LabelsEvaluationRule());
+//		strategy.addAttributeFuser(Album.GENRE, new GenresFuserUnion(), new GenresEvaluationRule());
+		strategy.addAttributeFuser(Album.GENRE, new GenresFuserVoting(), new GenresEvaluationRule());
+//		strategy.addAttributeFuser(Album.LABELS, new LabelsFuserUnion(), new LabelsEvaluationRule());
+		strategy.addAttributeFuser(Album.LABELS, new LabelsFuserVoting(), new LabelsEvaluationRule());
 
 		// create the fusion engine
 		DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);

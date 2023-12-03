@@ -51,10 +51,6 @@ public class GenresFuserUnion extends AttributeValueFuser<List<String>, Album, A
 
 	@Override
 	public void fuse(RecordGroup<Album, Attribute> group, Album fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
-//		FusedValue<List<String>, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
-////		fusedRecord.setGenres(fused.getValue());
-//		fusedRecord.setGenres(fused.getValue().toArray(new String[1]));
-//		fusedRecord.setAttributeProvenance(Album.GENRE, fused.getOriginalIds());
 		
 	    FusedValue<List<String>, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
 	    

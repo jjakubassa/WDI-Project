@@ -88,12 +88,12 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 		album.appendChild(createArtistElement(record, doc));
 
 		String[] genres = record.getGenres();
-		if (!genres[0].isEmpty()) {
+		if (genres != null && genres.length > 0 && !genres[0].isEmpty()) {
 			album.appendChild(createGenresElement(record, doc));
 		}
 	
 		String[] labels = record.getLabels();
-		if (!labels[0].isEmpty()) {
+		if (labels != null && labels.length > 0 && !labels[0].isEmpty()) {
 			album.appendChild(createLabelsElement(record, doc));
 		}
 
