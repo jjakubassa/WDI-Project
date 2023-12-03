@@ -12,7 +12,9 @@
 package de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.model.Album;
 import de.uni_mannheim.informatik.dws.winter.datafusion.AttributeValueFuser;
@@ -49,10 +51,21 @@ public class GenresFuserUnion extends AttributeValueFuser<List<String>, Album, A
 
 	@Override
 	public void fuse(RecordGroup<Album, Attribute> group, Album fusedRecord, Processable<Correspondence<Attribute, Matchable>> schemaCorrespondences, Attribute schemaElement) {
-		FusedValue<List<String>, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
-//		fusedRecord.setGenres(fused.getValue());
-		fusedRecord.setGenres(fused.getValue().toArray(new String[1]));
-		fusedRecord.setAttributeProvenance(Album.GENRE, fused.getOriginalIds());
+//		FusedValue<List<String>, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
+////		fusedRecord.setGenres(fused.getValue());
+//		fusedRecord.setGenres(fused.getValue().toArray(new String[1]));
+//		fusedRecord.setAttributeProvenance(Album.GENRE, fused.getOriginalIds());
+		
+	    FusedValue<List<String>, Album, Attribute> fused = getFusedValue(group, schemaCorrespondences, schemaElement);
+	    
+	    // Convert the list to a set to remove duplicates
+	    Set<String> uniqueGenres = new LinkedHashSet<>(fused.getValue());
+	    
+	    // Convert the set back to an array
+	    String[] uniqueGenresArray = uniqueGenres.toArray(new String[0]);
+
+	    fusedRecord.setGenres(uniqueGenresArray);
+	    fusedRecord.setAttributeProvenance(Album.GENRE, fused.getOriginalIds());
 	}
 
 }

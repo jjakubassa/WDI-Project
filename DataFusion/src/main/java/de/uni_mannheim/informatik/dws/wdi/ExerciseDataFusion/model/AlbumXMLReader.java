@@ -152,10 +152,14 @@ FusibleFactory<Album, Attribute> {
 		    String replace = genres.replace("[", "");
 		    String replace1 = replace.replace("]", "");
 
-		    String[] genreArray = Arrays.stream(replace1.split("'"))
-		            .map(String::trim)
-		            .toArray(String[]::new);
+//		    String[] genreArray = Arrays.stream(replace1.split("""))
+//		            .map(String::trim)
+//		            .toArray(String[]::new);
 
+		    String[] genreArray = Arrays.stream(replace.split("\\s*['\"\t\n]+\\s*"))
+		            .filter(s -> !s.isEmpty())
+		            .toArray(String[]::new);
+		    
 		    Album.setGenres(genreArray);
 		} else {
 		    Album.setGenres(new String[]{""});
