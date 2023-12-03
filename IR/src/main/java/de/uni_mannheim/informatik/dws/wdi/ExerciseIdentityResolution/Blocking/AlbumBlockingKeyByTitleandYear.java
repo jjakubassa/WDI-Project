@@ -47,14 +47,18 @@ public class AlbumBlockingKeyByTitleandYear extends
 	        normalizedTitle += titleTokens[i].substring(0, Math.min(2, titleTokens[i].length())).toUpperCase();
 	    }
 
-	    int releaseYear = record.getReleaseDate().getYear();
+		if (record.getReleaseDate() != null) {
+	    	int releaseYear = record.getReleaseDate().getYear();
+			String blockingKeyValue = normalizedTitle + String.valueOf(releaseYear);
+			resultCollector.next(new Pair<>(blockingKeyValue, record));
+		}
+		else {
+			resultCollector.next(new Pair<>(normalizedTitle, record));
+		}
 	    
 //	    String normalizedArtist = record.getArtist().replaceAll("[^a-zA-Z0-9\\s]", "").substring(0, 2).toUpperCase();
 //	    String blockingKeyValue = normalizedTitle + normalizedArtist + releaseYear;	    
 	    
-	    String blockingKeyValue = normalizedTitle + releaseYear;
-	    
-		resultCollector.next(new Pair<>(blockingKeyValue, record));
 	}
 
 }

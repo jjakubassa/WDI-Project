@@ -6,7 +6,7 @@ for c in df.columns:
     df[c.strip()] = df.pop(c)
 
 # Sort by dataset
-df = df.sort_values(by=["Dataset"])
+df = df.sort_values(by=["Dataset", "Algorithm", "MatchingRule"])
 
 # Convert ms to s
 df["Time [s]"] = df["Time [ms]"] / 1000
