@@ -76,10 +76,15 @@ FusibleFactory<Album, Attribute> {
 		// Album.setReleaseDate(getValueFromChildElement(node, "ReleaseDate"));
 		
 		String country = getValueFromChildElement(node, "Country");
-		Album.setCountry(stripQuotes(country));
+		
+		if (country != null) {
+			Album.setCountry(stripQuotes(country));
+		}
 		
 		String language = getValueFromChildElement(node, "Language");
-		Album.setLanguage(stripQuotes(language));
+		if (language != null) {
+			Album.setLanguage(stripQuotes(language));
+		}
 		
 		String artists = getValueFromChildElement(node, "Artists");
 		if (artists != null){

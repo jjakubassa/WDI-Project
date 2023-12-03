@@ -43,63 +43,62 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 				record.getMergedAttributeProvenance(Album.TITLE),
 				doc));
 
-		if (record.getDuration() == null) {
-			album.appendChild(createTextElementWithProvenance(
-				"duration", 
-				"null",
-				record.getMergedAttributeProvenance(Album.DURATION), doc));
-		} else {
+		if (record.getDuration() != null) {
 			album.appendChild(createTextElementWithProvenance(
 				"duration",
 				record.getDuration().toString(),
 				record.getMergedAttributeProvenance(Album.DURATION), doc));
 		}
 
-		if (record.getTotalTracks() == null) {
-			album.appendChild(createTextElementWithProvenance(
-				"totalTracks", 
-				"null",
-				record.getMergedAttributeProvenance(Album.TOTALTRACKS), doc));
-		} else {
+		if (record.getTotalTracks() != null) {
 			album.appendChild(createTextElementWithProvenance(
 				"totalTracks",
 				record.getTotalTracks().toString(),
 				record.getMergedAttributeProvenance(Album.TOTALTRACKS), doc));
 		}
 
-		if (record.getReleaseDate() == null) {
-			album.appendChild(createTextElementWithProvenance(
-				"releaseDate", 
-				"null",
-				record.getMergedAttributeProvenance(Album.RELEASEDATE), doc));
-		} else {
+		if (record.getReleaseDate() != null) {
 			album.appendChild(createTextElementWithProvenance(
 				"releaseDate",
 				record.getReleaseDate().toString(),
 				record.getMergedAttributeProvenance(Album.RELEASEDATE), doc));
 		}
-		
-		if (record.getPrice() == null) {
-			album.appendChild(createTextElementWithProvenance(
-				"price", 
-				"null",
-				record.getMergedAttributeProvenance(Album.PRICE), doc));
-		} else {
+
+		if (record.getPrice() != null) {
 			album.appendChild(createTextElementWithProvenance(
 				"price",
 				roundToDecimals(record.getPrice(), 2).toString(),
 				record.getMergedAttributeProvenance(Album.PRICE), doc));
 		}
 
+		if (record.getLanguage() != null) {
+			album.appendChild(createTextElementWithProvenance(
+				"language",
+				record.getLanguage(),
+				record.getMergedAttributeProvenance(Album.LANGUAGE), doc));
+		}
+
+		if (record.getCountry() != null) {
+			album.appendChild(createTextElementWithProvenance(
+				"country",
+				record.getCountry(),
+				record.getMergedAttributeProvenance(Album.COUNTRY), doc));
+		}
+		
 		album.appendChild(createArtistElement(record, doc));
-		album.appendChild(createGenresElement(record, doc));
-		album.appendChild(createLabelsElement(record, doc));
+
+		String[] genres = record.getGenres();
+		if (!genres[0].isEmpty()) {
+			album.appendChild(createGenresElement(record, doc));
+		}
 	
+		String[] labels = record.getLabels();
+		if (!labels[0].isEmpty()) {
+			album.appendChild(createLabelsElement(record, doc));
+		}
 
 		return album;
 	}
-	
-	
 	
 	protected Element createArtistElement(Album record, Document doc) {
 		Element artistRoot = artistFormatter.createRootElement(doc);
