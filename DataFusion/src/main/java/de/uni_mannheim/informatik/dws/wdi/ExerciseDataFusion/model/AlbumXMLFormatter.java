@@ -93,6 +93,7 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 
 		album.appendChild(createArtistElement(record, doc));
 		album.appendChild(createGenresElement(record, doc));
+		album.appendChild(createLabelsElement(record, doc));
 	
 
 		return album;
@@ -125,6 +126,22 @@ public class AlbumXMLFormatter extends XMLFormatter<Album> {
 		}
 
 		return genresRoot;
+	}
+	
+	protected Element createLabelsElement(Album record, Document doc) {
+		Element labelsRoot = doc.createElement("labels");
+		
+		labelsRoot.setAttribute("provenance",
+				record.getMergedAttributeProvenance(Album.LABELS));
+
+		for (String a : record.getLabels()) {
+			if (!a.isEmpty()) {
+				labelsRoot.appendChild(createTextElement("label", a, doc));
+			}
+			
+		}
+
+		return labelsRoot;
 	}
 	
 	protected Element createTrackElement(Album record, Document doc) {

@@ -60,7 +60,7 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 	private Double price;
 	private List<Artist> artists;
 	private List<Track> tracks;
-	private List<String> labels;
+	private String[] labels;
 	private Integer totalTracks;
 	private String[] genre;
 	private String country;
@@ -110,11 +110,11 @@ public class Album extends AbstractRecord<Attribute> implements Serializable {
 		this.tracks = tracks;
 	}
 
-	public List<String> getLabels() {
+	public String[] getLabels() {
 		return labels;
 	}
 
-	public void setLabels(List<String> labels) {
+	public void setLabels(String[] labels) {
 		this.labels = labels;
 	}
 

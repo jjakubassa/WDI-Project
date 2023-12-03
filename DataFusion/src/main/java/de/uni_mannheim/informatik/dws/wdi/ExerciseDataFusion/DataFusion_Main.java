@@ -13,6 +13,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.Director
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DurationEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.GenresEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.LabelsEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.PriceEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ReleaseDateEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TotalTracksEvaluationRule;
@@ -25,6 +26,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserMos
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.GenresFuserUnion;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.LabelsFuserUnion;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.PriceFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
@@ -142,6 +144,7 @@ public class DataFusion_Main
 		// genre Spotify
 		strategy.addAttributeFuser(Album.GENRE, new GenresFuserUnion(), new GenresEvaluationRule());
 		// label MB
+		strategy.addAttributeFuser(Album.LABELS, new LabelsFuserUnion(), new LabelsEvaluationRule());
 
 		// create the fusion engine
 		DataFusionEngine<Album, Attribute> engine = new DataFusionEngine<>(strategy);
