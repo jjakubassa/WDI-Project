@@ -9,9 +9,9 @@ import java.util.Locale;
 
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.AlbumTitleEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ArtistsEvaluationRule;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DirectorEvaluationRule;
-
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.CountryEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.DurationEvaluationRule;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.LanguageEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.PriceEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.ReleaseDateEvaluationRule;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TotalTracksEvaluationRule;
@@ -19,10 +19,12 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.evaluation.TrackTit
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ArtistFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ArtistFuserIntersectionKSources;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.ArtistFuserMostRecent;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.CountryFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserMostRecent;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DateFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.DurationFuserAverage;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.LanguageFuserVoting;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.PriceFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserFavourSource;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseDataFusion.fusers.TitleFuserLongestString;
@@ -81,9 +83,9 @@ public class DataFusion_Main
 		// Maintain Provenance
 		// Scores (e.g. from rating)
 		// TODO: discuss which scores to use
-		ds1.setScore(3.0);
+		ds1.setScore(1.0);
 		ds2.setScore(2.0);
-		ds3.setScore(1.0);
+		ds3.setScore(3.0);
 
 		// Date (e.g. last update)
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
@@ -132,10 +134,10 @@ public class DataFusion_Main
 		strategy.addAttributeFuser(Album.TOTALTRACKS, new TotalTracksFuserVoting(), new TotalTracksEvaluationRule());
 		strategy.addAttributeFuser(Album.TRACKS, new TrackTitleFuserFavourSource(), new TrackTitlesEvaluationRule());
 		strategy.addAttributeFuser(Album.RELEASEDATE, new DateFuserMostRecent(), new ReleaseDateEvaluationRule());
-		// strategy.addAttributeFuser(Album.PRICE, new PriceFuserFavourSource(), new PriceEvaluationRule());
-		// price WDC
-		// country MB
-		// language MB
+		strategy.addAttributeFuser(Album.PRICE, new PriceFuserFavourSource(), new PriceEvaluationRule());
+		strategy.addAttributeFuser(Album.COUNTRY, new CountryFuserVoting(), new CountryEvaluationRule());
+		strategy.addAttributeFuser(Album.LANGUAGE, new LanguageFuserVoting(), new LanguageEvaluationRule());
+
 		// genre Spotify
 		// label MB
 
