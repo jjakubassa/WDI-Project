@@ -2,6 +2,8 @@ import pandas as pd
 
 # Read the CSV file into a pandas DataFrame
 df = pd.read_csv("data/output/summary_IR.csv", skipinitialspace=True)
+for c in df.columns:
+    df[c.strip()] = df.pop(c)
 
 # Sort by dataset
 df = df.sort_values(by=["Dataset"])

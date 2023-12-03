@@ -20,6 +20,7 @@ import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.TrackNameComporatorGeneralisedMaximumOfContainment;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTotalTracksComparatorAbsoluteDifferenceSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparator10Years;
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparator2Years;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDateComparatorWeightedDate;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumDurationComparatorAbsoluteDifferenceSimilarity;
 import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators.AlbumTitleComparatorJaccard;
@@ -38,8 +39,6 @@ import de.uni_mannheim.informatik.dws.winter.model.io.CSVCorrespondenceFormatter
 import de.uni_mannheim.informatik.dws.winter.model.Performance;
 import de.uni_mannheim.informatik.dws.winter.processing.Processable;
 import de.uni_mannheim.informatik.dws.winter.utils.WinterLogManager;
-import weka.core.pmml.jaxbbindings.False;
-import weka.core.pmml.jaxbbindings.True;
 import de.uni_mannheim.informatik.dws.winter.matching.MatchingEvaluator;
 import de.uni_mannheim.informatik.dws.winter.matching.algorithms.MaximumBipartiteMatchingAlgorithm;
 import de.uni_mannheim.informatik.dws.winter.matching.algorithms.RuleLearner;
@@ -105,7 +104,7 @@ public class IR_using_linear_combination
 		comparatorMap1.put("TotalTracksComparatorDeviationSimilarity", true);
 		comparatorMap1.put("AlbumTotalTracksComparatorDeviationSimilarity", true);
 		comparatorMap1.put("TrackNameComporatorGeneralisedMaximumOfContainment", true);
-		comparatorMap1.put("AlbumDateComparator10Years", true);
+		comparatorMap1.put("AlbumDateComparator2Years", true);
 		comparatorMap1.put("AlbumDateComparatorWeightedDate", true);
 		comparatorMap1.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", true);
 
@@ -119,7 +118,7 @@ public class IR_using_linear_combination
 		comparatorMap2.put("TotalTracksComparatorDeviationSimilarity", false);
 		comparatorMap2.put("AlbumTotalTracksComparatorDeviationSimilarity", false);
 		comparatorMap2.put("TrackNameComporatorGeneralisedMaximumOfContainment", false);
-		comparatorMap2.put("AlbumDateComparator10Years", false);
+		comparatorMap2.put("AlbumDateComparator2Years", false);
 		comparatorMap2.put("AlbumDateComparatorWeightedDate", false);
 		comparatorMap2.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", false);
 		
@@ -134,7 +133,7 @@ public class IR_using_linear_combination
 		comparatorMap2.put("TotalTracksComparatorDeviationSimilarity", false);
 		comparatorMap2.put("AlbumTotalTracksComparatorDeviationSimilarity", false);
 		comparatorMap2.put("TrackNameComporatorGeneralisedMaximumOfContainment", false);
-		comparatorMap2.put("AlbumDateComparator10Years", false);
+		comparatorMap2.put("AlbumDateComparator2Years", false);
 		comparatorMap2.put("AlbumDateComparatorWeightedDate", false);
 		comparatorMap2.put("AlbumDurationComparatorAbsoluteDifferenceSimilarity", false);
 
@@ -243,14 +242,14 @@ public class IR_using_linear_combination
 		}
 
 		logger.info(csv);
-		writeStringToCsvFile(csv, "data/output/summary_IR.csv");
+		writeStringToCsvFile(csv, "data/output/summary_IR_run.csv");
     }
 
 	private static void printEvalPerf(Performance perfTest) {
 		logger.info(String.format(
 				"Precision: %.4f",perfTest.getPrecision()));
 		logger.info(String.format(
-				"Recall: %.4f",	perfTest.getRecall()));
+				"Recall: %.4f",perfTest.getRecall()));
 		logger.info(String.format(
 				"F1: %.4f",perfTest.getF1()));
 	}
@@ -374,9 +373,9 @@ public class IR_using_linear_combination
 			}
 			
 			// album date comparators
-			if (comparatorMap.get("AlbumDateComparator10Years")) {
-				matchingRule.addComparator(new AlbumDateComparator10Years(), 0.03); 
-				logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparator10Years");
+			if (comparatorMap.get("AlbumDateComparator2Years")) {
+				matchingRule.addComparator(new AlbumDateComparator2Years(), 0.03); 
+				logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparator2Years");
 			}
 			
 			if (comparatorMap.get("AlbumDateComparatorWeightedDate")) {
@@ -384,7 +383,6 @@ public class IR_using_linear_combination
 				logger.info("Attribute: AlbumDate, Comparator: AlbumDateComparatorWeightedDate");
 
 			}
-			
 		}
 		
 		else if (d1_d2_name.equals("WDC_SPY")) {
@@ -438,9 +436,13 @@ public class IR_using_linear_combination
 		}
 		
 		// create a blocker (blocking strategy)
-		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
 		// NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
-		// SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
+		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
+		// StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleandYear());
+		// SortedNeighbourhoodBlocker<Album, Attribute,  Attribute> blocker = new SortedNeighbourhoodBlocker<>(new AlbumBlockingKeyByTitleGenerator(), 10);
+		// SortedNeighbourhoodBlocker<Album, Attribute,  Attribute> blocker = new SortedNeighbourhoodBlocker<>(new AlbumBlockingKeyByTitleandYear(), 10);
+
+
 		blocker.setMeasureBlockSizes(true);
 		
 		//Write debug results to file:
@@ -542,9 +544,9 @@ public class IR_using_linear_combination
 		}
 
 		// album date comparators
-		if (comparatorMap.get("AlbumDateComparator10Years")) {
-			matchingRule.addComparator(new AlbumDateComparator10Years()); 
-			logger.info("Model: " + modelType + " Attribute: AlbumDate, Comparator: AlbumDateComparator10Years");
+		if (comparatorMap.get("AlbumDateComparator2Years")) {
+			matchingRule.addComparator(new AlbumDateComparator2Years()); 
+			logger.info("Model: " + modelType + " Attribute: AlbumDate, Comparator: AlbumDateComparator2Years");
 		}
 
 		// album duration comparators
@@ -560,9 +562,12 @@ public class IR_using_linear_combination
 		logger.info(String.format("Matching rule is:\n%s", matchingRule.getModelDescription()));
 
 		// create a blocker (blocking strategy)
-		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
 		// NoBlocker<Album, Attribute> blocker = new NoBlocker<>();
-		// SortedNeighbourhoodBlocker<Movie, Attribute, Attribute> blocker = new SortedNeighbourhoodBlocker<>(new MovieBlockingKeyByTitleGenerator(), 1);
+		StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleGenerator());
+		// StandardRecordBlocker<Album, Attribute> blocker = new StandardRecordBlocker<Album, Attribute>(new AlbumBlockingKeyByTitleandYear());
+		// SortedNeighbourhoodBlocker<Album, Attribute,  Attribute> blocker = new SortedNeighbourhoodBlocker<>(new AlbumBlockingKeyByTitleGenerator(), 10);
+		// SortedNeighbourhoodBlocker<Album, Attribute,  Attribute> blocker = new SortedNeighbourhoodBlocker<>(new AlbumBlockingKeyByTitleandYear(), 10);
+
 		blocker.setMeasureBlockSizes(true);
 		
 		//Write debug results to file:

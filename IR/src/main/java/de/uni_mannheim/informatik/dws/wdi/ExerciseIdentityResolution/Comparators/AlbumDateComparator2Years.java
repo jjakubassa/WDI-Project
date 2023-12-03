@@ -11,19 +11,18 @@
  */
 package de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.Comparators;
 
+
+import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
 import de.uni_mannheim.informatik.dws.winter.matching.rules.comparators.Comparator;
 import de.uni_mannheim.informatik.dws.winter.matching.rules.comparators.ComparatorLogger;
 import de.uni_mannheim.informatik.dws.winter.model.Correspondence;
 import de.uni_mannheim.informatik.dws.winter.model.Matchable;
 import de.uni_mannheim.informatik.dws.winter.model.defaultmodel.Attribute;
 import de.uni_mannheim.informatik.dws.winter.similarity.date.YearSimilarity;
-import de.uni_mannheim.informatik.dws.wdi.ExerciseIdentityResolution.model.Album;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
- * {@link Comparator} for {@link Movie}s based on the {@link Movie#getDate()}
- * value, with a maximal difference of 2 years.
+ * {@link Comparator} for {@link Album}s based on the {@link Album#getReleaseDate()} ()}
+ * value. With a maximal difference of 10 years.
  * 
  * @author Oliver Lehmberg (oli@dwslab.de)
  * 
@@ -41,25 +40,20 @@ public class AlbumDateComparator2Years implements Comparator<Album, Attribute> {
 			Album record2,
 			Correspondence<Attribute, Matchable> schemaCorrespondences) {
     	
-        LocalDateTime releaseDate1 = record1.getReleaseDate().atTime(LocalTime.MIDNIGHT);
-        LocalDateTime releaseDate2 = record2.getReleaseDate().atTime(LocalTime.MIDNIGHT);
-        
-	    
-    	double similarity = sim.calculate(releaseDate1, releaseDate2);
-    	
+		if (record1.getReleaseDate() == null | record1.getReleaseDate() == null) {
+			return 0.0;
+		}
+    	double similarity = sim.calculate(record1.getReleaseDate().atStartOfDay(), record2.getReleaseDate().atStartOfDay());
+
 		if(this.comparisonLog != null){
 			this.comparisonLog.setComparatorName(getClass().getName());
-		
-			String releaseYear1 = Integer.toString(record1.getReleaseDate().getYear());
-            String releaseYear2 = Integer.toString(record2.getReleaseDate().getYear());
 
-            this.comparisonLog.setRecord1Value(releaseYear1);
-            this.comparisonLog.setRecord2Value(releaseYear2);
-    	
+			this.comparisonLog.setRecord1Value(record1.getReleaseDate().toString());
+			this.comparisonLog.setRecord2Value(record2.getReleaseDate().toString());
+
 			this.comparisonLog.setSimilarity(Double.toString(similarity));
 		}
 		return similarity;
-
 	}
 
 	@Override
